@@ -7,7 +7,15 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   // other Vite configurations...
   plugins: [react()],
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
   server: {
+    // port: 3009,
     proxy: {
       "/api/node": {
         target: "http://localhost:5050", // Adjust the port as needed
@@ -20,5 +28,8 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api\/python/, ""),
       },
     },
+    preview:{
+      port:80,
+    }
   },
 });

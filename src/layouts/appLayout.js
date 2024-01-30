@@ -17,7 +17,7 @@ const AppLayout = ({ children }) => {
   return (
     <>
       <Navbar />
-      <Box marginTop={heightTop}></Box>
+      <Box marginTop={heightTop}/>
 
       {children}
 
