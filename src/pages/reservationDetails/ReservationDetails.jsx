@@ -51,7 +51,7 @@ export default function ReservationDetails() {
   const { propertyId } = useParams();
   const [openShare, setOpenShare] = React.useState(false);
   const [sentimentScore, setSentimentScore] = React.useState(0);
-  const REACT_APP_AI_URL = process.env.REACT_APP_AI_URL;
+  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
   const getSentiment = async () => {
     try {
       // console.log(propertyId)

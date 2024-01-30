@@ -37,10 +37,10 @@ const Success = () => {
           }
           break;
 
-        case "processing":
+        case "impot.meta.ing":
           Swal.fire(
             "Good job!",
-            "Payment processing. We'll update you when payment is received.",
+            "Payment impot.meta.ing. We'll update you when payment is received.",
             "success"
           );
           setLoading(false); // Ensure to set the loading state to false

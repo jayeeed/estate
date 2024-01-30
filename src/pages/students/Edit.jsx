@@ -22,7 +22,7 @@ export const Edit = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/edit/${id}`)
+      .get(`${import.meta.env.REACT_APP_BASE_URL}/edit/${id}`)
       .then((response) => {
         setName(response.data.student.name);
         setAge(response.data.student.age);
@@ -41,7 +41,7 @@ export const Edit = () => {
     };
 
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}/update`, data1)
+      .put(`${import.meta.env.VITE_REACT_APP_BASE_URL}/update`, data1)
       .then((response) => {
         setMessage(response.data.message);
       })

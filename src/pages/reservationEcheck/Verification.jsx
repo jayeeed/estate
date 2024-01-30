@@ -9,10 +9,10 @@ import { useLocation } from "react-router-dom";
 
 function NIDVerificationForm({ bookingId, mode, close}) {
 
-  // const update_url = process.env.REACT_APP_STATUS_ENDPOINT;
-  // const delete_url = process.env.REACT_APP_DELETE_ENDPOINT;
-  const REACT_APP_AI_URL = process.env.REACT_APP_AI_URL;
-  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+  // const update_url = impot.meta..env.REACT_APP_STATUS_ENDPOINT;
+  // const delete_url = impot.meta..env.REACT_APP_DELETE_ENDPOINT;
+  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
+  const REACT_APP_BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
   const api_url =
     mode === "check"
       ? REACT_APP_AI_URL+"/idVerification/upload"
@@ -33,7 +33,7 @@ function NIDVerificationForm({ bookingId, mode, close}) {
   const handleStatusUpdate = () => {
     axios
       .post(REACT_APP_BASE_URL+"/booking-status-update", {
-        //${process.env.REACT_APP_BASE_URL}
+        //${impot.meta..env.REACT_APP_BASE_URL}
         bookingId: bookingId,
         // invoiceId: invoiceId,
       })
@@ -49,7 +49,7 @@ function NIDVerificationForm({ bookingId, mode, close}) {
   const handleStatusDelete = () => {
     axios
       .post(REACT_APP_BASE_URL+"/booking-delete", {
-        //${process.env.REACT_APP_BASE_URL}
+        //${impot.meta..env.REACT_APP_BASE_URL}
         bookingId: bookingId,
       })
       .then((response) => {
@@ -196,7 +196,7 @@ export default NIDVerificationForm;
 
 // function NIDVerificationForm() {
 
-//     const instant_check_api_url = process.env.REACT_APP_OCR_AI_URL;
+//     const instant_check_api_url = impot.meta..env.REACT_APP_OCR_AI_URL;
 //     const [file, setFile] = useState(null);
 //     const [fileUploaded, setFileUploaded] = useState(false);
 
@@ -303,7 +303,7 @@ export default NIDVerificationForm;
 
 // function NIDVerificationForm() {
 
-//     const instant_check_api_url = process.env.REACT_APP_OCR_AI_URL;
+//     const instant_check_api_url = impot.meta..env.REACT_APP_OCR_AI_URL;
 //     //const verified = 'ok';
 
 //     const [file, setFile] = useState(null);

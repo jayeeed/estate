@@ -6,7 +6,7 @@ import { PageNotFound } from "./pages/404";
 import RegisterScreen from "./pages/auth/Register";
 import LoginScreen from "./pages/auth/Login";
 import OtpScreen from "./pages/OTP";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { AppRoutes } from "./routes/AppRoutes";
 import { AdminRoutes } from "./routes/AdminRoutes";
@@ -20,7 +20,7 @@ import Students from "./pages/students/Students";
 import { Edit } from "./pages/students/Edit";
 import { theme } from "./assets/themes/index";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 export default function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);

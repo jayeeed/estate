@@ -7,7 +7,7 @@ const Description = ({ setStepValue, values }) => {
 
   const [sentiment, setSentiment] = useState(null);
   const [emotion, setEmotion] = useState(null);
-  const REACT_APP_AI_URL = process.env.REACT_APP_AI_URL;
+  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
 
   const maxLength = 500;
 

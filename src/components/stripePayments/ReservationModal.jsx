@@ -7,7 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { postApi } from "../../config/configAxios";
 import "./ReservationModal.css";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const ReservationModal = ({
   isOpen,

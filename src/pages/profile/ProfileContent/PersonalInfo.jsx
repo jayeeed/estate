@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import { Box } from "@mui/material";
 import GlobalModalForProfile from "./GlobalModalForProfile";
 import "../ProfilePage.css";
-import { Typography } from "antd";
+
 import { CheckBox, Favorite } from "@mui/icons-material";
 import { useAuthInfo } from "../../../helpers/AuthCheck";
 
@@ -50,7 +50,7 @@ const PersonalInfo = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Process the form data or submit it to an API here
+    // impot.meta. the form data or submit it to an API here
   };
 
   return (

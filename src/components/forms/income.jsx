@@ -10,7 +10,7 @@ const IncomeForm = ({ close }) => {
   const fileRefButton = useRef(null);
   const userInfo = useAuthInfo();
   const userId = userInfo._id;
-  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+  const REACT_APP_BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const [file, setFile] = useState(null);
 
