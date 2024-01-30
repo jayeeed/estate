@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 // Utility function to check if the user is authenticated
 export const useIsAuthenticated = () => {

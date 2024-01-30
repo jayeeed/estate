@@ -33,7 +33,7 @@ function ProfilePage() {
   const [isUploadOpen, setUploadOpen] = useState(false);
   // const userInfo = useAuthInfo();
   const [file, setFile] = useState(null);
-  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+  const REACT_APP_BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const userInfo = useAuthInfo();
   const userId = userInfo._id;

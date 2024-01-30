@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { postApi } from "../../config/configAxios";
 
 
-// const review_url = process.env.REACT_APP_CREATE_REVIEW_ENDPOINT;
+// const review_url = impot.meta..env.REACT_APP_CREATE_REVIEW_ENDPOINT;
 // console.log(review_url);
 
 
@@ -140,7 +140,7 @@ export default reviewPropertiesSlice.reducer;
 // export default reviewPropertiesSlice.reducer;
 
 
-// const review_url= process.env.REACT_APP_CREATE_REVIEW_ENDPOINT
+// const review_url= impot.meta..env.REACT_APP_CREATE_REVIEW_ENDPOINT
 // console.log(review_url);
 
 // const addReviewAction = createAction('ADD_REVIEW')((review) => ({

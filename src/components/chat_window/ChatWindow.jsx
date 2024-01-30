@@ -9,7 +9,7 @@ const ChatWindow = ({ onClose }) => {
   const [userInput, setUserInput] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
   const chatContainerRef = useRef(null);
-  const REACT_APP_AI_URL = process.env.REACT_APP_AI_URL;
+  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
 
   const handleSend = async () => {
     if (userInput.trim() !== '') { 

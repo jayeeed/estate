@@ -3,7 +3,7 @@ import "./otp.css";
 import { Box, Button, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, verifyOTP } from "../../redux/features/AuthSlice";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { postApi } from "../../config/configAxios";
@@ -118,7 +118,7 @@ export const OtpComponent = () => {
   useEffect(() => {
     // Fetch the oldTime value from the database using the user ID as a parameter
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/user/${userId}`)
+      .get(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/${userId}`)
       .then((response) => {
         setOldTime(new Date(response.data.user.otpExpiration));
       })

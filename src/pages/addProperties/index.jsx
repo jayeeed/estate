@@ -16,7 +16,7 @@ import Decide from "../../components/addpropertiesComponents/Decide";
 import Discounts from "../../components/addpropertiesComponents/Discounts";
 import { postApi } from "../../config/configAxios";
 import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import ExacteLocation from "../../components/addpropertiesComponents/ExacteLocation";
 import AppLayout from "../../layouts/appLayout";
 import { BeatLoader } from "react-spinners";

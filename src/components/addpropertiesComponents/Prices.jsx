@@ -12,7 +12,7 @@ import axios from "axios";
 const Prices = ({ setStepValue, values }) => {
   const [price, setPrice] = useState(values.prices || "");
   const [suggestedPrice, setSuggestedPrice] = useState(null);
-  const REACT_APP_AI_URL = process.env.REACT_APP_AI_URL;
+  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
 
   useEffect(() => {
     setStepValue("prices", price);

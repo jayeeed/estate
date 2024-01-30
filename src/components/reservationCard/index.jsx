@@ -48,7 +48,7 @@ export default function ReservationCard(props) {
     //console.log(isFavorite);
     const userId = userInfo._id;
 
-    // Start creating process
+    // Start creating impot.meta.
     axios
       .post("/wishlists", { propertyId, userId })
       .then((response) => {

@@ -1,21 +1,22 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
-// vite.config.js
+// import react from '@vitejs/plugin-react-swc'
+// import styled from 'vite-plugin-styled-components';
 
 export default defineConfig({
   // other Vite configurations...
   plugins: [react()],
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-      },
-    },
-  },
+  // plugins: [react(),styled()],
+  // optimizeDeps: {
+  //   esbuildOptions: {
+  //     loader: {
+  //       '.js': 'jsx',
+  //     },
+  //   },
+  // },
   server: {
-    // port: 3009,
+    port: 3009,
     proxy: {
       "/api/node": {
         target: "http://localhost:5050", // Adjust the port as needed

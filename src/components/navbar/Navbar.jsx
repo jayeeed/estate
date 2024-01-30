@@ -22,7 +22,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import AvatarMenu from "../avater";
 import SearchMobile from "../searchFilter/SearchMobile";
 import Logo from "./Logo";
-import VoiceSearch from "../VoiceSearch/VoiceSearch";
+// import VoiceSearch from "../VoiceSearch/VoiceSearch";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -104,7 +104,7 @@ export default function Navbar(props) {
                 {showSearchMobile}
               </Box>
               <Box>
-                <VoiceSearch />
+                {/* <VoiceSearch /> */}
               </Box>
               <Stack direction={"row"} alignItems={"center"}>
                 <Link to={"/hosting"}>
