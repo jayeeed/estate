@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Typography, List, ListItem, ListItemText } from '@mui/material';
 import { Box, Container, Grid } from "@mui/material";
-import ReservationCard from "../../components/reservationCard";
+import ReservationCard from "../reservationCard";
 import { AppLayout } from "../../layouts/appLayout";
 import { getActiveProperties } from "../../redux/features/PropertySlice";
 import { useDispatch, useSelector } from "react-redux";
-import CustomHashLoader from "../../components/customLoader/CustomHashLoader";
-import ReservationCardCopy from "../../components/reservationCard/index copy";
-import { NoRecord } from "../../components/noRecord";
+import CustomHashLoader from "../customLoader/CustomHashLoader";
+import ReservationCardCopy from "../reservationCard/index copy";
+import { NoRecord } from "../noRecord";
 import images from '../../pages/home/Images';
 
 function SearchResults() {

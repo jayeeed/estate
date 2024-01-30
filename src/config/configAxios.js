@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Set base URL for Axios
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+axios.defaults.baseURL = mport.meta.env.VITE_REACT_APP_BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 
 // Handle API request and response

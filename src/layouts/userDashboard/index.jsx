@@ -26,7 +26,7 @@ const DashboardLayout = ({ children, title }) => {
             top={"0"}
             zIndex={"5"}
             bottom={"0"}
-          ></Box>
+          />
         ))}
       <SideBar setOpen={setDrawerOpen} open={drawerOpen} />
       <Box

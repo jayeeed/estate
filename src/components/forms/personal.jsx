@@ -4,7 +4,7 @@ import { Button, Grid, TextField } from "@mui/material";
 import * as Yup from "yup";
 import axios from "axios";
 import { useAuthInfo } from "../../helpers/AuthCheck";
-import ResponseAlert from "../snakbar";
+// import ResponseAlert from "../snakbar";
 import { toast } from "react-toastify";
 
 const PersonalInfoForm = ({ close }) => {

@@ -22,7 +22,7 @@ import PersonalInfo from "./ProfileContent/PersonalInfo";
 import ActiveRenting from "./ProfileContent/ActiveRenting";
 import UpcomingRenting from "./ProfileContent/UpcomingRenting";
 import AppLayout from "../../layouts/appLayout";
-import MyTrips from "../profile/ProfileContent/MyTrips";
+import MyTrips from "./ProfileContent/MyTrips";
 // import Verification from "../reservationEcheck/Verification";
 import Confirmation from "../reservationEcheck/confirmation";
 import axios from "axios";

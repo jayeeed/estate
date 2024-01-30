@@ -3,7 +3,7 @@ import AdminLayout from "../../../layouts/adminLayout";
 import { Box, Card, Grid, Typography } from "@mui/material";
 import DashboardCard from "../../../components/dashboardCard/DashboardCard";
 import { MonetizationOnOutlined } from "@mui/icons-material";
-import { theme } from "../../../theme";
+// import { theme } from "../../../theme";
 
 export const AdminDashboard = () => {
   return (
