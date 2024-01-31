@@ -1,0 +1,84 @@
+version: '3.9'
+
+services:
+
+  server:
+    build: ./airbnbApi
+    image: estateRegistry.azurecr.io/server:beta-1
+    working_dir: /app/airbnbApi
+    restart: unless-stopped
+    networks:
+      - your_network
+    command: sh -c "npm install && npm start"
+    volumes:
+      - ./airbnbApi:/app/airbnbApi
+    ports:
+      - "5050:5050"
+    depends_on:
+      - mongoDb
+    # env_file:
+    #   - ./airbnbApi/.env 
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    links:
+      - "mongoDb:mongoDb"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5050/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  ai_server:
+    build: ./ukbdAi
+    image: estateRegistry.azurecr.io/ai_server:beta-2
+    working_dir: /app/ukbdAi
+    restart: unless-stopped
+    networks:
+      - your_network
+    command: python app.py
+    volumes:
+      - ./ukbdAi:/app/ukbdAi
+    ports:
+      - "7050:7050"
+    depends_on:
+      - mongoDb
+    # env_file:
+    #   - ./ukbdAi/.env
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:7050/api"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+  client:
+    build: ./airbnb
+    image: estateRegistry.azurecr.io/client:beta-1
+    working_dir: /app/airbnb
+    command: sh -c "npm install && npm start"
+    volumes:
+      - ./airbnb:/app/airbnb
+    ports:
+      - "80:3009"
+    depends_on:
+      - server
+      - ai_server
+    # env_file:
+    #   - ./airbnb/.env  
+    environment:
+      - REACT_APP_BASE_URL= ${REACT_APP_BASE_URL}
+      - REACT_APP_AI_URL= ${REACT_APP_AI_URL}
+      - REACT_APP_GOOGLE_CLIENT_ID= ${REACT_APP_GOOGLE_CLIENT_ID}
+      - REACT_APP_STRIPE_PUBLISHABLE_KEY= ${REACT_APP_STRIPE_PUBLISHABLE_KEY}
+      - REACT_APP_seckret_KEY= ${REACT_APP_seckret_KEY}
+
+volumes:
+  mongoDb:
+
+networks:
+  your_network:
