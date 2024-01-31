@@ -7,7 +7,7 @@ const Description = ({ setStepValue, values }) => {
 
   const [sentiment, setSentiment] = useState(null);
   const [emotion, setEmotion] = useState(null);
-  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
+  const VITE_AI_URL = import.meta.env.VITE_AI_URL;
 
   const maxLength = 500;
 
@@ -29,7 +29,7 @@ const Description = ({ setStepValue, values }) => {
 
   const analyzeDescription = async () => {
     try {
-      const response = await axios.post(REACT_APP_AI_URL+"/description", {
+      const response = await axios.post(VITE_AI_URL+"/description", {
         // description: text,
         text
       });

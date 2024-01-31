@@ -10,7 +10,7 @@ const IncomeForm = ({ close }) => {
   const fileRefButton = useRef(null);
   const userInfo = useAuthInfo();
   const userId = userInfo._id;
-  const REACT_APP_BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [file, setFile] = useState(null);
 
@@ -43,7 +43,7 @@ const IncomeForm = ({ close }) => {
     // console.log(values);
 
     try {
-      const response = await fetch(REACT_APP_BASE_URL+"/income-info", {
+      const response = await fetch(VITE_API_BASE_URL+"/income-info", {
         method: "POST",
         body: formData,
       });

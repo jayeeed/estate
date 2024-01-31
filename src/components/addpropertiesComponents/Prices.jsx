@@ -12,7 +12,7 @@ import axios from "axios";
 const Prices = ({ setStepValue, values }) => {
   const [price, setPrice] = useState(values.prices || "");
   const [suggestedPrice, setSuggestedPrice] = useState(null);
-  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
+  const VITE_AI_URL = import.meta.env.VITE_AI_URL;
 
   useEffect(() => {
     setStepValue("prices", price);
@@ -31,7 +31,7 @@ const Prices = ({ setStepValue, values }) => {
     console.log(price);
     // Make an HTTP request to your Flask API
     axios
-      .post(REACT_APP_AI_URL+"/price", {
+      .post(VITE_AI_URL+"/price", {
         values, // Send the user-entered price to the API
         // Include other necessary data in the request body
       })

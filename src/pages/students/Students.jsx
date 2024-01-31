@@ -34,7 +34,7 @@ const Students = () => {
     e.preventDefault();
 
     axios
-      .post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/add`, studentInfoForSumbut)
+      .post(`${import.meta.env.VITE_API_BASE_URL}/add`, studentInfoForSumbut)
       .then((response) => {
         setMessage(response.data.message);
         fetchStudents();
@@ -52,7 +52,7 @@ const Students = () => {
   const fetchStudents = () => {
     // fetch data use api endpoint 'api/students' use axios
     axios
-      .get(`${import.meta.env.REACT_APP_BASE_URL}/students`)
+      .get(`${import.meta.env.VITE_API_BASE_URL}/students`)
       .then((response) => {
         setStudents(response.data.students);
       })
@@ -61,7 +61,7 @@ const Students = () => {
 
   // handle delete
   const handleDelete = (id) => {
-    axios.delete(`${import.meta.env.REACT_APP_BASE_URL}/delete/${id}`,)
+    axios.delete(`${import.meta.env.VITE_API_BASE_URL}/delete/${id}`,)
       .then((response) => {
         setMessage(response.data.message);
         fetchStudents(); 

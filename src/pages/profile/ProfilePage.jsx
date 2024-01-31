@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Container,
   Grid,
@@ -13,7 +13,7 @@ import {
   Divider,
 } from "@mui/material";
 import {
-  ContactSupportOutlined,
+  // ContactSupportOutlined,
   EmailOutlined,
   PhotoCamera,
   UploadFile,
@@ -25,7 +25,7 @@ import AppLayout from "../../layouts/appLayout";
 import MyTrips from "./ProfileContent/MyTrips";
 // import Verification from "../reservationEcheck/Verification";
 import Confirmation from "../reservationEcheck/confirmation";
-import axios from "axios";
+// import axios from "axios";
 import { useAuthInfo } from "../../helpers/AuthCheck";
 
 function ProfilePage() {
@@ -33,7 +33,7 @@ function ProfilePage() {
   const [isUploadOpen, setUploadOpen] = useState(false);
   // const userInfo = useAuthInfo();
   const [file, setFile] = useState(null);
-  const REACT_APP_BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const userInfo = useAuthInfo();
   const userId = userInfo._id;

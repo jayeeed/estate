@@ -51,12 +51,12 @@ export default function ReservationDetails() {
   const { propertyId } = useParams();
   const [openShare, setOpenShare] = React.useState(false);
   const [sentimentScore, setSentimentScore] = React.useState(0);
-  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
+  const VITE_AI_URL = import.meta.env.VITE_AI_URL;
   const getSentiment = async () => {
     try {
       // console.log(propertyId)
       const response = await axios.post(
-        REACT_APP_AI_URL+"/get_review_sentiment",
+        VITE_AI_URL+"/get_review_sentiment",
         {
           propertyId: propertyId,
         },   

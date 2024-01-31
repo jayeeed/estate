@@ -47,7 +47,7 @@ export default function Home() {
 
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
+  // const VITE_AI_URL = import.meta.env.VITE_AI_URL;
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);

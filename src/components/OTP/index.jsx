@@ -119,7 +119,7 @@ export const OtpComponent = () => {
   useEffect(() => {
     // Fetch the oldTime value from the database using the user ID as a parameter
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/${userId}`)
+      .get(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`)
       .then((response) => {
         setOldTime(new Date(response.data.user.otpExpiration));
       })

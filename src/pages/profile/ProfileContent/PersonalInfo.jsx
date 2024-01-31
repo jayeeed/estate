@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
-import { Box, Typography, Grid,Button } from "@mui/material";
+import { Box, Typography, Grid, Button } from "@mui/material";
 import GlobalModalForProfile from "./GlobalModalForProfile";
 import "../ProfilePage.css";
 

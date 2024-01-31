@@ -11,12 +11,12 @@ function NIDVerificationForm({ bookingId, mode, close}) {
 
   // const update_url = impot.meta..env.REACT_APP_STATUS_ENDPOINT;
   // const delete_url = impot.meta..env.REACT_APP_DELETE_ENDPOINT;
-  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
-  const REACT_APP_BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const VITE_AI_URL = import.meta.env.VITE_AI_URL;
+  const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const api_url =
     mode === "check"
-      ? REACT_APP_AI_URL+"/idVerification/upload"
-      : REACT_APP_AI_URL+"/idVerification/update";
+      ? VITE_AI_URL+"/idVerification/upload"
+      : VITE_AI_URL+"/idVerification/update";
 
 
 
@@ -32,8 +32,8 @@ function NIDVerificationForm({ bookingId, mode, close}) {
   // booking status update
   const handleStatusUpdate = () => {
     axios
-      .post(REACT_APP_BASE_URL+"/booking-status-update", {
-        //${impot.meta..env.REACT_APP_BASE_URL}
+      .post(VITE_API_BASE_URL+"/booking-status-update", {
+        //${impot.meta..env.VITE_API_BASE_URL}
         bookingId: bookingId,
         // invoiceId: invoiceId,
       })
@@ -48,7 +48,7 @@ function NIDVerificationForm({ bookingId, mode, close}) {
   //   /booking-delete
   const handleStatusDelete = () => {
     axios
-      .post(REACT_APP_BASE_URL+"/booking-delete", {
+      .post(VITE_API_BASE_URL+"/booking-delete", {
         //${impot.meta..env.REACT_APP_BASE_URL}
         bookingId: bookingId,
       })
