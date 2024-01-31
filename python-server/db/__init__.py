@@ -16,12 +16,12 @@ if MONGODB_URL is None:
 client = MongoClient("mongodb://localhost:27017/")
 print(MONGODB_URL)
 
-airbnb_db = client["airbnb"]
+airbnb_db = client["estate"]
 
 
 # Check if the database exists
 if "airbnb" in client.list_database_names():
-    airbnb_db = client["airbnb"]
+    airbnb_db = client["estate"]
     print("Connected to the 'airbnb' database")
 
     # Insert a test document into the 'test' collection

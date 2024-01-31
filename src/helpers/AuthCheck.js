@@ -1,6 +1,6 @@
+// import jwtDecode from "jwt-decode";
 import { useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
-
 // Utility function to check if the user is authenticated
 export const useIsAuthenticated = () => {
   const isLoggedInRedux = useSelector((state) => state.auth.isLoggedIn);

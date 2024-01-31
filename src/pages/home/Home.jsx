@@ -47,7 +47,7 @@ export default function Home() {
 
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
+  // const REACT_APP_AI_URL = import.meta.env.VITE_REACT_APP_AI_URL;
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
@@ -66,7 +66,7 @@ export default function Home() {
   const getRecommendedProperties = () => {
     try {
       // Fetch recommended properties from your API
-      fetch(`${VITE_REACT_APP_AI_URL}/recommended/${userInfo._id}`)
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/recommended/${userInfo._id}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Set base URL for Axios
-axios.defaults.baseURL = import.meta.env.VITE_REACT_APP_BASE_URL;
+axios.defaults.baseURL =  import.meta.env.VITE_API_BASE_URL;
+console.log( import.meta.env.VITE_API_BASE_URL)
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 
 // Handle API request and response

@@ -94,6 +94,7 @@ const connection = mongoose.connection;
 
 connection.on("connected", () => {
   console.log("Connected to MongoDB");
+  
 
   // Start the server only after the database connection is established
   app.listen(port, () => {

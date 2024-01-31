@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { postApi } from "../../config/configAxios";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// import jwtDecode from "jwt-decode";
 
 export const OtpComponent = () => {
   const navigate = useNavigate();
