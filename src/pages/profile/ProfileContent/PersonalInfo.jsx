@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import { Box } from "@mui/material";
+/* eslint-disable react/jsx-key */
+import { useEffect, useState } from "react";
+import { Box, Typography, Grid,Button } from "@mui/material";
 import GlobalModalForProfile from "./GlobalModalForProfile";
 import "../ProfilePage.css";
 
-import { CheckBox, Favorite } from "@mui/icons-material";
+// import { CheckBox, Favorite } from "@mui/icons-material";
 import { useAuthInfo } from "../../../helpers/AuthCheck";
 
 const PersonalInfo = () => {
   const [globalModalForProfile, setGlobalModalForProfile] = useState(false);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   const [isGreen, setIsGreen] = useState(false);
 
@@ -48,10 +46,10 @@ const PersonalInfo = () => {
     setTypeOfForm(tileClicked);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // impot.meta. the form data or submit it to an API here
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   // impot.meta. the form data or submit it to an API here
+  // };
 
   return (
     <>
@@ -77,7 +75,7 @@ const PersonalInfo = () => {
       <Grid container spacing={2}>
         {tilesPersonal.map((tiles) => (
           <Grid item xs={9} sx={{ textAlign: "start" }}>
-            <button
+            <Button
               style={{
                 width: "100%",
                 paddingLeft: "0%",
@@ -92,7 +90,7 @@ const PersonalInfo = () => {
               onClick={handleTiles}
             >
               {tiles}
-            </button>
+            </Button>
           </Grid>
         ))}
       </Grid>
