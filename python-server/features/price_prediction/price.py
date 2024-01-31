@@ -19,7 +19,7 @@ load_dotenv()
 
 CORS_ORIGIN = os.getenv('CORS_ORIGIN')
 
-print(type(CORS_ORIGIN))
+# print(type(CORS_ORIGIN))
 
 
 # CORS(app, resources={r"/add-properties": {"origins": CORS_ORIGIN}})
@@ -28,6 +28,7 @@ print(type(CORS_ORIGIN))
 # property_data = list(mongo.db.price.find())
 
 property_data = list(properties_collection.find())
+# print(property_data)
 
 
 data = pd.DataFrame(property_data)

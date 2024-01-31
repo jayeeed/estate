@@ -13,14 +13,14 @@ if MONGODB_URL is None:
     fallback_url = MONGDB_URI
     MONGODB_URL = fallback_url
 
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient(MONGODB_URL)
 print(MONGODB_URL)
 
 airbnb_db = client["estate"]
 
 
 # Check if the database exists
-if "airbnb" in client.list_database_names():
+if "estate" in client.list_database_names():
     airbnb_db = client["estate"]
     print("Connected to the 'airbnb' database")
 

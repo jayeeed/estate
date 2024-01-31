@@ -83,7 +83,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something went wrong!");
 });
 
-console.log(dbURL);
+// console.log(dbURL);
 // Connect to MongoDB
 mongoose.connect(dbURL, {
   useNewUrlParser: true,
