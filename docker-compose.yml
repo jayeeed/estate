@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   server:
-    build: ./airbnbApi
+    build: ./node-server
     image: estateRegistry.azurecr.io/server:beta-1
     working_dir: /app/airbnbApi
     restart: unless-stopped
@@ -11,7 +11,7 @@ services:
       - your_network
     command: sh -c "npm install && npm start"
     volumes:
-      - ./airbnbApi:/app/airbnbApi
+      - ./node-server:/app/airbnbApi
     ports:
       - "5050:5050"
     depends_on:
@@ -31,7 +31,7 @@ services:
       retries: 3
 
   ai_server:
-    build: ./ukbdAi
+    build: ./python-server
     image: estateRegistry.azurecr.io/ai_server:beta-2
     working_dir: /app/ukbdAi
     restart: unless-stopped
@@ -39,7 +39,7 @@ services:
       - your_network
     command: python app.py
     volumes:
-      - ./ukbdAi:/app/ukbdAi
+      - ./python-server:/app/ukbdAi
     ports:
       - "7050:7050"
     depends_on:
@@ -57,12 +57,12 @@ services:
     #   retries: 3
 
   client:
-    build: ./airbnb
+    build: ./estate
     image: estateRegistry.azurecr.io/client:beta-1
     working_dir: /app/airbnb
     command: sh -c "npm install && npm start"
     volumes:
-      - ./airbnb:/app/airbnb
+      - ./estate:/app/airbnb
     ports:
       - "80:3009"
     depends_on:
