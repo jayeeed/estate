@@ -20,12 +20,12 @@ import Students from "./pages/students/Students";
 import { Edit } from "./pages/students/Edit";
 import { theme } from "./assets/themes/index";
 
-const stripePromise = loadStripe(import.meta.env.VITE_REACT_APP_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
   const isEmailVerified = useSelector((state) => state.auth.isEmailVerified);
-  const isAdmin = AdminCheck();
+  // const isAdmin = AdminCheck();
 
   return (
     <ThemeProvider theme={theme}>
