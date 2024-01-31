@@ -75,7 +75,7 @@ exports.getReview = async (req, res) => {
       const mongores = await Reviews.find({ propertyId }).populate("reviewedBy", "name avatar")
         .limit(limit)
         .skip(offset);
-        console.log(mongores);
+        // console.log(mongores);
 
 
     // const goodReviews = await Reviews.find({ propertyId: propertyId, overAllRating: { $gte: 4 } }, { _id: 0, reviewMessage: 1 }).sort({ rating: -1 }).limit(2);

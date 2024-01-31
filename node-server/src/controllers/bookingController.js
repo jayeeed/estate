@@ -42,7 +42,7 @@ exports.getBookingData = async (req, res) => {
       });
 
     res.json(data);
-    console.log(data);
+    // console.log(data);
   } catch (err) {
     console.error(err);
     console.log(err.message);
