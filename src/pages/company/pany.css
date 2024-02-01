@@ -1,0 +1,50 @@
+/* style.css */
+
+/* Container for the entire profile */
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Banner styling */
+.banner {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Content styling */
+.content {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: -80px; /* Adjust the margin-top to overlap with the banner */
+}
+
+/* Title styling */
+.title {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Avatar styling */
+.avatar {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  border: 3px solid #fff;
+}
+
+/* Details styling */
+.details {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* Add more styles as needed */

@@ -20,6 +20,7 @@ import MyTrips from "../pages/profile/ProfileContent/MyTrips";
 import Wishlist from "../pages/profile/ProfileContent/Wishlist";
 import HostDashboard from "../pages/admin/dashboard/hostDashboard";
 import CompanyProfileInfo from "../pages/company";
+import AddCompanyProfile from "../pages/company/addCompany";
 
 // import HostProfileInfo from "../pages/profile/HostInfo";
 
@@ -62,7 +63,7 @@ export const AppRoutes = () => {
 
         <Route
           path="/inbox"
-          // element={<ProtectedRoute children={<Notify />} />}
+        // element={<ProtectedRoute children={<Notify />} />}
         />
 
 
@@ -87,6 +88,11 @@ export const AppRoutes = () => {
           path="/add-properties"
           element={<ProtectedRoute children={<AddProperties />} />}
         />
+        <Route
+          path="/add-company"
+          element={<ProtectedRoute children={<AddCompanyProfile />} />}
+        />
+
         <Route
           path="/e-check"
           element={<ProtectedRoute children={<Echeck />} />}

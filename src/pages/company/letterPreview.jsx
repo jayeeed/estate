@@ -1,48 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-const HostLetterTemplate = ({ 
-    propertyManagementCompany,
-    propertyCompanyAddress,
-    appreciationDetails,
-    additionalDetails }) => {
+const Letter = ({ propertyManagementCompany, propertyCompanyAddress, additionalDetails, appreciationDetails }) => {
+  return (
+    <Box sx={{ display: 'block' }}>
+      <Box className="letter-left">
+        <Typography variant="h2">{propertyManagementCompany}</Typography>
+        <Typography paragraph>{propertyCompanyAddress}</Typography>
+        
+      </Box>
 
-    return (
-        <>       
-        <div className="letter-container">
-            <div className="letter-left">
-                <h2> {propertyManagementCompany} </h2>
-                <p> {propertyCompanyAddress} </p>
-                <p> {additionalDetails} </p>
-            </div>
-            <div className="letter-right">
-                <p>{`Dear Tenats,`}</p>
+      <Box className="letter-right" sx={{ ml: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Dear Tenants,
+        </Typography>
 
-                <p>
-                    I am writing to express my sincere appreciation for the outstanding service provided by {propertyManagementCompany}. As a tenant, I have experienced exceptional professionalism and dedication from your team, making my stay at {propertyCompanyAddress} truly enjoyable.
-                </p>
+        <Typography paragraph>
+          I am writing to express my sincere appreciation for the outstanding service provided by {propertyManagementCompany}. As a tenant, I have experienced exceptional professionalism and dedication from your team, making my stay at {propertyCompanyAddress} truly enjoyable.
+        </Typography>
 
-                <p>
-                    {appreciationDetails}
-                </p>
+        <Typography paragraph>{appreciationDetails}</Typography>
 
-                <p>
-                    The attention to detail and prompt response to any concerns have truly set {propertyManagementCompany} apart. I feel fortunate to be a part of a community managed by such a dedicated and reliable property management company.
-                </p>
+        <Typography paragraph>
+          The attention to detail and prompt response to any concerns have truly set {propertyManagementCompany} apart. I feel fortunate to be a part of a community managed by such a dedicated and reliable property management company.
+        </Typography>
 
-                <p>
-                    Thank you for your continuous efforts in maintaining a high standard of service. I look forward to a continued positive relationship with {propertyManagementCompany}.
-                </p>
+        <Typography paragraph>{additionalDetails}</Typography>
 
-                <p>
-                    Thank you for choosing our property for your stay. If there's anything you need during your time here, do not hesitate to contact us.
-                </p>
+        <Typography paragraph>
+          Thank you for your continuous efforts in maintaining a high standard of service. I look forward to a continued positive relationship with {propertyManagementCompany}.
+        </Typography>
 
-                <p>Best regards,</p>
-                <p>{propertyManagementCompany}</p>
-            </div>
-        </div>
-        </>
-    );
+        <Typography paragraph>
+          Thank you for choosing our property for your stay. If there's anything you need during your time here, do not hesitate to contact us.
+        </Typography>
+
+        <Typography>Best regards,</Typography>
+        <Typography>{propertyManagementCompany}</Typography>
+      </Box>
+    </Box>
+  );
 };
 
-export default HostLetterTemplate;
+export default Letter;

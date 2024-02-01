@@ -12,12 +12,12 @@ const sidebarContent = [
   {
     name: "Property List",
     path: "/property/list",
-    icon: "clarity:building-line",
+    icon: "clarity:home-line",
   },
   {
-    name: "Personal info",
-    path: "/personal/info",
-    icon: "tdesign:personal-information",
+    name: "Company info",
+    path: "/company",
+    icon: "clarity:building-line",
   },
   {
     name: "Login & security",
@@ -32,7 +32,7 @@ const sidebarContent = [
   {
     name: "Reservation check-in",
     path: "/e-check",
-    icon: "clarity:building-line",
+    "icon": "bi:check-circle-fill",
   },
 ];
 
