@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Container, Box, Typography, TextField, Button, Stack, Grid } from '@mui/material';
+import { Container, Box, Typography, TextField, Button, Grid } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import './App.css'
 import HostLetterTemplate from './letterPreview'
 // import pic from "./assets/company.jpg"
 
-export default function App() {
+
+// const PropertyList = () => {
+const companyProfileInfo=()=> {
   // const [count, setCount] = useState(0);
 
   const [companyName, setCompanyName] = useState('');
@@ -187,4 +188,4 @@ export default function App() {
   )
 }
 
-
+export default companyProfileInfo;

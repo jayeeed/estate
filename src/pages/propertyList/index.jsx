@@ -27,7 +27,7 @@ import {
   Search,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import DashboardLayout from "../../layouts/userDashboard";
+import DashboardLayout from "../../layouts/hostDashboard";
 import { getApiById, putApi } from "../../config/configAxios";
 import { useAuthInfo } from "../../helpers/AuthCheck";
 import CustomHashLoader from "../../components/customLoader/CustomHashLoader";
@@ -76,7 +76,7 @@ const PropertyList = () => {
         // Handle Active action
         try {
           const response = await getApiById(`/edit/property/${id}`, id);
-          if (response.data.property.images.length > 4) {
+          if (response.data.property.images.length >=1) {
             const data = { status: "active" };
             updatedStatus(id, data);
            
@@ -135,6 +135,7 @@ const PropertyList = () => {
   // Define an array of action items
   const actionItems = [
     { type: "active" },
+    { type: "on-demand" },
     { type: "de-active" },
     { type: "delete" },
   ];
@@ -142,6 +143,7 @@ const PropertyList = () => {
   // filter option
   const options = [
     { label: "Active", value: "active" },
+    { label: "On-Demand", value: "on-demand" },
     { label: "De-Active", value: "de-active" },
     { label: "In progress", value: "in progress" },
   ];

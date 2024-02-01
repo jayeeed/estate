@@ -19,6 +19,8 @@ import Echeck from "../pages/reservationEcheck";
 import MyTrips from "../pages/profile/ProfileContent/MyTrips";
 import Wishlist from "../pages/profile/ProfileContent/Wishlist";
 import HostDashboard from "../pages/admin/dashboard/hostDashboard";
+import CompanyProfileInfo from "../pages/company";
+
 // import HostProfileInfo from "../pages/profile/HostInfo";
 
 export const AppRoutes = () => {
@@ -51,10 +53,18 @@ export const AppRoutes = () => {
           path="/property/list"
           element={<ProtectedRoute children={<PropertyList />} />}
         />
-        {/* <Route
-          path="/personal/info"
-          element={<ProtectedRoute children={<HostProfileInfo />} />}
-        /> */}
+        <Route
+          path="/company"
+          element={<ProtectedRoute children={<CompanyProfileInfo />} />}
+        />
+
+        {/* /payments/coupons */}
+
+        <Route
+          path="/inbox"
+          // element={<ProtectedRoute children={<Notify />} />}
+        />
+
 
         <Route path="/edit/property/:propertyId" element={<EditProperty />} />
         <Route
