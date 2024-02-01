@@ -62,6 +62,9 @@
 }
 
 
+"start-python": "cd python-server && . venv/bin/activate && echo $VIRTUAL_ENV && which python && python --version && python app.py"
+
+
 "scripts": {
   "dev": "concurrently --prefix-colors cyan,magenta,yellow --prefix \"[{name}]\" \"vite --port 3009\" \"npm run start-node\" \"npm run start-python\"",
   "build": "vite build",
