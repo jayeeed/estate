@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { AdminDashboard } from "../pages/admin/dashboard";
+import AdminDashboard  from "../pages/admin/dashboard/adminDashboard";
 import { PageNotFound } from "../pages/404";
 import Properties from "../pages/admin/properties/Properties";
 import HostUsers from "../pages/admin/users/HostUsers";

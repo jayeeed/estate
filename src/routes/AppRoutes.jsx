@@ -18,7 +18,9 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import Echeck from "../pages/reservationEcheck";
 import MyTrips from "../pages/profile/ProfileContent/MyTrips";
 import Wishlist from "../pages/profile/ProfileContent/Wishlist";
+import AdminDashboard from "../pages/admin/dashboard/adminDashboard";
 import HostDashboard from "../pages/admin/dashboard/hostDashboard";
+
 import CompanyProfileInfo from "../pages/company";
 import AddCompanyProfile from "../pages/company/addCompany";
 
@@ -45,6 +47,10 @@ export const AppRoutes = () => {
             )
           }
         />
+        {/* <Route
+          path="/admin"
+          element={<ProtectedRoute children={<AdminDashboard />} />}
+        /> */}
         <Route
           path="/hosting"
           element={<ProtectedRoute children={<HostDashboard />} />}
@@ -60,6 +66,11 @@ export const AppRoutes = () => {
         />
 
         {/* /payments/coupons */}
+
+        <Route
+          path="/view-applications"
+        // element={<ProtectedRoute children={<Notify />} />}
+        />
 
         <Route
           path="/inbox"

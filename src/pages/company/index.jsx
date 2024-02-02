@@ -63,7 +63,40 @@ const companyProfileInfo = () => {
             <CloudUploadRounded sx={{ color: "f3f3f3", pr: 1 }} />
             Edit page
           </Button>
-      
+
+
+
+          <Button
+            sx={{
+              textTransform: "capitalize",
+              borderRadius: "30px",
+              margin: "2px"
+            }}
+            variant="outlined"
+            color="primary"
+            onClick={handleClick}
+          >
+            <AddCircleRounded sx={{ color: "f3f3f3", pr: 1 }} />
+           View applications
+          </Button>
+
+
+
+          <Button
+            sx={{
+              textTransform: "capitalize",
+              borderRadius: "30px",
+              margin: "2px"
+            }}
+            variant="outlined"
+            color="primary"
+            onClick={handleClick}
+          >
+            <AddCircleRounded sx={{ color: "f3f3f3", pr: 1 }} />
+            Post a job
+          </Button>
+
+
           <Button
             sx={{
               textTransform: "capitalize",

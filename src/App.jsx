@@ -18,7 +18,7 @@ import Cancel from "./pages/paymentStatus/Cancel";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Students from "./pages/students/Students";
+// import Students from "./pages/students/Students";
 import { Edit } from "./pages/students/Edit";
 import { theme } from "./assets/themes/index";
 
@@ -78,7 +78,9 @@ export default function App() {
             <Route path="/success" element={<Success />} />
             <Route path="/cancel" element={<Cancel />} />
 
-            <Route path="/students" element={<Students />} />
+            {/* <Route path="/students" element={<Students />} /> */}
+
+
             <Route path="/edit/:id" element={<Edit />} />
 
             <Route path="*" element={<PageNotFound />} />

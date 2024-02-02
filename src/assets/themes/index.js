@@ -28,6 +28,7 @@ export const theme = (customization) => {
     menuSelected: color.secondaryDark,
     menuSelectedBack: color.secondaryLight,
     divider: color.grey200,
+    boxShadow: 
     customization
   };
 
