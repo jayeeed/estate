@@ -89,7 +89,7 @@ const createCompanyProfile = () => {
         <Grid container spacing={2} height={"100vh"}>
           <Grid item xs={6}>
             <Container maxWidth="md">
-              <Box sx={{ marginTop: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Box sx={{ marginTop: 1, display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
                 <Typography component="heading" variant="h2">
                   Company Registration
                 </Typography>

@@ -297,7 +297,7 @@ const PropertyList = () => {
                       {data.images?.length > 0 && (
                         <CardMedia
                           component="img"
-                          height="140"
+                          height="180"
                           image={data.images[0].url}
                           alt="Property Image"
                         />
