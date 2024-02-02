@@ -23,6 +23,8 @@ import HostDashboard from "../pages/admin/dashboard/hostDashboard";
 
 import CompanyProfileInfo from "../pages/company";
 import AddCompanyProfile from "../pages/company/addCompany";
+import RaisedIssues from "../pages/raisedIssues";
+import RenterRequestComponent from "../pages/propertyList/rentalApplication";
 
 // import HostProfileInfo from "../pages/profile/HostInfo";
 
@@ -47,10 +49,7 @@ export const AppRoutes = () => {
             )
           }
         />
-        {/* <Route
-          path="/admin"
-          element={<ProtectedRoute children={<AdminDashboard />} />}
-        /> */}
+
         <Route
           path="/hosting"
           element={<ProtectedRoute children={<HostDashboard />} />}
@@ -68,8 +67,13 @@ export const AppRoutes = () => {
         {/* /payments/coupons */}
 
         <Route
-          path="/view-applications"
-        // element={<ProtectedRoute children={<Notify />} />}
+          path="/view-applications/:id"
+        element={<ProtectedRoute children={<RenterRequestComponent />} />}
+        />
+
+        <Route
+          path="/raised-issues"
+        element={<ProtectedRoute children={<RaisedIssues />} />}
         />
 
         <Route

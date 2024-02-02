@@ -20,6 +20,11 @@ const sidebarContent = [
     icon: "clarity:building-line",
   },
   {
+    name: "Raised issues",
+    path: "/raised-issues",
+    icon: "bi:exclamation-diamond", // Change the icon to an exclamation diamond
+  },  
+  {
     name: "Login & security",
     path: "/login/security",
     icon: "mdi:security-lock-outline",
@@ -32,8 +37,9 @@ const sidebarContent = [
   {
     name: "Reservation check-in",
     path: "/e-check",
-    "icon": "bi:check-circle-fill",
+    icon: "bi:check-circle",
   },
+
 ];
 
 export default sidebarContent;

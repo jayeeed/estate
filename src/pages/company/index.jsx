@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react'
 import { Container, Box, Typography, TextField, Button, Grid, Drawer } from '@mui/material';
 import DashboardLayout from "../../layouts/hostDashboard";
 import { Link } from 'react-router-dom';
-import { AddCircleRounded, CloudUploadRounded } from '@mui/icons-material';
+import { AddCircleRounded, 
+  CloudUploadRounded, 
+  WorkHistoryRounded,
+BusinessCenterRounded, BusinessRounded} from '@mui/icons-material';
 import CreateCompanyProfile from './addCompany';
 import CompanyProfileView from './comProfileView';
 import SubCompany from './addSubCom';
 import CompanyProfileEditForm from './editComProfile';
+import JobPostForm from './jobPost';
 
 
 
@@ -20,7 +24,15 @@ const companyProfileInfo = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
- 
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const handleJobClick = () => {
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
 
   const handleClose = () => {
     setIsSidebarOpen(false);
@@ -64,8 +76,6 @@ const companyProfileInfo = () => {
             Edit page
           </Button>
 
-
-
           <Button
             sx={{
               textTransform: "capitalize",
@@ -74,28 +84,12 @@ const companyProfileInfo = () => {
             }}
             variant="outlined"
             color="primary"
-            onClick={handleClick}
+            onClick={handleJobClick}
           >
-            <AddCircleRounded sx={{ color: "f3f3f3", pr: 1 }} />
-           View applications
-          </Button>
-
-
-
-          <Button
-            sx={{
-              textTransform: "capitalize",
-              borderRadius: "30px",
-              margin: "2px"
-            }}
-            variant="outlined"
-            color="primary"
-            onClick={handleClick}
-          >
-            <AddCircleRounded sx={{ color: "f3f3f3", pr: 1 }} />
+           <WorkHistoryRounded sx={{ color: 'f3f3f3', pr: 1 }} />
             Post a job
           </Button>
-
+          
 
           <Button
             sx={{
@@ -107,10 +101,10 @@ const companyProfileInfo = () => {
             color="primary"
             onClick={handleClick}
           >
-            <AddCircleRounded sx={{ color: "f3f3f3", pr: 1 }} />
+            <BusinessCenterRounded sx={{ color: "f3f3f3", pr: 1 }} />
             Create a Company
           </Button>
-         
+
           <Button
             sx={{
               textTransform: "capitalize",
@@ -121,10 +115,10 @@ const companyProfileInfo = () => {
             color="primary"
             onClick={handleSubClick}
           >
-            <AddCircleRounded sx={{ color: "f3f3f3", pr: 1 }} />
+            <BusinessRounded sx={{ color: "f3f3f3", pr: 1 }} />
             add a sub Company
           </Button>
-          
+
           <Link to={"/add-properties"}>
             <Button
               sx={{
@@ -145,8 +139,8 @@ const companyProfileInfo = () => {
         {/* Conditionally render the AddCompany component */}
         {showAddCompany && <CreateCompanyProfile /> ? <CreateCompanyProfile /> : <CompanyProfileView />}
 
-
-
+        {isPopupOpen && <JobPostForm onClose={closePopup} />}
+        
 
         <Drawer
           anchor="right"
@@ -157,10 +151,10 @@ const companyProfileInfo = () => {
           <div>
 
 
-          {showEdit && !showSub && <CompanyProfileEditForm />}
-    {showSub && !showEdit && <SubCompany />}
+            {showEdit && !showSub && <CompanyProfileEditForm />}
+            {showSub && !showEdit && <SubCompany />}
 
-            
+
 
           </div>
         </Drawer>

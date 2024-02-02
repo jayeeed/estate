@@ -102,8 +102,8 @@ const CompanyProfilePanels = () => {
 
                         <CustomTabPanel value={value} index={2}>
 
-                            <Grid container spacing={3}>
-                                <Grid item xs={4}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={8} md={6}>
                                     <Card sx={{ marginBottom: 2 }}>
                                         <CardMedia
                                             component="img"
@@ -126,7 +126,7 @@ const CompanyProfilePanels = () => {
                                         </CardContent>
                                     </Card>
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={12} sm={8} md={6}>
                                     <Card sx={{ marginBottom: 2 }}>
                                         <CardMedia
                                             component="img"
@@ -149,7 +149,7 @@ const CompanyProfilePanels = () => {
                                         </CardContent>
                                     </Card>
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={12} sm={8} md={6}>
                                     <Card sx={{ marginBottom: 2 }}>
                                         <CardMedia
                                             component="img"

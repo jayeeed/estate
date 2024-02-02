@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 const CompanyProfileEditForm = () => {
-//   const { companyId } = useParams(); // Assumes you have a route parameter for companyId
+  //   const { companyId } = useParams(); // Assumes you have a route parameter for companyId
   const [companyData, setCompanyData] = useState({
     companyName: '',
     registrationNumber: '',
@@ -19,16 +19,16 @@ const CompanyProfileEditForm = () => {
     additionalDetails: '',
   });
 
-//   useEffect(() => {
-//     // Fetch company data based on companyId
-//     axios.get(`/api/companies/${companyId}`)
-//       .then((response) => {
-//         setCompanyData(response.data);
-//       })
-//       .catch((error) => {
-//         console.error('Error fetching company data:', error);
-//       });
-//   }, [companyId]);
+  //   useEffect(() => {
+  //     // Fetch company data based on companyId
+  //     axios.get(`/api/companies/${companyId}`)
+  //       .then((response) => {
+  //         setCompanyData(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error fetching company data:', error);
+  //       });
+  //   }, [companyId]);
 
   const handleInputChange = (field, value) => {
     setCompanyData({
@@ -50,43 +50,45 @@ const CompanyProfileEditForm = () => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Box sx={{ marginTop: 4, display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-        <Typography component="h1" variant="h5">
-          Edit Company Profile
-        </Typography>
-        <form>
-          {/* Render form fields for editing */}
-          <TextField
-            label="Company Name"
-            fullWidth
-            margin="normal"
-            value={companyData.companyName}
-            onChange={(e) => handleInputChange('companyName', e.target.value)}
-            required
-          />
-          <TextField
-            label="Registration Number"
-            fullWidth
-            margin="normal"
-            value={companyData.registrationNumber}
-            onChange={(e) => handleInputChange('registrationNumber', e.target.value)}
-            required
-          />
-          {/* Add other fields as needed */}
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleUpdate}
-            sx={{ mt: 3 }}
-          >
-            Update Profile
-          </Button>
-        </form>
-      </Box>
-    </Container>
+    <Box sx={{ width: "20vw" }} >
+      <Container maxWidth="md">
+        <Box sx={{ marginTop: 4, display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+          <Typography component="h1" variant="h5">
+            Edit Company Profile
+          </Typography>
+          <form>
+            {/* Render form fields for editing */}
+            <TextField
+              label="Company Name"
+              fullWidth
+              margin="normal"
+              value={companyData.companyName}
+              onChange={(e) => handleInputChange('companyName', e.target.value)}
+              required
+            />
+            <TextField
+              label="Registration Number"
+              fullWidth
+              margin="normal"
+              value={companyData.registrationNumber}
+              onChange={(e) => handleInputChange('registrationNumber', e.target.value)}
+              required
+            />
+            {/* Add other fields as needed */}
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleUpdate}
+              sx={{ mt: 3 }}
+            >
+              Update Profile
+            </Button>
+          </form>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 

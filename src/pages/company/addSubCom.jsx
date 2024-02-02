@@ -31,7 +31,7 @@ const SubCompany = () => {
         }
     }
     return (
-        <Box sx={{ width: "25vw" }} >
+        <Box sx={{ width: "20vw" }} >
             <Container maxWidth="md" >
                 <Box sx={{ marginTop: 7, display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
                     <Typography component="heading" variant="h2">
