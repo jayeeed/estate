@@ -37,17 +37,17 @@ const CompanyProfileEditForm = () => {
     });
   };
 
-//   const handleUpdate = () => {
-//     // Update company data in the database
-//     axios.put(`/api/companies/${companyId}`, companyData)
-//       .then((response) => {
-//         console.log('Company profile updated successfully:', response.data);
-//         // Redirect or perform any other actions after successful update
-//       })
-//       .catch((error) => {
-//         console.error('Error updating company profile:', error);
-//       });
-//   };
+  const handleUpdate = () => {
+    // Update company data in the database
+    // axios.put(`/api/companies/${companyId}`, companyData)
+    //   .then((response) => {
+    //     console.log('Company profile updated successfully:', response.data);
+    //     // Redirect or perform any other actions after successful update
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error updating company profile:', error);
+    //   });
+  };
 
   return (
     <Container maxWidth="md">

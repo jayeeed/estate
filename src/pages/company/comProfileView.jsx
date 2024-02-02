@@ -28,7 +28,7 @@ const CompanyProfilePanels = () => {
     return (
         <Grid container spacing={3}>
             {/* Left side content */}
-            <Grid item xs={8}>
+            <Grid item xs={12} sm={7} md={8}>
                 <Box className='root' marginBlock={2}>
                     <CardMedia
                         component="img"
@@ -101,76 +101,93 @@ const CompanyProfilePanels = () => {
                         </CustomTabPanel>
 
                         <CustomTabPanel value={value} index={2}>
-                            <Card sx={{ marginBottom: 2 }}>
-                                <CardMedia
-                                    component="img"
-                                    // alt={title}
-                                    height="180"
-                                    image="src/pages/company/assets/jobs.jpeg" // Placeholder image URL
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h4" component="div">
-                                        {/* {title} */} Cleaning
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {/* Location: {location} */}
-                                        Location: Dhaka
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {/* Company: {company} */}
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio natus doloremque? Similique quis voluptas maxime autem repudiandae repellendus dolor eum accusantium, laborum et exercitationem provident, atque nesciunt, aliquam voluptatum.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                            <Card sx={{ marginBottom: 2 }}>
-                                <CardMedia
-                                    component="img"
-                                    // alt={title}
-                                    height="180"
-                                    image="src/pages/company/assets/jobs.jpeg" // Placeholder image URL
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h4" component="div">
-                                        {/* {title} */} Renovation
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {/* Location: {location} */}
-                                        Location: Dhaka
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {/* Company: {company} */}
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio natus doloremque? Similique quis voluptas maxime autem repudiandae repellendus dolor eum accusantium, laborum et exercitationem provident, atque nesciunt, aliquam voluptatum.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                            <Card sx={{ marginBottom: 2 }}>
-                                <CardMedia
-                                    component="img"
-                                    // alt={title}
-                                    height="180"
-                                    image="src/pages/company/assets/jobs.jpeg" // Placeholder image URL
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h4" component="div">
-                                        {/* {title} */} Plumbing
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {/* Location: {location} */}
-                                        Location: Dhaka
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {/* Company: {company} */}
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio natus doloremque? Similique quis voluptas maxime autem repudiandae repellendus dolor eum accusantium, laborum et exercitationem provident, atque nesciunt, aliquam voluptatum.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+
+                            <Grid container spacing={3}>
+                                <Grid item xs={4}>
+                                    <Card sx={{ marginBottom: 2 }}>
+                                        <CardMedia
+                                            component="img"
+                                            // alt={title}
+                                            height="180"
+                                            image="src/pages/company/assets/jobs.jpeg" // Placeholder image URL
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h4" component="div">
+                                                {/* {title} */} Cleaning
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {/* Location: {location} */}
+                                                Location: Dhaka
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {/* Company: {company} */}
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio natus doloremque? Similique quis voluptas maxime autem repudiandae repellendus dolor eum accusantium, laborum et exercitationem provident, atque nesciunt, aliquam voluptatum.
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Card sx={{ marginBottom: 2 }}>
+                                        <CardMedia
+                                            component="img"
+                                            // alt={title}
+                                            height="180"
+                                            image="src/pages/company/assets/jobs.jpeg" // Placeholder image URL
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h4" component="div">
+                                                {/* {title} */} Renovation
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {/* Location: {location} */}
+                                                Location: Dhaka
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {/* Company: {company} */}
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio natus doloremque? Similique quis voluptas maxime autem repudiandae repellendus dolor eum accusantium, laborum et exercitationem provident, atque nesciunt, aliquam voluptatum.
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Card sx={{ marginBottom: 2 }}>
+                                        <CardMedia
+                                            component="img"
+                                            // alt={title}
+                                            height="180"
+                                            image="src/pages/company/assets/jobs.jpeg" // Placeholder image URL
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h4" component="div">
+                                                {/* {title} */} Plumbing
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {/* Location: {location} */}
+                                                Location: Dhaka
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {/* Company: {company} */}
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio natus doloremque? Similique quis voluptas maxime autem repudiandae repellendus dolor eum accusantium, laborum et exercitationem provident, atque nesciunt, aliquam voluptatum.
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+
+
+                            </Grid>
+
+
+
+
+
+
                         </CustomTabPanel>
                     </Box>
                 </Box>
             </Grid>
 
             {/* Right side property cards */}
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={5} md={4}>
                 <Box marginInline={2}>
                     <Card sx={{ marginBlock: 2 }}>
                         <CardMedia
