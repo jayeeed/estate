@@ -4,6 +4,7 @@ import { Typography, Paper, Avatar, CardMedia, Box, Grid, Card, CardContent, Tab
 import './pany.css'; // Import the external CSS file
 
 // Custom TabPanel component
+// eslint-disable-next-line react/prop-types
 const CustomTabPanel = ({ children, value, index, ...other }) => {
     return (
         <div
@@ -33,8 +34,8 @@ const CompanyProfilePanels = () => {
                     <CardMedia
                         component="img"
                         alt="Banner"
-                        height="220px"
-                        image='src/pages/company/assets/closeup-shot-person-thinking-buying-selling-house.jpg'
+                        height="250px"
+                        image='src/pages/company/assets/house.jpg'
                         className="banner"
                     />
                     <Box className="content" display={"block"} position={"relative"}>
@@ -231,9 +232,9 @@ const CompanyProfilePanels = () => {
                             component="img"
                             alt="Property 1"
                             height="180"
-                            sx={{ objectFit: 'contain' }}
+                            sx={{ objectFit: 'cover' }}
 
-                            image="src/pages/company/assets/Rental.jpg"
+                            image="src/pages/company/assets/real-es.webp"
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h4" component="div">

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Container, Box, Typography, TextField, Button, Grid, Drawer } from '@mui/material';
+import { useState } from 'react'
+import { Box, Button,  Drawer } from '@mui/material';
 import DashboardLayout from "../../layouts/hostDashboard";
 import { Link } from 'react-router-dom';
 import { AddCircleRounded, 
@@ -16,7 +16,7 @@ import JobPostForm from './jobPost';
 
 
 
-const companyProfileInfo = () => {
+const CompanyProfileInfo = () => {
 
   const [showAddCompany, setShowAddCompany] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -165,7 +165,7 @@ const companyProfileInfo = () => {
   )
 }
 
-export default companyProfileInfo;
+export default CompanyProfileInfo;
 
 
 
