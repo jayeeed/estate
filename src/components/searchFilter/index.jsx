@@ -429,7 +429,7 @@ const SearchFilter = () => {
             }}
           >
             <Search sx={{ marginLeft: "5px" }} />
-            <Typography variant="text"> Search </Typography>
+            Search 
           </Box>
         </Box>
         <Popper

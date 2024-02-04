@@ -161,7 +161,7 @@ const RaisedIssues = ({ onClose }) => {
   };
   return (
     <DashboardLayout title={"Raised issues"}>
-      <Box className='root'>
+      <Box >
         {/* ... (Banner, Avatar, etc.) */}
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

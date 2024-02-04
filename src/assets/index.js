@@ -1,4 +1,4 @@
-import logo from "./images/logo.jpg";
+import logo from "./images/estate-logo.webp";
 import avatar from "./images/man.png";
 import bdMap from "./images/bd.png";
 import ukMap from "./images/uk.webp";

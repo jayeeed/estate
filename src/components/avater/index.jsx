@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Avatar, Box, Divider, Menu, MenuItem } from "@mui/material";
 import { ArrowDropDownCircle, Logout } from "@mui/icons-material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -44,7 +44,7 @@ const AvatarMenu = () => {
         <Box
           sx={{
             cursor: "pointer",
-            color:"grey.900"
+            color: "grey.900",
           }}
           onClick={handleMenuOpen}
           display={"flex"}
@@ -54,7 +54,7 @@ const AvatarMenu = () => {
           py={"5px"}
           borderRadius={"50px"}
         >
-          <ArrowDropDownCircle  />
+          <ArrowDropDownCircle />
           <Avatar
             alt="Remy Sharp"
             src={assets.images.avatar}
@@ -123,6 +123,27 @@ const AvatarMenu = () => {
               >
                 Add another account
               </MenuItem>,
+
+              <Link
+                to="/wishlist"
+                style={{ textDecoration: "none", color: "inherit" }}
+                key="profile-link"
+              >
+                <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
+                  Wishlists
+                </MenuItem>
+              </Link>,
+
+              <Link
+                to="/my-trips"
+                style={{ textDecoration: "none", color: "inherit" }}
+                key="profile-link"
+              >
+                <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
+                  My Trips
+                </MenuItem>
+              </Link>,
+
               <MenuItem
                 sx={{ minWidth: "250px" }}
                 onClick={handleMenuClose}

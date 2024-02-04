@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import assets from "../../assets";
@@ -22,9 +21,10 @@ const Logo = () => {
             src={assets.images.logo}
             alt="Logo"
             style={{
-              height: "40px",
+              height: "90px",
               cursor: "pointer",
               border: "1px solid #f3f3f3",
+              objectFit: "cover",
             }}
           />
         </Box>
