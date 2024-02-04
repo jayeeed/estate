@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react/no-children-prop */
+// import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "../pages/home/Home";
 import { PageNotFound } from "../pages/404";
@@ -18,7 +19,7 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import Echeck from "../pages/reservationEcheck";
 import MyTrips from "../pages/profile/ProfileContent/MyTrips";
 import Wishlist from "../pages/profile/ProfileContent/Wishlist";
-import AdminDashboard from "../pages/admin/dashboard/adminDashboard";
+// import AdminDashboard from "../pages/admin/dashboard/adminDashboard";
 import HostDashboard from "../pages/admin/dashboard/hostDashboard";
 
 import CompanyProfileInfo from "../pages/company";

@@ -6,18 +6,18 @@ export default function componentStyleOverrides(theme) {
         root: {
           fontWeight: 500,
           borderRadius: '4px',
-          //color: theme.darkTextPrimary,
+          // color: theme.background,
         }
       }
     },
-    // MuiTypography:{
-    //   styleOverrides: {
-    //     root: {
-    //       fontWeight: 500,
-    //       color: theme.darkTextPrimary,
-    //     }
-    //   }
-    // },
+    MuiTypography:{
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          color: theme.darkTextPrimary,
+        }
+      }
+    },
     MuiPaper: {
       defaultProps: {
         elevation: 0
