@@ -12,13 +12,18 @@ const sidebarContent = [
   {
     name: "Property List",
     path: "/property/list",
+    icon: "clarity:home-line",
+  },
+  {
+    name: "Company info",
+    path: "/company",
     icon: "clarity:building-line",
   },
   {
-    name: "Personal info",
-    path: "/personal/info",
-    icon: "tdesign:personal-information",
-  },
+    name: "Raised issues",
+    path: "/raised-issues",
+    icon: "bi:exclamation-diamond", // Change the icon to an exclamation diamond
+  },  
   {
     name: "Login & security",
     path: "/login/security",
@@ -32,8 +37,9 @@ const sidebarContent = [
   {
     name: "Reservation check-in",
     path: "/e-check",
-    icon: "clarity:building-line",
+    icon: "bi:check-circle",
   },
+
 ];
 
 export default sidebarContent;

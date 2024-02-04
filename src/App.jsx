@@ -1,5 +1,7 @@
 import React from "react";
-import { ThemeProvider } from "@mui/material";
+// import { ThemeProvider } from "@mui/material";
+import { ThemeProvider } from '@mui/material';
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageNotFound } from "./pages/404";
@@ -16,67 +18,75 @@ import Cancel from "./pages/paymentStatus/Cancel";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Students from "./pages/students/Students";
+// import Students from "./pages/students/Students";
 import { Edit } from "./pages/students/Edit";
 import { theme } from "./assets/themes/index";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
+
+
 export default function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
   const isEmailVerified = useSelector((state) => state.auth.isEmailVerified);
   // const isAdmin = AdminCheck();
+  // Create a theme instance.
+  // const customTheme = theme(customization);
+  const customTheme = theme();
+
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
       <Elements stripe={stripePromise}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              isAuthenticated ? <Navigate to="/" replace /> : <LoginScreen />
-            }
-          />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                isAuthenticated ? <Navigate to="/" replace /> : <LoginScreen />
+              }
+            />
 
-          <Route
-            path="/register"
-            element={
-              isAuthenticated ? <Navigate to="/" replace /> : <RegisterScreen />
-            }
-          />
-          <Route
-            path="/otp-verify"
-            element={
-              isAuthenticated ? (
-                isEmailVerified ? (
-                  <Navigate to="/" replace />
+            <Route
+              path="/register"
+              element={
+                isAuthenticated ? <Navigate to="/" replace /> : <RegisterScreen />
+              }
+            />
+            <Route
+              path="/otp-verify"
+              element={
+                isAuthenticated ? (
+                  isEmailVerified ? (
+                    <Navigate to="/" replace />
+                  ) : (
+                    <OtpScreen />
+                  )
                 ) : (
-                  <OtpScreen />
+                  <Navigate to="/login" replace />
                 )
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
+              }
+            />
 
-          {/* app all routes  */}
-          <Route path="/*" element={<AppRoutes />} /> 
+            {/* app all routes  */}
+            <Route path="/*" element={<AppRoutes />} />
 
-          {/* admin all routes {isAdmin && */}
-          {/* {isAdmin && <Route path="/admin/*" element={<AdminRoutes />} />} */}
-          <Route path="/admin/*" element={<AdminRoutes />} />
+            {/* admin all routes {isAdmin && */}
+            {/* {isAdmin && <Route path="/admin/*" element={<AdminRoutes />} />} */}
+            <Route path="/admin/*" element={<AdminRoutes />} />
 
-          <Route path="/success" element={<Success />} />
-          <Route path="/cancel" element={<Cancel />} /> 
+            <Route path="/success" element={<Success />} />
+            <Route path="/cancel" element={<Cancel />} />
 
-          <Route path="/students" element={<Students />} /> 
-          <Route path="/edit/:id" element={<Edit />} /> 
+            {/* <Route path="/students" element={<Students />} /> */}
 
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-      <ToastContainer position="top-right" autoClose={3000} />
+
+            <Route path="/edit/:id" element={<Edit />} />
+
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <ToastContainer position="top-right" autoClose={3000} />
       </Elements>
     </ThemeProvider>
   );

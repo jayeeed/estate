@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react/no-children-prop */
+// import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "../pages/home/Home";
 import { PageNotFound } from "../pages/404";
@@ -18,7 +19,14 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import Echeck from "../pages/reservationEcheck";
 import MyTrips from "../pages/profile/ProfileContent/MyTrips";
 import Wishlist from "../pages/profile/ProfileContent/Wishlist";
+// import AdminDashboard from "../pages/admin/dashboard/adminDashboard";
 import HostDashboard from "../pages/admin/dashboard/hostDashboard";
+
+import CompanyProfileInfo from "../pages/company";
+import AddCompanyProfile from "../pages/company/addCompany";
+import RaisedIssues from "../pages/raisedIssues";
+import RenterRequestComponent from "../pages/propertyList/rentalApplication";
+
 // import HostProfileInfo from "../pages/profile/HostInfo";
 
 export const AppRoutes = () => {
@@ -42,6 +50,7 @@ export const AppRoutes = () => {
             )
           }
         />
+
         <Route
           path="/hosting"
           element={<ProtectedRoute children={<HostDashboard />} />}
@@ -51,10 +60,28 @@ export const AppRoutes = () => {
           path="/property/list"
           element={<ProtectedRoute children={<PropertyList />} />}
         />
-        {/* <Route
-          path="/personal/info"
-          element={<ProtectedRoute children={<HostProfileInfo />} />}
-        /> */}
+        <Route
+          path="/company"
+          element={<ProtectedRoute children={<CompanyProfileInfo />} />}
+        />
+
+        {/* /payments/coupons */}
+
+        <Route
+          path="/view-applications/:id"
+        element={<ProtectedRoute children={<RenterRequestComponent />} />}
+        />
+
+        <Route
+          path="/raised-issues"
+        element={<ProtectedRoute children={<RaisedIssues />} />}
+        />
+
+        <Route
+          path="/inbox"
+        // element={<ProtectedRoute children={<Notify />} />}
+        />
+
 
         <Route path="/edit/property/:propertyId" element={<EditProperty />} />
         <Route
@@ -77,6 +104,11 @@ export const AppRoutes = () => {
           path="/add-properties"
           element={<ProtectedRoute children={<AddProperties />} />}
         />
+        <Route
+          path="/add-company"
+          element={<ProtectedRoute children={<AddCompanyProfile />} />}
+        />
+
         <Route
           path="/e-check"
           element={<ProtectedRoute children={<Echeck />} />}

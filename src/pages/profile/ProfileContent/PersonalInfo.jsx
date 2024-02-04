@@ -1,14 +1,16 @@
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
-import { Box, Typography, Grid, Button } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import GlobalModalForProfile from "./GlobalModalForProfile";
 import "../ProfilePage.css";
 
 // import { CheckBox, Favorite } from "@mui/icons-material";
 import { useAuthInfo } from "../../../helpers/AuthCheck";
+import { useTheme } from "@emotion/react";
 
 const PersonalInfo = () => {
   const [globalModalForProfile, setGlobalModalForProfile] = useState(false);
+  const btheme = useTheme();
   // const [open, setOpen] = React.useState(false);
   // const handleOpen = () => setOpen(true);
   // const handleClose = () => setOpen(false);
@@ -74,23 +76,26 @@ const PersonalInfo = () => {
 
       <Grid container spacing={2}>
         {tilesPersonal.map((tiles) => (
-          <Grid item xs={9} sx={{ textAlign: "start" }}>
-            <Button
+          <Grid item xs={12} sx={{ textAlign: "start" }}>
+            <Box
               style={{
-                width: "100%",
-                paddingLeft: "0%",
+                width: "50%",
+                paddingLeft: "2%",
                 textTransform: "capitalize",
-                paddingRight: "60%",
+                // paddingRight: "60%",
                 paddingBlock: "2%",
                 borderRadius: "8px",
                 backgroundColor: isGreen ? "green" : "",
                 fontSize: "1rem",
+                border: "1px solid",
+                // boxShadow: btheme.palette.boxShadow,
+                color: btheme.heading,
               }}
               variant="outlined"
               onClick={handleTiles}
             >
-              {tiles}
-            </Button>
+              <Typography variant={btheme.typography.menuCaption} > {tiles} </Typography>
+            </Box>
           </Grid>
         ))}
       </Grid>

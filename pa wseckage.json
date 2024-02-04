@@ -62,7 +62,7 @@
 }
 
 
-"start-python": "cd python-server && . venv/bin/activate && echo $VIRTUAL_ENV && which python && python --version && python app.py"
+// "start-python": "cd python-server && . venv/bin/activate && echo $VIRTUAL_ENV && which python && python --version && python app.py"
 
 
 "scripts": {

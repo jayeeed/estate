@@ -102,7 +102,9 @@ export default function ReservationCard(props) {
           checkedIcon={
             <Favorite sx={{ fontSize: "29px", color: "secondary.main" }} />
           }
-          checked={isFavorite}
+          // checked={isFavorite}
+          checked={isFavorite==="checked"? true: false}
+
           onClick={
             isFavorite === "checked"
               ? handleFavouriteDelete

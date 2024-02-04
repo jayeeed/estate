@@ -3,13 +3,24 @@ import AdminLayout from "../../../layouts/adminLayout";
 import { Box, Card, Grid, Typography } from "@mui/material";
 import DashboardCard from "../../../components/dashboardCard/DashboardCard";
 import { MonetizationOnOutlined } from "@mui/icons-material";
-// import { theme } from "../../../theme";
+import { theme } from "../../../assets/themes/theme";
 
-export const AdminDashboard = () => {
+
+const AdminDashboard = () => {
   return (
     <AdminLayout title={"Admin Dashborad"}>
+
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+
+
+
+
+
+
+
+
+
+        {/* <Grid item xs={12}>
           <h4>Finance info</h4>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -33,7 +44,7 @@ export const AdminDashboard = () => {
         <Grid item xs={12} md={4}>
           <Card
             sx={{
-              boxShadow: theme.palette.boxShadow,
+              boxShadow:"14px 17px 40px 4px rgba(112, 144, 176, 0.18)",
               borderRadius: "20px",
               position: "relative",
               width: "100%",
@@ -45,7 +56,7 @@ export const AdminDashboard = () => {
               display={"flex"}
               alignItems={"center"}
               p={3}
-              boxShadow={theme.palette.boxShadow}
+              boxShadow={"14px 17px 40px 4px rgba(112, 144, 176, 0.18)"}
               bgcolor={"#ffffff"}
               borderRadius={"20px"}
             >
@@ -132,8 +143,17 @@ export const AdminDashboard = () => {
             countNumber={"30"}
             color={"#ff0000"}
           />
-        </Grid>
+        </Grid> */}
+      
+      
+      
+      
+      
+      
+      
+      
       </Grid>
     </AdminLayout>
   );
 };
+export default AdminDashboard;

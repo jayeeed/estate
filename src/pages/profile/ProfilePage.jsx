@@ -27,18 +27,23 @@ import MyTrips from "./ProfileContent/MyTrips";
 import Confirmation from "../reservationEcheck/confirmation";
 // import axios from "axios";
 import { useAuthInfo } from "../../helpers/AuthCheck";
+import { useTheme } from "@emotion/react";
+import ProfileView from "./ProfileContent/profileView";
 
 function ProfilePage() {
   const [value, setValue] = useState(0);
   const [isUploadOpen, setUploadOpen] = useState(false);
   // const userInfo = useAuthInfo();
+
   const [file, setFile] = useState(null);
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const userInfo = useAuthInfo();
   const userId = userInfo._id;
 
-  console.log(userId);
+  console.log(userInfo);
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(file);
@@ -47,7 +52,7 @@ function ProfilePage() {
     formData.append("userId", userId);
 
     try {
-      const response = await fetch(REACT_APP_BASE_URL+"/users/avatar", {
+      const response = await fetch(VITE_API_BASE_URL + "/users/avatar", {
         method: "POST",
         body: formData,
       });
@@ -301,15 +306,62 @@ function ProfilePage() {
 }
 
 function Tab1Content() {
+
+  // console.log(userInfo);
+  // variant="ptheme.menuCaption"
+  const [isClicked, setIsClicked]=useState(false);
+
+  const handleUpdateProfile =()=>{
+    setIsClicked(true);
+  }
   return (
     <Box>
-      <Typography variant="h4"> Renter Profile </Typography>
-      <h4>
-        {" "}
-        Create your Renter Profile once and reuse it for all your applications.
-      </h4>
-      <br></br>
-      <PersonalInfo />
+
+      <Box display={"flex"} justifyContent={"space-between"}>
+        <Box width={"70%"}>
+          <Typography  variant="h3"> 
+          Renter Profile </Typography>
+          <Typography>
+            {" "}
+            Create your Renter Profile once and reuse it for all your applications.
+          </Typography>
+        </Box>
+
+
+        <Button variant="outlined" 
+        onClick={handleUpdateProfile}>
+          make a full profile
+        </Button>
+
+
+      </Box>
+
+<br/>
+
+<ProfileView/>
+
+
+{isClicked && <PersonalInfo />}
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </Box>
   );
 }

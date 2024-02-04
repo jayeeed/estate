@@ -18,7 +18,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import { theme } from "../../assets/themes/theme";
+import { useTheme } from '@mui/system';
 import {
   AddCircleRounded,
   Close,
@@ -26,8 +26,10 @@ import {
   MoreVert,
   Search,
 } from "@mui/icons-material";
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
-import DashboardLayout from "../../layouts/userDashboard";
+import DashboardLayout from "../../layouts/hostDashboard";
 import { getApiById, putApi } from "../../config/configAxios";
 import { useAuthInfo } from "../../helpers/AuthCheck";
 import CustomHashLoader from "../../components/customLoader/CustomHashLoader";
@@ -48,6 +50,14 @@ const PropertyList = () => {
   const [filter, setFilter] = useState(null);
   const dispatch = useDispatch();
 
+  const theme = useTheme();
+
+
+
+  const handleApplication = (event) => {
+    // setAnchorEl(event.currentTarget);
+  };
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -59,7 +69,7 @@ const PropertyList = () => {
   const updatedStatus = async (propertyId, data) => {
     setLoading(true);
     try {
-      await putApi(`/properties/${propertyId}`, data).then((res)=>{
+      await putApi(`/properties/${propertyId}`, data).then((res) => {
         propertiesData();
         toast.success("Successfully status updated");
       });
@@ -76,10 +86,10 @@ const PropertyList = () => {
         // Handle Active action
         try {
           const response = await getApiById(`/edit/property/${id}`, id);
-          if (response.data.property.images.length > 4) {
+          if (response.data.property.images.length >= 1) {
             const data = { status: "active" };
             updatedStatus(id, data);
-           
+
           } else {
             Swal.fire({
               icon: "error",
@@ -124,7 +134,13 @@ const PropertyList = () => {
           }
         });
         break;
+
       // Add more cases for other actions as needed
+      case "on-demand":
+        const dataD = { status: "on-demand" };
+        updatedStatus(id, dataD);
+        break;
+
       default:
         break;
     }
@@ -135,6 +151,7 @@ const PropertyList = () => {
   // Define an array of action items
   const actionItems = [
     { type: "active" },
+    { type: "on-demand" },
     { type: "de-active" },
     { type: "delete" },
   ];
@@ -142,6 +159,7 @@ const PropertyList = () => {
   // filter option
   const options = [
     { label: "Active", value: "active" },
+    { label: "On-Demand", value: "on-demand" },
     { label: "De-Active", value: "de-active" },
     { label: "In progress", value: "in progress" },
   ];
@@ -204,7 +222,7 @@ const PropertyList = () => {
 
   return (
     <DashboardLayout title={"Property list"}>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} >
         <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
@@ -238,7 +256,25 @@ const PropertyList = () => {
                   <FilterAltRounded sx={{ color: "f3f3f3", pr: 1 }} />
                   Filters
                 </Button>
+                <Link to={"/view-applications"}>
+                  <Button
+                    sx={{
+                      textTransform: "capitalize",
+                      borderRadius: "30px",
+                      marginInline: "4px"
+
+                    }}
+                    variant="outlined"
+                    color="primary"
+
+                  >
+                    <ListAltIcon sx={{ color: 'f3f3f3', pr: 1 }} />
+                    View applications
+                  </Button>
+                </Link>
+                {" "}
                 <Link to={"/add-properties"}>
+
                   <Button
                     sx={{
                       textTransform: "capitalize",
@@ -247,7 +283,7 @@ const PropertyList = () => {
                     variant="outlined"
                     color="primary"
                   >
-                    <AddCircleRounded sx={{ color: "f3f3f3", pr: 1 }} />
+                    <HomeIcon sx={{ color: 'f3f3f3', pr: 1 }} />
                     Property listing
                   </Button>
                 </Link>
@@ -290,35 +326,36 @@ const PropertyList = () => {
                         size="small"
                       />
                     </Box>
+                    {data.images?.length > 0 && (
+                      <CardActionArea component={Link} to="/view-applications/:id">
 
-                    <CardActionArea>
-                      {data.images?.length > 0 && (
                         <CardMedia
                           component="img"
-                          height="140"
+                          height="180"
                           image={data.images[0].url}
                           alt="Property Image"
                         />
-                      )}
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="h5"
-                          component="div"
-                          fontSize={"18px"}
-                          fontWeight={600}
-                        >
-                          {data.title.length > 30
-                            ? data.title.substring(0, 30)
-                            : data.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {data.description.length > 60
-                            ? data.description.substring(0, 60)
-                            : data.description}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
+
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            fontSize={"18px"}
+                            fontWeight={600}
+                          >
+                            {data.title.length > 30
+                              ? data.title.substring(0, 30)
+                              : data.title}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {data.description.length > 60
+                              ? data.description.substring(0, 60)
+                              : data.description}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    )}
                     <Box
                       display={"flex"}
                       justifyContent={"space-between"}

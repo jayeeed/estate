@@ -1,0 +1,70 @@
+/* style.css */
+
+/* Container for the entire profile */
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Banner styling */
+/* .banner {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+} */
+
+/* Content styling */
+.content {
+  /* max-width: "60vw"; */
+  width: 90%;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-inline: 1rem;
+  margin-top: -30px; /* Adjust the margin-top to overlap with the banner */
+  position: relative;
+  text-align: left;
+  z-index: 1;
+}
+
+/* Title styling */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Avatar styling */
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  position: relative;
+  top: -60px;
+  left: 20px;
+}
+
+/* Company details styling */
+.company-details {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.company-details img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+/* Details styling */
+.details {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Add more styles as needed */

@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material';
 
 // assets
 import colors from '../scss/_themes-vars.module.scss';
@@ -28,6 +28,7 @@ export const theme = (customization) => {
     menuSelected: color.secondaryDark,
     menuSelectedBack: color.secondaryLight,
     divider: color.grey200,
+    boxShadow: 
     customization
   };
 

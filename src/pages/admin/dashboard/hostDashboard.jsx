@@ -6,7 +6,7 @@ import DashboardCard from "../../../components/dashboardCard/DashboardCard";
 // import { theme } from "../../../assets/themes/theme";
 // import EarningCard from "./Default/EarningCard";
 import Dashboard from "./Default";
-import DashboardLayout from "../../../layouts/userDashboard";
+import DashboardLayout from "../../../layouts/hostDashboard";
 
 const HostDashboard = () => {
   return (

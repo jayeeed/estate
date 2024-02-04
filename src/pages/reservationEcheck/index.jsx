@@ -19,7 +19,7 @@ import { theme } from "../../assets/themes/theme";
 import Verification from "./Verification";
 
 
-import Layout from "../../layouts/userDashboard";
+import Layout from "../../layouts/hostDashboard";
 import { useEffect, useState } from "react";
 
 import axios from "axios";
