@@ -37,8 +37,10 @@ import OpenAmenitiseList from "./AmenitiseList";
 import ShareThisPlace from "./ShareThisPlace";
 import axios from "axios";
 import ReviewSection from "./reviewSection";
+import ReserveApply from "./reserveApplication";
 
 export default function ReservationDetails() {
+  const [propertyStatus, setPropertyStatus] = React.useState(false);
   const [selectPosition, setSelectPosition] = React.useState(null);
   const [propertyValues, setPropertyValues] = React.useState(null);
   const [amenitiseItem, setAmenitiseItem] = React.useState(null);
@@ -52,16 +54,20 @@ export default function ReservationDetails() {
   const [openShare, setOpenShare] = React.useState(false);
   const [sentimentScore, setSentimentScore] = React.useState(0);
   const VITE_AI_URL = import.meta.env.VITE_AI_URL;
+
+
+
+
   const getSentiment = async () => {
     try {
       // console.log(propertyId)
       const response = await axios.post(
-        VITE_AI_URL+"/get_review_sentiment",
+        VITE_AI_URL + "/get_review_sentiment",
         {
           propertyId: propertyId,
-        },   
+        },
         { headers: { "Content-Type": "application/json" } }
-       
+
       );
       console.log(response);
 
@@ -72,7 +78,7 @@ export default function ReservationDetails() {
   };
 
   React.useEffect(() => {
-  
+
     const fetchDataServer = async () => {
       try {
         setLoading(true);
@@ -92,6 +98,11 @@ export default function ReservationDetails() {
         setAmenitiseItem(response.data.property?.amenitiesIds);
         setLoading(false); // Set loading to false after data is fetched
 
+        // console.log(response.data.property.status)
+        if (response.data.property.status === "on-demand") {
+          setPropertyStatus(true);
+        }
+
         //console.log(propertyId);
       } catch (error) {
         console.error("Internal server error:", error);
@@ -106,6 +117,9 @@ export default function ReservationDetails() {
 
   }, [propertyId]);
 
+
+
+
   const handleImageLIst = () => {
     setOpenImageList(!openImageList);
   };
@@ -113,6 +127,8 @@ export default function ReservationDetails() {
   const handleAmenitiseLIst = () => {
     setOpenAmenitiseList(!openAmenitiseList);
   };
+
+
 
   React.useEffect(() => {
     const defaultValueForLat = "23.8041";
@@ -153,6 +169,9 @@ export default function ReservationDetails() {
     "November",
     "December",
   ];
+
+// console.log(propertyValues);
+
 
   return (
     <AppLayout>
@@ -289,16 +308,16 @@ export default function ReservationDetails() {
                           bgcolor: "primary.50",
                           border: "2px solid",
                           borderColor: "primary.100",
-                          color:   sentimentScore["Positive"]>= "50%" ? "green": "red",
+                          color: sentimentScore["Positive"] >= "50%" ? "green" : "red",
                           fontWeight: "bold",
                           fontSize: 18,
                         }}
                       >
                         <InfoRounded sx={{ fontSize: 16 }} />
-                        <small> reviewed:  </small>{" "} 
+                        <small> reviewed:  </small>{" "}
                         {sentimentScore["Positive"] ?
-                        <span>   Positive {sentimentScore["Positive"]}</span>
-                         : (<span>Negative {sentimentScore["Negative"]}</span>)
+                          <span>   Positive {sentimentScore["Positive"]}</span>
+                          : (<span>Negative {sentimentScore["Negative"]}</span>)
                         }
                       </Box>
                       <Link to={"#avater"}>
@@ -325,7 +344,7 @@ export default function ReservationDetails() {
                         </Typography>
                         <Typography
                           variant="text"
-                          fontSize={"14px"} 
+                          fontSize={"14px"}
                           color={"primary.main"}
                         >
                           At 73 Mbps, you can take video calls and stream videos
@@ -520,7 +539,12 @@ export default function ReservationDetails() {
                         },
                       }}
                     >
-                      <Reserve propertyValues={propertyValues} />
+
+                      {propertyStatus && <ReserveApply /> ? <ReserveApply /> :
+                        <Reserve propertyValues={propertyValues} />}
+
+
+
                     </Box>
                   </Grid>
                 </Grid>
