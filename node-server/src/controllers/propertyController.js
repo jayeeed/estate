@@ -18,6 +18,7 @@ exports.addProperty = async (req, res, next) => {
   }
 };
 
+
 // add wishlists
 exports.addWishlistsProperty = async (req, res, next) => {
   const { propertyId, userId } = req.body;
@@ -55,7 +56,7 @@ exports.getWishlistsProperty = async (req, res, next) => {
   } catch (error) {
     return resReturn(res, 500, { error: error.message });
   }
-  properties;
+  // properties;
 };
 
 exports.deletePropertyfromWishlist = async (req, res, next) => {
