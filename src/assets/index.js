@@ -1,5 +1,5 @@
-import logo from "./images/estate-logo.webp";
-import avatar from "./images/man.png";
+import logo from "./images/es.png";
+import avatar from "./images/man.png";  
 import bdMap from "./images/bd.png";
 import ukMap from "./images/uk.webp";
 import hotel1 from "./images/hotels/h1.jpeg";
