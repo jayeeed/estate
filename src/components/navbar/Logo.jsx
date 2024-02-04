@@ -21,10 +21,10 @@ const Logo = () => {
             src={assets.images.logo}
             alt="Logo"
             style={{
-              height: "90px",
+              height: "40px",
               cursor: "pointer",
               border: "1px solid #f3f3f3",
-              objectFit: "cover",
+              objectFit: "center",
             }}
           />
         </Box>

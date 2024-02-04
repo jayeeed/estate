@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, Modal, Grid, Typography, Paper } from "@mui/material";
 import Fade from "@mui/material/Fade";
 // import React, { useState } from "react";
@@ -15,18 +16,20 @@ const GlobalModalForProfile = ({ open, onClose, typeOfForm }) => {
   const closeDrawer = () => {
     onClose();
   };
-
+  
+// added the spaces to work the switch case
   const handleModal = () => {
+    console.log("typeOfForm", typeOfForm);
     switch (typeOfForm) {
-      case "Personal details":
+      case " Personal details ":
         return <PersonalInfoForm close={onClose} />;
-      case "About me":
+      case " About me ":
         return <AboutMeForm close={onClose} />;
-      case "Income":
+      case " Income ":
         return <IncomeForm close={onClose} />;
-      case "Address history":
+      case " Address history ":
         return <AddressHistoryForm close={onClose} />;
-      case "Tenant check (recommended)":
+      case " Tenant check (recommended) ":
         return <TenantCheck close={onClose} />;
       default:
         return <EmergencyForm close={onClose} />;
@@ -54,7 +57,16 @@ const GlobalModalForProfile = ({ open, onClose, typeOfForm }) => {
                 justifyContent={"center"}
                 justifyItems={"center"}
               >
+
+
+                
                 {handleModal()}
+
+
+
+
+
+
               </Grid>
             </div>
             {/* Close Button */}

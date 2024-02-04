@@ -4,6 +4,8 @@ const { v4: uuidv4 } = require("uuid");
 const fs = require('fs');
 const path = require('path');
 const { Binary } = require('mongodb');
+const { promisify } = require('util');
+const readFileAsync = promisify(fs.readFile);
 
 // exports.updateUser = async (req, res) => {
 //   try {
@@ -67,7 +69,7 @@ exports.uploadAvatar = async (req, res, next) => {
 exports.personalInfoRouter = async (req, res) => {
   const { userId, values } = req.body;
   //const { userId } = req.body;
-  console.log(userId);
+  console.log(values);
   try {
     const mongores = await User.findByIdAndUpdate(
       userId,
@@ -108,28 +110,17 @@ exports.addAboutInfo = async (req, res) => {
 
 
 
-//  /income-info
+
+
 exports.addIncomeInfo = async (req, res) => {
-  // const { file, values, userId } = req.body;
-  //const {  } = req.body;
-  // console.log(values);
-  console.log(req.file);
-  const { incomeSource, officeName, workplaceLocation } = req.body.values;
-
-  // Create a new instance of the Income model
-
-
   try {
-    const filePath = req.file.path;
-    const fileName = req.file.originalname;
-    
-    const fileData = fs.readFileSync(filePath);
-    const binaryData = new Binary(fileData);
-    
+    const { incomeSource, officeName, workplaceLocation, userId } = req.body.values;
+    const fileBuffer = await readFileAsync(req.file.path);
+
     const image = {
       public_id: uuidv4(),
-      name: fileName,
-      url: `data:${req.file.mimetype};base64,${binaryData.toString('base64')}`,
+      name: req.file.originalname,
+      url: `data:${req.file.mimetype};base64,${fileBuffer.toString('base64')}`,
     };
 
     const newIncome = new Income({
@@ -139,30 +130,86 @@ exports.addIncomeInfo = async (req, res) => {
       file: image,
     });
 
-
     const mongores = await User.findByIdAndUpdate(
-      req.body.userId,
-      { $set: { incomeSources: newIncome } },
+      userId,
+      { $set: { "personalInfo.incomeSources": newIncome } },
       { new: false }
     );
 
-    //  try {
-    //    const mongores = await User.findByIdAndUpdate(
-    //        userId,
-    //        { $set: { "personalInfo.incomeSources": newIncome } },
-    //        { new: false },
-    //    );
-
-    res
-      .status(200)
-      .send("Object saved successfully to MongoDB")
-      .json({ message: "Server returned Saved, addIncomeInfo", mongores });
-  } catch (err) {
-    console.error(err);
-    console.log(err.message);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(200).json({ message: "Server returned Saved, addIncomeInfo", mongores });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  } finally {
+    // Cleanup: Delete the temporary file after processing
+    fs.unlinkSync(req.file.path);
   }
 };
+
+
+
+//  /income-info
+// exports.addIncomeInfo = async (req, res) => {
+//   // const { file, values, userId } = req.body;
+//   //const {  } = req.body;
+//   // console.log(values);
+//   console.log(req.file);
+//   const { incomeSource, officeName, workplaceLocation } = req.body.values;
+
+//   // Create a new instance of the Income model
+
+
+//   try {
+//     const filePath = req.file.path;
+//     const fileName = req.file.originalname;
+    
+//     const fileData = fs.readFileSync(filePath);
+//     const binaryData = new Binary(fileData);
+    
+//     const image = {
+//       public_id: uuidv4(),
+//       name: fileName,
+//       url: `data:${req.file.mimetype};base64,${binaryData.toString('base64')}`,
+//     };
+
+//     const newIncome = new Income({
+//       incomeSource,
+//       officeName,
+//       workplaceLocation,
+//       file: image,
+//     });
+
+//     const mongores = await User.findByIdAndUpdate(
+//       req.body.userId,
+//       { $set: { "personalInfo": { "incomeSources": newIncome } } },
+//       { new: false }
+//     );
+
+
+//     // const mongores = await User.findByIdAndUpdate(
+//     //   req.body.userId,
+//     //   { $set: { "personalInfo.incomeSources": newIncome } },
+//     //   { new: false }
+//     // );
+
+//     //  try {
+//     //    const mongores = await User.findByIdAndUpdate(
+//     //        userId,
+//     //        { $set: { "personalInfo.incomeSources": newIncome } },
+//     //        { new: false },
+//     //    );
+
+//     res
+//       .status(200)
+//       .send("Object saved successfully to MongoDB")
+//       .json({ message: "Server returned Saved, addIncomeInfo", mongores });
+//     } catch (error) {
+//       console.error(error);
+//       console.log(error.message);
+//       res.status(500).json({ message: "Internal server error", error: error.message });
+//     }
+    
+// };
 
 // /address-info
 exports.addressHistoryInfo = async (req, res) => {

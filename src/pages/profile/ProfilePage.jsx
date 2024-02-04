@@ -87,7 +87,7 @@ function ProfilePage() {
   // console.log(userInfo.avatar.url);
   return (
     <AppLayout>
-      <Box sx={{ m: 1 }}>
+      <Box sx={{ m: 3 }}>
         <Container>
           <Grid container spacing={1}>
             <Grid item xs={12} md={4}>
@@ -340,25 +340,7 @@ function Tab1Content() {
 
 <ProfileView/>
 
-
 {isClicked && <PersonalInfo />}
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import { useAuthInfo } from "../../../helpers/AuthCheck";
 import ReviewForm from "../../../components/review";
@@ -115,13 +116,9 @@ function MyTrips() {
                     variant="contained"
                     onClick={handleOpen}
                   >
-                    <Typography
-                      variant="button"
-                      display="inline-block"
-                      gutterBottom
-                    >
+
                       Review the stay
-                    </Typography>
+                  
                   </Button>
                   <ReviewModal
                     size="lg"

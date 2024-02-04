@@ -145,9 +145,11 @@ exports.getPropertyAllDetails = async (req, res, next) => {
 };
 
 // Query properties where status is "active"
+// eslint-disable-next-line no-undef
 exports.getActiveProperties = async (req, res, next) => {
   try {
-    const activeProperties = await AllProperty.find({ status: "active" });
+    const activeProperties = await AllProperty.find({ status: { $in: ["active", "on-demand"] } });
+
 
     return resReturn(res, 200, { activeProperties });
   } catch (error) {

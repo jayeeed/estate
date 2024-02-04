@@ -38,3 +38,54 @@ Warnings :
 36 : the definition is not identified
 
 Your trace has 0 errors and 34 warnings.
+
+
+
+{
+  "_id": {
+    "$oid": "6561c8daf5d08290c6327551"
+  },
+  "name": "Vai Bashar",
+  "email": "bashar@example.com",
+  "password": "$2a$10$6CCY4rv8Gh/Pu98ihd8Kuunyt9Z53aXpZ0Fq9iM7Zo5Kcw1lG1n3i",
+  "avatar": {
+    "public_id": "24c62d95-6bcc-47cb-83ea-251fd5cd888a",
+    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAUAAAL5CAIAAABHGwp7AAAAA3NCSVQICAjb4U/"
+  },
+  "role": "user",
+  "status": "active",
+  "type": "host",
+  "isEmailVerified": true,
+  "createdAt": {
+    "$date": "2023-11-25T10:13:46.236Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-02T12:10:39.620Z"
+  },
+  "__v": 0,
+  "regex_data": {
+    "nid": 1504945484,
+    "name": "MD. ABUL BASHAR",
+    "dob": "31 Dec 1999"
+  },
+  "personalInfo": {
+    "firstName": "Md.",
+    "lastName": "Abul Bashar",
+    "dateOfBirth": "1999-03-24",
+    "phoneNumber": "+8801536162503",
+    "incomeSources": {
+      "incomeSource": "reaaaaa",
+      "officeName": "werwetweghsdfgaet",
+      "workplaceLocation": "fdgsrh",
+      "_id": {
+        "$oid": "657dc7630143820adab4eb22"
+      }
+    },
+    "emergencyContact": {
+      "emergencyContactName": "Md. Abul Bashar",
+      "relationship": "parent",
+      "emergencyContactPhoneNumber": "+8801536162503"
+    }
+  },
+  "url": "uploads/avatar-1702986654112.webp"
+}

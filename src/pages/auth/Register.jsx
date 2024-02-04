@@ -138,25 +138,25 @@ const RegisterScreen = () => {
   // }, [error, success]);
 
   /// social login
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      const accessToken = tokenResponse.access_token; // Extract the access token from the response
+  // const login = useGoogleLogin({
+  //   onSuccess: (tokenResponse) => {
+  //     const accessToken = tokenResponse.access_token; // Extract the access token from the response
 
-      axios
-        .get("https://www.googleapis.com/userinfo/v2/me", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-        .then((response) => {
-          const loginData = response.data;
-          dispatch(socialLoginSignup(loginData));
-        })
-        .catch((error) => {
-          console.error("Error fetching user info:", error);
-        });
-    },
-  });
+  //     axios
+  //       .get("https://www.googleapis.com/userinfo/v2/me", {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         const loginData = response.data;
+  //         dispatch(socialLoginSignup(loginData));
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching user info:", error);
+  //       });
+  //   },
+  // });
 
   return (
     <Box
@@ -403,7 +403,7 @@ const RegisterScreen = () => {
                 </Box>
               </form>
 
-              <Box
+              {/* <Box
                 my={2}
                 bgcolor={"white"}
                 p={1}
@@ -419,7 +419,7 @@ const RegisterScreen = () => {
                 <Typography variant="text" sx={{ ml: 1 }} fontSize={"14px"}>
                   Sing up with google
                 </Typography>
-              </Box>
+              </Box> */}
               <Box pt={2} display="flex" alignItems="center">
                 If you have already an account ?
                 <Link to="/login">
