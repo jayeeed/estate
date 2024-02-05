@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { useTheme } from '@mui/system';
 import {
-  AddCircleRounded,
+  // AddCircleRounded,
   Close,
   FilterAltRounded,
   MoreVert,
@@ -103,7 +103,7 @@ const PropertyList = () => {
         }
         break;
       case "de-active":
-        const data = { status: "de-active" };
+        var data = { status: "de-active" };
         updatedStatus(id, data);
         break;
       case "delete":
@@ -135,9 +135,8 @@ const PropertyList = () => {
         });
         break;
 
-      // Add more cases for other actions as needed
       case "on-demand":
-        const dataD = { status: "on-demand" };
+        var dataD = { status: "on-demand" };
         updatedStatus(id, dataD);
         break;
 
@@ -209,6 +208,7 @@ const PropertyList = () => {
       })
       .catch((error) => {
         setLoading(false);
+        console.log(error)
       });
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DataTable from "../../../components/dataTable/DataTable";
 import AdminLayout from "../../../layouts/adminLayout";
 import { Box, Chip, Grid, IconButton } from "@mui/material";
@@ -10,9 +10,9 @@ import Capitalize from "../../../components/capitalize/Capitalize";
 import { getAllProperties } from "../../../redux/features/AllPropertyForAdminSlice";
 import { MoreHoriz } from "@mui/icons-material";
 import { DropdownMenu } from "../../../components/dropdown";
-// import Swal from "sweetalert2";
-// import { putApi } from "../../../config/configAxios";
-// import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { putApi } from "../../../config/configAxios";
+import { toast } from "react-toastify";
 
 const Properties = () => {
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ const Properties = () => {
       })
       .catch((error) => {
         setLoading(false);
+        console.log(error)
       });
   }, [dispatch, properties.length]);
 
@@ -140,7 +141,6 @@ const Properties = () => {
           }
         });
         break;
-      // Add more cases for other actions as needed
       default:
         break;
     }
