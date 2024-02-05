@@ -200,9 +200,9 @@ return (
 
               {/* Submit Button */}
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                <Typography fontSize={16}>
+                
                   Register
-                </Typography>
+           
               </Button>
             </Box>
           </Box>
