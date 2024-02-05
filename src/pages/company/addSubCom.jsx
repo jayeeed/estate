@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Box, Container, Typography, TextField } from '@mui/material';
-import Drawer from '@mui/material/Drawer';
-import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
+// import Drawer from '@mui/material/Drawer';
+// import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
 
 const SubCompany = () => {
     const [companyName, setCompanyName] = useState('');
-    const [registrationNumber, setRegistrationNumber] = useState('');
+    // const [registrationNumber, setRegistrationNumber] = useState('');
     const [newAddress, setNewAddress] = useState('');
     const [bankAccountNumber, setBankAccountNumber] = useState('');
     const [additionalDetails, setAdditionalDetails] = useState('');
@@ -14,12 +14,12 @@ const SubCompany = () => {
     const handleSubmit = async () => {
         try {
             // Your server endpoint for saving data
-            const endpoint = 'http://localhost:5050/api/save-compnay';
+            const endpoint = 'http://localhost:5050/api/save-subCompnay';
 
             // Form data to be sent to the server
             const formData = {
                 companyName,
-                registrationNumber,
+                // registrationNumber,
                 newAddress,
                 bankAccountNumber,
                 additionalDetails,
@@ -85,9 +85,9 @@ const SubCompany = () => {
 
                         {/* Submit Button */}
                         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                            <Typography fontSize={16}>
-                                Register
-                            </Typography>
+
+                            Register
+
                         </Button>
                     </Box>
                 </Box>

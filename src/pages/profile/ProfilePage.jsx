@@ -43,7 +43,6 @@ function ProfilePage() {
 
   console.log(userInfo);
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(file);
@@ -59,7 +58,7 @@ function ProfilePage() {
 
       if (!response.ok) {
         console.error(
-          "Failed to send image. Server responded with " + response.status
+          "Failed to send image. Server responded with " + response.status,
         );
         return;
       }
@@ -88,7 +87,7 @@ function ProfilePage() {
   return (
     <AppLayout>
       <Box sx={{ marginInline: 3 }}>
-      <Container maxWidth={"xl"}>
+        <Container maxWidth={"xl"}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={4}>
               <Paper
@@ -182,7 +181,7 @@ function ProfilePage() {
                     style={{ fontWeight: "bold" }}
                     gutterBottom
                   >
-                    User's confirmed information
+                    Users confirmed information
                   </Typography>
 
                   <Typography
@@ -306,44 +305,35 @@ function ProfilePage() {
 }
 
 function Tab1Content() {
-
   // console.log(userInfo);
   // variant="ptheme.menuCaption"
-  const [isClicked, setIsClicked]=useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
-  const handleUpdateProfile =()=>{
+  const handleUpdateProfile = () => {
     setIsClicked(true);
-  }
+  };
   return (
     <Box>
-
       <Box display={"flex"} justifyContent={"space-between"}>
         <Box width={"70%"}>
-          <Typography  variant="h3"> 
-          Renter Profile </Typography>
+          <Typography variant="h3">Renter Profile </Typography>
           <Typography>
             {" "}
-            Create your Renter Profile once and reuse it for all your applications.
+            Create your Renter Profile once and reuse it for all your
+            applications.
           </Typography>
         </Box>
 
-
-        <Button variant="outlined" 
-        onClick={handleUpdateProfile}>
+        <Button variant="outlined" onClick={handleUpdateProfile}>
           make a full profile
         </Button>
-
-
       </Box>
 
-<br/>
+      <br />
 
-<ProfileView/>
+      <ProfileView />
 
-{isClicked && <PersonalInfo />}
-
-
-
+      {isClicked && <PersonalInfo />}
     </Box>
   );
 }

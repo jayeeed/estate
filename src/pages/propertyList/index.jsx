@@ -7,7 +7,6 @@ import {
   CardMedia,
   Grid,
   Typography,
-  IconButton,
   Box,
   Popover,
   Chip,
@@ -23,7 +22,6 @@ import {
   // AddCircleRounded,
   Close,
   FilterAltRounded,
-  MoreVert,
   Search,
 } from "@mui/icons-material";
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -374,10 +372,10 @@ const PropertyList = () => {
                           View and Edit
                         </Button>
                       </Link>
-
+{/* 
                       <IconButton onClick={(event) => handleMenuOpen(event)}>
                         <MoreVert />
-                      </IconButton>
+                      </IconButton> */}
                       <DropdownMenu
                         anchorEl={anchorEl}
                         handleMenuClose={handleMenuClose}

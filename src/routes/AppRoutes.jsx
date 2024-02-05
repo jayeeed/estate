@@ -26,7 +26,7 @@ import CompanyProfileInfo from "../pages/company";
 import AddCompanyProfile from "../pages/company/addCompany";
 import RaisedIssues from "../pages/raisedIssues";
 import RenterRequestComponent from "../pages/propertyList/rentalApplication";
-import RaiseIssue from "../pages/raisedIssues/tenat-raised";
+// import RaiseIssue from "../pages/raisedIssues/tenat-raised";
 
 // import HostProfileInfo from "../pages/profile/HostInfo";
 
