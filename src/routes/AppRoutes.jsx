@@ -26,6 +26,7 @@ import CompanyProfileInfo from "../pages/company";
 import AddCompanyProfile from "../pages/company/addCompany";
 import RaisedIssues from "../pages/raisedIssues";
 import RenterRequestComponent from "../pages/propertyList/rentalApplication";
+import RaiseIssue from "../pages/raisedIssues/tenat-raised";
 
 // import HostProfileInfo from "../pages/profile/HostInfo";
 
@@ -69,25 +70,29 @@ export const AppRoutes = () => {
 
         <Route
           path="/view-applications/:id"
-        element={<ProtectedRoute children={<RenterRequestComponent />} />}
+          element={<ProtectedRoute children={<RenterRequestComponent />} />}
         />
 
         <Route
           path="/raised-issues"
-        element={<ProtectedRoute children={<RaisedIssues />} />}
+          element={<ProtectedRoute children={<RaisedIssues />} />}
         />
+        {/* <Route
+          path="/raise-issue"
+          element={<ProtectedRoute children={<RaiseIssue />} />}
+        /> */}
 
         <Route
           path="/inbox"
-        // element={<ProtectedRoute children={<Notify />} />}
+          // element={<ProtectedRoute children={<Notify />} />}
         />
-
 
         <Route path="/edit/property/:propertyId" element={<EditProperty />} />
         <Route
           path="/profile"
           element={<ProtectedRoute children={<ProfilePage />} />}
         />
+
         <Route
           path="/reservation-details/:propertyId"
           element={<ProtectedRoute children={<ReservationDetails />} />}

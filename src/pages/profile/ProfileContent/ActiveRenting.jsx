@@ -1,16 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-// import Button from "@mui/material/Button";
-// import Dialog from "@mui/material/Dialog";
-// import DialogActions from "@mui/material/DialogActions";
-// import DialogContent from "@mui/material/DialogContent";
-// import DialogTitle from "@mui/material/DialogTitle";
-// import InputLabel from "@mui/material/InputLabel";
-// import FormControl from "@mui/material/FormControl";
-// import Select from "@mui/material/Select";
-// import IconButton from "@mui/material/IconButton";
-// import SearchIcon from "@mui/icons-material/Search";
-// import CloseIcon from "@mui/icons-material/Close";
+
 import {
   Table,
   TableBody,
@@ -22,9 +12,14 @@ import {
 } from "@mui/material";
 import { useAuthInfo } from "../../../helpers/AuthCheck";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import IssueSidebar from "../../raisedIssues/tenat-raised";
 
 const ActiveRentingTable = () => {
   const [activeRentingData, setActiveRentingData] = React.useState([]);
+  const [selectedPropertyId, setSelectedPropertyId] = React.useState(null);
+
+
 
   const userInfo = useAuthInfo();
   const renterId = userInfo._id;
@@ -48,68 +43,80 @@ const ActiveRentingTable = () => {
   console.log(activeRentingData);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead sx={{ fontWeight: "bold", fontSize: "24px" }}>
-          <TableRow>
-            <TableCell>
-              <b>
-                {" "}
-                <big> Place</big>{" "}
-              </b>
-            </TableCell>
-            <TableCell>
-              <b>
-                {" "}
-                <big>Title</big>{" "}
-              </b>
-            </TableCell>
-            <TableCell>
-              <b>
-                {" "}
-                <big>Address</big>{" "}
-              </b>
-            </TableCell>
-            <TableCell>
-              <b>
-                {" "}
-                <big>Staying</big>{" "}
-              </b>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {activeRentingData.map((rental) => (
-            <TableRow key={rental.propertyId._id}>
+    <Box>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead sx={{ fontWeight: "bold", fontSize: "24px" }}>
+            <TableRow>
               <TableCell>
-                <Box
-                  component="img"
-                  p={1}
-                  mr={2}
-                  width={"5.625rem"}
-                  height={"5.625rem"}
-                  borderRadius="10px"
-                  bgcolor="#e0eeff"
-                  display="flex"
-                  textAlign="center"
-                  alignItems="center"
-                  justifyContent="center"
-                  src={rental.propertyId.images[0].url}
-                ></Box>
+                <b>
+                  {" "}
+                  <big> Place</big>{" "}
+                </b>
               </TableCell>
-              <TableCell>{rental.propertyId.title}</TableCell>
-             
               <TableCell>
-                {rental.propertyId.address.addressLine1},{" "}
-                {rental.propertyId.address.city},{" "}
-                {rental.propertyId.address.state}
+                <b>
+                  {" "}
+                  <big>Title</big>{" "}
+                </b>
               </TableCell>
-              <TableCell>{rental.stayDays} days</TableCell>
+              <TableCell>
+                <b>
+                  {" "}
+                  <big>Address</big>{" "}
+                </b>
+              </TableCell>
+              <TableCell>
+                <b>
+                  {" "}
+                  <big>Staying</big>{" "}
+                </b>
+              </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {activeRentingData.map((rental) => (
+              <TableRow
+                key={rental.propertyId._id}
+                onClick={() => setSelectedPropertyId(rental.propertyId._id)}
+              >
+                <TableCell>
+                  <Box
+                    component="img"
+                    p={1}
+                    mr={2}
+                    width={"5.625rem"}
+                    height={"5.625rem"}
+                    borderRadius="10px"
+                    bgcolor="#e0eeff"
+                    display="flex"
+                    textAlign="center"
+                    alignItems="center"
+                    justifyContent="center"
+                    src={rental.propertyId.images[0].url}
+                  ></Box>
+                </TableCell>
+                <TableCell>{rental.propertyId.title}</TableCell>
+
+                <TableCell>
+                  {rental.propertyId.address.addressLine1},{" "}
+                  {rental.propertyId.address.city},{" "}
+                  {rental.propertyId.address.state}
+                </TableCell>
+                <TableCell>{rental.stayDays} days</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Right sidebar with RaiseIssue form */}
+      {selectedPropertyId && (
+        <IssueSidebar
+          propertyId={selectedPropertyId}
+        />
+      )}
+    </Box>
   );
 };
 

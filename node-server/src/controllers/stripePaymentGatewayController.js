@@ -8,7 +8,7 @@ const pdf = require("html-pdf");
 const path = require("path");
 const nodemailer = require("nodemailer");
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.VITE_STRIPE_SECRET_KEY);
 
 const rootDirectory = path.join(__dirname, '../..');
 

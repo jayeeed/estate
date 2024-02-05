@@ -27,7 +27,7 @@ import MyTrips from "./ProfileContent/MyTrips";
 import Confirmation from "../reservationEcheck/confirmation";
 // import axios from "axios";
 import { useAuthInfo } from "../../helpers/AuthCheck";
-import { useTheme } from "@emotion/react";
+// import { useTheme } from "@emotion/react";
 import ProfileView from "./ProfileContent/profileView";
 
 function ProfilePage() {
@@ -87,8 +87,8 @@ function ProfilePage() {
   // console.log(userInfo.avatar.url);
   return (
     <AppLayout>
-      <Box sx={{ m: 3 }}>
-        <Container>
+      <Box sx={{ marginInline: 3 }}>
+      <Container maxWidth={"xl"}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={4}>
               <Paper

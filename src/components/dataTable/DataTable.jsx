@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
-import { theme } from "../../assets/themes/theme";
+import { useTheme } from "@emotion/react";
 
 const DataTable = ({ data, columns }) => {
   const [filteredData, setFilteredData] = useState(data);
+  const dtheme = useTheme();
 
   const handleSearch = (event) => {
     const searchValue = event.target.value.toLowerCase();
@@ -53,10 +54,11 @@ const DataTable = ({ data, columns }) => {
           }}
         />
       </div>
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: "100vh", width: "100%" }}>
         <DataGrid
-          sx={{ boxShadow: theme.palette.boxShadow, border: "none", p: 3 }}
+          sx={{ boxShadow: dtheme.palette.boxShadow, border: "none", p: 3 }}
           rows={filteredData}
+          autoHeight
           slots={{ toolbar: GridToolbar }}
           pageSize={12}
           rowsPerPageOptions={[12, 24, 36]}

@@ -253,7 +253,7 @@ const Properties = () => {
   return (
     <AdminLayout title="All properties">
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={12} >
           {loading ? (
             <CustomHashLoader />
           ) : (

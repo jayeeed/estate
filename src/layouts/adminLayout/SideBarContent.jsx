@@ -5,6 +5,11 @@ const sidebarContent = [
     icon: "uil:chart",
   },
   {
+    name: "Set Cost",
+    path: "/admin/set-cost",
+    icon: "uil:coins",
+  },
+  {
     name: "Inbox",
     path: "/admin/inbox",
     icon: "mi:email",
