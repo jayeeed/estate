@@ -19,8 +19,6 @@ const ActiveRentingTable = () => {
   const [activeRentingData, setActiveRentingData] = React.useState([]);
   const [selectedPropertyId, setSelectedPropertyId] = React.useState(null);
 
-
-
   const userInfo = useAuthInfo();
   const renterId = userInfo._id;
   console.log(renterId);
@@ -75,10 +73,16 @@ const ActiveRentingTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {activeRentingData.map((rental) => (
+            {activeRentingData.map((rental, index) => (
               <TableRow
-                key={rental.propertyId._id}
-                onClick={() => setSelectedPropertyId(rental.propertyId._id)}
+                key={index}
+                onClick={() => {
+                  setSelectedPropertyId((prevId) =>
+                    prevId === rental.propertyId._id
+                      ? null
+                      : rental.propertyId._id
+                  );
+                }}
               >
                 <TableCell>
                   <Box
@@ -111,11 +115,7 @@ const ActiveRentingTable = () => {
       </TableContainer>
 
       {/* Right sidebar with RaiseIssue form */}
-      {selectedPropertyId && (
-        <IssueSidebar
-          propertyId={selectedPropertyId}
-        />
-      )}
+      {selectedPropertyId && <IssueSidebar propertyId={selectedPropertyId} />}
     </Box>
   );
 };

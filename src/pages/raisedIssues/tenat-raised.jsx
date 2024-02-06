@@ -35,6 +35,7 @@ const IssueSidebar = ({ propertyId }) => {
 
   const handleDrawerClose = () => {
     setDrawerOpen(false);
+
   };
 
   return (
@@ -59,6 +60,11 @@ const IssueSidebar = ({ propertyId }) => {
             <Button type="submit" variant="contained" color="primary">
               Submit Issue
             </Button>
+            {" "}
+            <Button onClick={handleDrawerClose} variant="outlined" color="secondary">
+            Close
+          </Button>
+
           </form>
         </Box>
       </Box>
