@@ -41,13 +41,13 @@ const HostTemplates = () => {
   return (
     <AdminLayout title="Legal Papers">
       <Container>
-        <Typography variant="h4" component="h2" gutterBottom>
-          Manage HTML Templates
+        <Typography variant="h3" component="h2" gutterBottom marginBlock={5}>
+          Manage HTML Templates 
         </Typography>
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ padding: 2 }}>
+            <Paper elevation={3} sx={{ padding: 2, borderRadius:"12px"}}>
               <Typography variant="h5" component="h3" gutterBottom>
                 Renting Application Template
               </Typography>
@@ -83,7 +83,7 @@ const HostTemplates = () => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ padding: 2 }}>
+            <Paper elevation={3} sx={{ padding: 2,  borderRadius:"12px" }}>
               <Typography variant="h5" component="h3" gutterBottom>
                 Lease Violation Template
               </Typography>
@@ -103,6 +103,7 @@ const HostTemplates = () => {
               >
                 Update Template
               </Button>
+           
            
               {leaseViolationTemplate && (
                 <Box mt={2}>
