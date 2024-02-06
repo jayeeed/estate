@@ -115,8 +115,8 @@ const AirbnbHostSettings = () => {
                 <Grid item xs={12}>
                   <Typography variant="body1">Select Region:</Typography>
                   <Select value={selectedRegion} onChange={handleRegionChange}>
-                    <MenuItem value="global">Global</MenuItem>
-                    <MenuItem value="australia">Australia</MenuItem>
+                    <MenuItem value="global"> Global </MenuItem>
+                    <MenuItem value="australia"> Australia </MenuItem>
                     {/* Add more regions as needed */}
                   </Select>
                 </Grid>
@@ -127,8 +127,12 @@ const AirbnbHostSettings = () => {
                     onChange={(e) => setSelectedCurrency(e.target.value)}
                   >
                     {currentSettings?.availableCurrencies.map((currency) => (
-                      <MenuItem key={currency} value={currency}>
-                        {currency}
+                      <MenuItem
+                        key={currency}
+                        value={currency}
+                        sx={{ whiteSpace: "pre" }}
+                      >
+                        &nbsp;{currency}&nbsp;
                       </MenuItem>
                     ))}
                   </Select>
@@ -140,8 +144,12 @@ const AirbnbHostSettings = () => {
                     onChange={(e) => setSelectedTimeZone(e.target.value)}
                   >
                     {currentSettings?.availableTimeZones.map((timeZone) => (
-                      <MenuItem key={timeZone} value={timeZone}>
-                        {timeZone}
+                      <MenuItem
+                        key={timeZone}
+                        value={timeZone}
+                        sx={{ whiteSpace: "pre" }}
+                      >
+                        &nbsp;{timeZone}&nbsp;
                       </MenuItem>
                     ))}
                   </Select>
@@ -180,7 +188,7 @@ const AirbnbHostSettings = () => {
             <br />
 
             <Button variant="contained" type="submit">
-              Make rules
+              Fix this rule
             </Button>
           </Box>
         </form>
