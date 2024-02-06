@@ -1,0 +1,132 @@
+import React, { useState } from 'react';
+import { Container, Typography, Box, Button, Paper, Grid, TextField } from '@mui/material';
+import AdminLayout from '../../../layouts/adminLayout';
+
+const HostTemplates = () => {
+  const [rentingApplicationTemplate, setRentingApplicationTemplate] = useState(null);
+  const [leaseViolationTemplate, setLeaseViolationTemplate] = useState(null);
+
+  const handleFileChange = (event, templateType) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const content = e.target.result;
+      switch (templateType) {
+        case 'rentingApplication':
+          setRentingApplicationTemplate(content);
+          break;
+        case 'leaseViolation':
+          setLeaseViolationTemplate(content);
+          break;
+        // Add more cases for other template types as needed
+        default:
+          break;
+      }
+    };
+
+    reader.readAsText(file);
+  };
+
+  const handleTemplateUpdate = (templateType) => {
+    // Perform API call or other actions to update the template on the server
+    // You can replace this with actual API calls to update the templates
+    console.log(`Updating ${templateType} template:`, {
+      rentingApplication: rentingApplicationTemplate,
+      leaseViolation: leaseViolationTemplate,
+      // Add more template types as needed
+    });
+  };
+
+  return (
+    <AdminLayout title="Legal Papers">
+      <Container>
+        <Typography variant="h4" component="h2" gutterBottom>
+          Manage HTML Templates
+        </Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} sx={{ padding: 2 }}>
+              <Typography variant="h5" component="h3" gutterBottom>
+                Renting Application Template
+              </Typography>
+              <br/>
+              <input
+                type="file"
+                accept=".html"
+                onChange={(e) => handleFileChange(e, 'rentingApplication')}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleTemplateUpdate('rentingApplication')}
+              >
+                Update Template
+              </Button>
+              {rentingApplicationTemplate && (
+                <Box mt={2}>
+                  <Typography variant="subtitle1" component="div">
+                    Current Template:
+                  </Typography>
+                  <TextField
+                    multiline
+                    value={rentingApplicationTemplate}
+                    fullWidth
+                    variant="outlined"
+                    rows={5}
+                    disabled
+                  />
+                </Box>
+              )}
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} sx={{ padding: 2 }}>
+              <Typography variant="h5" component="h3" gutterBottom>
+                Lease Violation Template
+              </Typography>
+              <br/>
+              <input
+                type="file"
+                accept=".html"
+                
+                onChange={(e) => handleFileChange(e, 'leaseViolation')}
+              />
+            
+              <Button
+                variant="contained"
+                color="primary"
+                margin="8px"
+                onClick={() => handleTemplateUpdate('leaseViolation')}
+              >
+                Update Template
+              </Button>
+           
+              {leaseViolationTemplate && (
+                <Box mt={2}>
+                  <Typography variant="subtitle1" component="div">
+                    Current Template:
+                  </Typography>
+                  <TextField
+                    multiline
+                    value={leaseViolationTemplate}
+                    fullWidth
+                    variant="outlined"
+                    rows={5}
+                    disabled
+                  />
+                </Box>
+              )}
+            </Paper>
+          </Grid>
+        </Grid>
+
+        {/* Add more sections for other template types as needed */}
+      </Container>
+    </AdminLayout>
+  );
+};
+
+export default HostTemplates;

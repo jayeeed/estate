@@ -1,0 +1,218 @@
+// const fetchSettings = async () => {
+//   try {
+//     let regionSettings;
+
+//     if (selectedRegion === 'australia') {
+//       // Fetch region-specific data for Australia using Geonames API (replace 'YOUR_USERNAME' with your Geonames username)
+//       const geonamesUrl = `http://api.geonames.org/timezoneJSON?formatted=true&lat=-25.2744&lng=133.7751&username=YOUR_USERNAME`;
+//       const response = await axios.get(geonamesUrl);
+//       // Extract available currencies and time zones from the Geonames response
+//       const { currencies, timezoneId } = response.data;
+//       regionSettings = {
+//         availableCurrencies: currencies,
+//         availableTimeZones: [timezoneId],
+//       };
+//     } else {
+//       // Default global settings
+//       regionSettings = {
+//         availableCurrencies: ['USD', 'EUR'],
+//         availableTimeZones: ['UTC', 'GMT'],
+//       };
+//     }
+
+//     // Update the currentSettings state with fetched settings
+//     setCurrentSettings({
+//       hostCost,
+//       subscriptionActive,
+//       selectedCurrency,
+//       selectedTimeZone,
+//       ...regionSettings,
+//     });
+//   } catch (error) {
+//     console.error('Error fetching settings:', error);
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from 'react';
+import AdminLayout from '../../../layouts/adminLayout';
+import { Drawer, Toolbar, List } from '@mui/material';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import AppBar from '@mui/material/AppBar';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import { Grid } from '@mui/material';
+
+const AirbnbHostSettings = () => {
+  const [hostCost, setHostCost] = useState(0);
+  const [subscriptionActive, setSubscriptionActive] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState('global');
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [selectedTimeZone, setSelectedTimeZone] = useState('UTC');
+  const [currentSettings, setCurrentSettings] = useState(null);
+  const drawerWidth = 240;
+
+  useEffect(() => {
+    // Fetch settings when any of the filter options change
+    fetchSettings();
+  }, [hostCost, subscriptionActive, selectedRegion, selectedCurrency, selectedTimeZone]);
+
+  const fetchSettings = async () => {
+    // Simulate fetching settings from the server based on the selected region
+    // You can replace this with actual API calls to get region-specific data
+    const regionSettings = getRegionSpecificSettings(selectedRegion);
+
+    // Update the currentSettings state with fetched settings
+    setCurrentSettings({
+      hostCost,
+      subscriptionActive,
+      selectedCurrency,
+      selectedTimeZone,
+      ...regionSettings,
+    });
+  };
+
+  const getRegionSpecificSettings = (region) => {
+    switch (region) {
+      case 'australia':
+        return {
+          availableCurrencies: ['AUD', 'NZD'],
+          availableTimeZones: ['Australia/Sydney', 'Australia/Melbourne'],
+        };
+      // Add more cases for other regions as needed
+      default:
+        // Global settings
+        return {
+          availableCurrencies: ['USD', 'EUR'],
+          availableTimeZones: ['UTC', 'GMT'],
+        };
+    }
+  };
+
+  useEffect(() => {
+    // Fetch settings when any of the filter options change
+    fetchSettings();
+  }, [hostCost, subscriptionActive, selectedRegion, selectedCurrency, selectedTimeZone]);
+
+
+  const handleRegionChange = (e) => {
+    const region = e.target.value;
+    setSelectedRegion(region);
+
+    // Reset currency and time zone when region changes
+    setSelectedCurrency('USD');
+    setSelectedTimeZone('UTC');
+  };
+
+
+    return (
+      <>
+        <AdminLayout title={"Hosting Cost Setup"}>
+          <Box sx={{ display: 'flex' }}>
+            {/* Sidebar */}
+            <Box
+              sx={{
+                width: drawerWidth,
+                flexShrink: 0,
+                p: 3,
+              }}
+            >
+              {/* Your Sidebar content here */}
+              <div>
+                <h2>Airbnb Host Settings</h2>
+                <label>
+                  Host Cost per Property:
+                  <input
+                    type="number"
+                    value={hostCost}
+                    onChange={(e) => setHostCost(parseFloat(e.target.value))}
+                  />
+                </label>
+  
+                <label>
+                  Activate Subscription:
+                  <input
+                    type="checkbox"
+                    checked={subscriptionActive}
+                    onChange={() => setSubscriptionActive(!subscriptionActive)}
+                  />
+                </label>
+  
+                <label>
+                  Select Region:
+                  <select value={selectedRegion} onChange={handleRegionChange}>
+                    <option value="global">Global</option>
+                    <option value="australia">Australia</option>
+                    {/* Add more regions as needed */}
+                  </select>
+                </label>
+  
+                <label>
+                  Select Currency:
+                  <select
+                    value={selectedCurrency}
+                    onChange={(e) => setSelectedCurrency(e.target.value)}
+                  >
+                    {currentSettings?.availableCurrencies.map((currency) => (
+                      <option key={currency} value={currency}>
+                        {currency}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+  
+                <label>
+                  Select Time Zone:
+                  <select
+                    value={selectedTimeZone}
+                    onChange={(e) => setSelectedTimeZone(e.target.value)}
+                  >
+                    {currentSettings?.availableTimeZones.map((timeZone) => (
+                      <option key={timeZone} value={timeZone}>
+                        {timeZone}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </Box>
+  
+            {/* Main Content */}
+            <Box
+              component="main"
+              sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+            >
+              {/* Your main content here */}
+              <div>
+                <h3>Current Settings:</h3>
+                <p>Host Cost: {currentSettings?.hostCost}</p>
+                <p>Subscription Active: {currentSettings?.subscriptionActive ? 'Yes' : 'No'}</p>
+                <p>Currency: {currentSettings?.selectedCurrency}</p>
+                <p>Time Zone: {currentSettings?.selectedTimeZone}</p>
+              </div>
+            </Box>
+          </Box>
+        </AdminLayout>
+      </>
+    );
+  };
+  
+  export default AirbnbHostSettings;
+  
