@@ -10,10 +10,11 @@ const sidebarContent = [
     icon: "uil:coins",
   },
   {
-    name: "Templates",
-    path: "/admin/template",
-    icon:  "mi:email",
-  },
+    name: "Official",
+    path: "/admin/Official",
+    icon:  "ri:file-text-line",
+  }
+  ,
   {
     name: "Inbox",
     path: "/admin/inbox",

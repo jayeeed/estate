@@ -10,6 +10,15 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 
 const AirbnbHostSettings = () => {
   const [hostCost, setHostCost] = useState(0);
@@ -17,7 +26,33 @@ const AirbnbHostSettings = () => {
   const [selectedRegion, setSelectedRegion] = useState("global");
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [selectedTimeZone, setSelectedTimeZone] = useState("UTC");
-  const [currentSettings, setCurrentSettings] = useState(null);
+  const [currentSettings, setCurrentSettings] = useState({
+    selectedRegion: selectedRegion, // Initialize selectedRegion in currentSettings
+  });
+
+  const handleRegionChange = (e) => {
+    const region = e.target.value;
+    setSelectedRegion(region);
+
+    // Reset currency and time zone when region changes
+    setSelectedCurrency("USD");
+    setSelectedTimeZone("UTC");
+
+    // Update currentSettings with the selected region
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      selectedRegion: region,
+    }));
+  };
+
+  // const handleRegionChange = (e) => {
+  //   const region = e.target.value;
+  //   setSelectedRegion(region);
+
+  //   // Reset currency and time zone when region changes
+  //   setSelectedCurrency("USD");
+  //   setSelectedTimeZone("UTC");
+  // };
 
   useEffect(() => {
     // Fetch settings when any of the filter options change
@@ -40,6 +75,7 @@ const AirbnbHostSettings = () => {
       hostCost,
       subscriptionActive,
       selectedCurrency,
+      selectedRegion,
       selectedTimeZone,
       ...regionSettings,
     });
@@ -59,15 +95,6 @@ const AirbnbHostSettings = () => {
           availableTimeZones: ["UTC", "GMT"],
         };
     }
-  };
-
-  const handleRegionChange = (e) => {
-    const region = e.target.value;
-    setSelectedRegion(region);
-
-    // Reset currency and time zone when region changes
-    setSelectedCurrency("USD");
-    setSelectedTimeZone("UTC");
   };
 
   const handleSubmit = (e) => {
@@ -122,19 +149,22 @@ const AirbnbHostSettings = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="body1">Select Currency:</Typography>
+
                   <Select
                     value={selectedCurrency}
                     onChange={(e) => setSelectedCurrency(e.target.value)}
                   >
-                    {currentSettings?.availableCurrencies.map((currency) => (
-                      <MenuItem
-                        key={currency}
-                        value={currency}
-                        sx={{ whiteSpace: "pre" }}
-                      >
-                        &nbsp;{currency}&nbsp;
-                      </MenuItem>
-                    ))}
+                    {(currentSettings?.availableCurrencies || []).map(
+                      (currency) => (
+                        <MenuItem
+                          key={currency}
+                          value={currency}
+                          sx={{ whiteSpace: "pre" }}
+                        >
+                          &nbsp;{currency}&nbsp;
+                        </MenuItem>
+                      )
+                    )}
                   </Select>
                 </Grid>
                 <Grid item xs={12}>
@@ -143,15 +173,17 @@ const AirbnbHostSettings = () => {
                     value={selectedTimeZone}
                     onChange={(e) => setSelectedTimeZone(e.target.value)}
                   >
-                    {currentSettings?.availableTimeZones.map((timeZone) => (
-                      <MenuItem
-                        key={timeZone}
-                        value={timeZone}
-                        sx={{ whiteSpace: "pre" }}
-                      >
-                        &nbsp;{timeZone}&nbsp;
-                      </MenuItem>
-                    ))}
+                    {(currentSettings?.availableTimeZones || []).map(
+                      (timeZone) => (
+                        <MenuItem
+                          key={timeZone}
+                          value={timeZone}
+                          sx={{ whiteSpace: "pre" }}
+                        >
+                          &nbsp;{timeZone}&nbsp;
+                        </MenuItem>
+                      )
+                    )}
                   </Select>
                 </Grid>
               </Grid>
@@ -166,7 +198,53 @@ const AirbnbHostSettings = () => {
                 borderRadius: "12px",
               }}
             >
-              <Box sx={{ p: 3 }}>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="current settings">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell colSpan={2}>
+                        <Typography variant="h6">Current Settings</Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Region/Country:
+                      </TableCell>
+                      <TableCell>{currentSettings?.selectedRegion}</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Host Cost:
+                      </TableCell>
+                      <TableCell>{currentSettings?.hostCost}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Subscription Active:
+                      </TableCell>
+                      <TableCell>
+                        {currentSettings?.subscriptionActive ? "Yes" : "No"}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Currency:
+                      </TableCell>
+                      <TableCell>{currentSettings?.selectedCurrency}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Time Zone:
+                      </TableCell>
+                      <TableCell>{currentSettings?.selectedTimeZone}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              {/* <Box sx={{ p: 3 }}>
                 <h3>Current Settings:</h3>
                 <p style={{ margin: "8px 0" }}>
                   Host Cost: {currentSettings?.hostCost}
@@ -181,7 +259,7 @@ const AirbnbHostSettings = () => {
                 <p style={{ margin: "8px 0" }}>
                   Time Zone: {currentSettings?.selectedTimeZone}
                 </p>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
           <Box textAlign={"right"}>
