@@ -211,7 +211,7 @@ const AirbnbHostSettings = () => {
                       value={selectedCountry}
                       onChange={handleCountryChange}
                     >
-                      {currentSettings?.countries.map((country) => (
+                      {currentSettings.countries && currentSettings?.countries.map((country) => (
                         <MenuItem key={country} value={country}>
                           {country}
                         </MenuItem>
@@ -226,7 +226,7 @@ const AirbnbHostSettings = () => {
                       value={selectedCurrency}
                       onChange={handleCurrencyChange}
                     >
-                      {currentSettings?.currencies.map((currency) => (
+                      {currentSettings.currencies && currentSettings?.currencies.map((currency) => (
                         <MenuItem key={currency} value={currency}>
                           {currency}
                         </MenuItem>
@@ -241,7 +241,7 @@ const AirbnbHostSettings = () => {
                       value={selectedTimeZone}
                       onChange={handleTimeZoneChange}
                     >
-                      {currentSettings?.timezones.map((timezone) => (
+                      {currentSettings.timezones && currentSettings?.timezones.map((timezone) => (
                         <MenuItem key={timezone} value={timezone}>
                           {timezone}
                         </MenuItem>
