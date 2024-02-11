@@ -1,11 +1,13 @@
+/* eslint-disable no-undef */
 
 // adminRoutes.js
 const express = require('express');
 const router = express.Router();
-const { adminLogin } = require('../controllers/adminControllers');
-const authMiddleware = require('../middleware/auth');
+const { adminLogin, estateHostSettings } = require('../controllers/adminControllers');
+
 
 // Route for admin login
 router.post('/admin/login', adminLogin);
+router.post('/set-cost',estateHostSettings);
 
 module.exports = router;

@@ -9,6 +9,7 @@ import {
   Checkbox,
   TextField,
   Button,
+
 } from "@mui/material";
 import {
   Table,
@@ -22,6 +23,8 @@ import {
 import axios from "axios";
 
 const AirbnbHostSettings = () => {
+  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [hostCost, setHostCost] = useState(0);
   const [subscriptionActive, setSubscriptionActive] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState("europe");
@@ -35,6 +38,7 @@ const AirbnbHostSettings = () => {
     selectedTimeZone: "",
     hostCost: 0,
     subscriptionActive: false,
+    category: "",
   });
 
   const handleRegionChange = (e) => {
@@ -97,6 +101,14 @@ const AirbnbHostSettings = () => {
     }));
   };
 
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      category: e.target.value,
+    }));
+  };
+
   useEffect(() => {
     fetchCountries();
   }, [selectedRegion]);
@@ -106,6 +118,10 @@ const AirbnbHostSettings = () => {
       fetchSettings();
     }
   }, [selectedCountry]);
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
 
   const fetchCountries = async () => {
     try {
@@ -156,21 +172,38 @@ const AirbnbHostSettings = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const fetchCategory = async () => {
+    try {
+      // Make a GET request to the amenities endpoint
+      const response = await axios.get("/category");
+      // Assuming the response data is structured as { amenities: [...] }
+      setCategory(response.data.category);
+      console.log("Category:", response.data.category);
+      // Handle the retrieved amenities data as needed
+    } catch (error) {
+      // Handle any errors that occur during the GET request
+      console.error("Error fetching amenities:", error);
+      // Optionally, show an error message to the user
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const formData = {
         hostCost: hostCost,
         subscriptionActive: subscriptionActive,
-        selectedRegion: selectedRegion,
-        selectedCountry: selectedCountry,
-        selectedCurrency: selectedCurrency,
-        selectedTimeZone: selectedTimeZone,
+        Region: selectedRegion,
+        Country: selectedCountry,
+        Currency: selectedCurrency,
+        TimeZone: selectedTimeZone,
+        Category: selectedCategory,
       };
-  
+      // console.log(formData);
       // Make a POST request to your API endpoint with the form data
-      const response = await axios.post("YOUR_API_ENDPOINT", formData);
-  
-      // Handle the response as needed
+      const response = await axios.post("/set-cost", formData);
+
+      // // Handle the response as needed
       console.log("Form submitted successfully:", response.data);
       // Optionally, you can reset the form fields or show a success message to the user
     } catch (error) {
@@ -179,7 +212,6 @@ const AirbnbHostSettings = () => {
       // Optionally, you can show an error message to the user
     }
   };
-  
 
   return (
     <>
@@ -193,7 +225,7 @@ const AirbnbHostSettings = () => {
               </Typography>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <Typography variant="body1">Select Region:</Typography>
+                  <Typography variant="body1" marginBlock={2}>Select Region:</Typography>
                   <Select
                     value={selectedRegion}
                     defaultValue="europe"
@@ -206,49 +238,69 @@ const AirbnbHostSettings = () => {
                 </Grid>
                 {selectedRegion && (
                   <Grid item xs={12}>
-                    <Typography variant="body1">Select Country:</Typography>
+                    <Typography variant="body1" marginBlock={2} >Select Country:</Typography>
+
                     <Select
                       value={selectedCountry}
                       onChange={handleCountryChange}
                     >
-                      {currentSettings.countries && currentSettings?.countries.map((country) => (
-                        <MenuItem key={country} value={country}>
-                          {country}
-                        </MenuItem>
-                      ))}
+                      {currentSettings.countries &&
+                        currentSettings?.countries.map((country) => (
+                          <MenuItem key={country} value={country}>
+                            {country}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </Grid>
                 )}
                 {selectedCountry && (
                   <Grid item xs={12}>
-                    <Typography variant="body1">Select Currency:</Typography>
+                    <Typography variant="body1" marginBlock={2}>Select Currency:</Typography>
                     <Select
                       value={selectedCurrency}
                       onChange={handleCurrencyChange}
                     >
-                      {currentSettings.currencies && currentSettings?.currencies.map((currency) => (
-                        <MenuItem key={currency} value={currency}>
-                          {currency}
-                        </MenuItem>
-                      ))}
+                      {currentSettings.currencies &&
+                        currentSettings?.currencies.map((currency) => (
+                          <MenuItem key={currency} value={currency}>
+                            {currency}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </Grid>
                 )}
                 {selectedCurrency && (
                   <Grid item xs={12}>
-                    <Typography variant="body1">Select Time Zone:</Typography>
+                    <Typography variant="body1" marginBlock={2}>Select Time Zone:</Typography>
                     <Select
                       value={selectedTimeZone}
                       onChange={handleTimeZoneChange}
                     >
-                      {currentSettings.timezones && currentSettings?.timezones.map((timezone) => (
-                        <MenuItem key={timezone} value={timezone}>
-                          {timezone}
-                        </MenuItem>
-                      ))}
+                      {currentSettings.timezones &&
+                        currentSettings?.timezones.map((timezone) => (
+                          <MenuItem key={timezone} value={timezone}>
+                            {timezone}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </Grid>
                 )}
+                <Grid item xs={12}>
+                  <Typography variant="body1" marginBlock={2}>
+                    Select Property Category:
+                  </Typography>
+                  <Select 
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                  >
+                    {category.map((categoryItem, index) => (
+                      <MenuItem key={index} value={categoryItem.title}>
+                        {categoryItem.title}{" "}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+
                 <Grid item xs={12}>
                   <TextField
                     label="Host Cost"
@@ -324,6 +376,11 @@ const AirbnbHostSettings = () => {
                 </Table>
               </TableContainer>
             </Box>
+          </Box>
+          <Box textAlign={"right"} marginBlock={3}>
+            <Button type="submit" variant="contained">
+              Fix this Rate
+            </Button>
           </Box>
         </form>
       </AdminLayout>

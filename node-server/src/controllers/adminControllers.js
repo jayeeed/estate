@@ -1,5 +1,12 @@
+/* eslint-disable no-undef */
 // adminController.js
-const adminLogin = (req, res) => {
+// Import necessary modules
+const EstateHostModel = require('../models/setCostModel');
+
+
+
+
+exports.adminLogin = (req, res) => {
     const { email, password } = req.body;
   
     // Check if the username and password match the default admin credentials
@@ -13,7 +20,52 @@ const adminLogin = (req, res) => {
     }
   };
   
-  module.exports = {
-    adminLogin,
-  };
+
+
+
+
+
+// Controller function to handle the POST request
+ exports.estateHostSettings = async (req, res) => {
+  try {
+    // Extract the form data from the request body
+    const {
+      hostCost,
+      subscriptionActive,
+       Region,
+       Country,
+       Category,
+       Currency,
+       TimeZone
+    } = req.body;
+
+    // Create a new instance of EstateHostSettings with the form data
+    const formData = new EstateHostModel({
+      hostCost,
+      subscriptionActive,
+       Region,
+       Country,
+       Category,
+       Currency,
+       TimeZone
+    });
+    console.log(formData);
+
+    // Save the form data to the database
+    await formData.save();
+
+    // Send a success response
+    res.status(200).json({ message: 'Form data submitted successfully' });
+  } catch (error) {
+    // Handle any errors that occur during the submission process
+    console.error('Error submitting form data:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
+
+  
   
