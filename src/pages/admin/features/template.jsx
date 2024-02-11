@@ -3,7 +3,7 @@ import axios from "axios"; // Assuming you're using Axios for HTTP requests
 import {
   Box,
   Button,
-  Divider,
+  // Divider,
   FormLabel,
   Toolbar,
   Typography,
@@ -71,12 +71,6 @@ const LegalDocumentPreview = ({ documentType }) => {
     }
   };
 
-  // Function to handle creating a new template
-  // Function to handle creating a new template
-  const handleCreateTemplate = () => {
-    setEditingTemplate(true);
-    setEditorContent("");
-  };
 
   // Function to handle submitting the uploaded file data
   const handleSubmit = async () => {
@@ -86,7 +80,7 @@ const LegalDocumentPreview = ({ documentType }) => {
       formData.append("file", uploadedFile); // Assuming 'file' is the key expected by your server for the uploaded file
 
       // Make a POST request to your server to save the uploaded file data
-      const response = await axios.post("/api/upload", formData, {
+      const response = await axios.post("/admin/templateUpload", formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Ensure the correct content type for file upload
         },

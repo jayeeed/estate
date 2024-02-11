@@ -11,7 +11,6 @@ import AdminLayout from "../../../layouts/adminLayout";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
-
   return (
     <Box
       role="tabpanel"
@@ -19,9 +18,12 @@ function TabPanel(props) {
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
-      sx={{ backgroundColor: "white", borderTopRightRadius: "16px", borderBottomRightRadius:"16px" }} // Set background color to white
+      sx={{
+        backgroundColor: "white",
+        borderTopRightRadius: "16px",
+        borderBottomRightRadius: "16px",
+      }} // Set background color to white
       width={"100%"}
-     
     >
       {value === index && (
         <Box sx={{ p: 3, marginBlock: 2 }}>
@@ -53,7 +55,7 @@ export default function VerticalTabs() {
   };
 
   return (
-    <AdminLayout title={"Official Documents"} sx={{ margin: 0, padding:0}}>
+    <AdminLayout title={"Official Documents"} sx={{ margin: 0, padding: 0 }}>
       <Box
         sx={{
           flexGrow: 1,
@@ -72,7 +74,7 @@ export default function VerticalTabs() {
             borderTopLeftRadius: "16px",
             borderBottomLeftRadius: "16px",
             backgroundColor: "#f0f0f0", // Filled color for the tabs' tab
-            minWidth: "240px"
+            minWidth: "240px",
           }}
         >
           <Tab
@@ -102,12 +104,16 @@ export default function VerticalTabs() {
           />
         </Tabs>
 
-        <TabPanel value={value} index={0} >
-          <Typography variant="h2" fontWeight={"bold"}>Tenant Application Preview</Typography>
+        <TabPanel value={value} index={0}>
+          <Typography variant="h2" fontWeight={"bold"}>
+            Tenant Application Preview
+          </Typography>
           <LegalDocumentPreview documentType="rentingApplication" />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Typography variant="h2" fontWeight={"bold"}>Lease Violation Preview</Typography>
+          <Typography variant="h2" fontWeight={"bold"}>
+            Lease Violation Preview
+          </Typography>
           <LegalDocumentPreview documentType="leaseViolation" />
         </TabPanel>
       </Box>

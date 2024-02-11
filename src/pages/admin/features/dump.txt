@@ -171,3 +171,20 @@ const AirbnbHostSettings = () => {
   
   export default AirbnbHostSettings;
   
+
+
+    // const getRegionSpecificSettings = (region) => {
+  //   switch (region) {
+  //     case "australia":
+  //       return {
+  //         availableCurrencies: ["AUD", "NZD"],
+  //         availableTimeZones: ["Australia/Sydney", "Australia/Melbourne"],
+  //       };
+  //     default:
+  //       // Global settings
+  //       return {
+  //         availableCurrencies: ["USD", "EUR"],
+  //         availableTimeZones: ["UTC", "GMT"],
+  //       };
+  //   }
+  // };

@@ -15,13 +15,6 @@ const {
 } = require("../controllers/userController");
 const authMiddleware = require("../middleware/auth");
 
-const {
-  studentController,
-  studentAddController,
-  studentDeleteController,
-  studentEditController,
-  studentUpdateController,
-} = require("../controllers/studentController");
 
 const router = express.Router();
 
@@ -37,10 +30,5 @@ router.post("/logout", authMiddleware, logoutUser);
 router.put("/update/:id", updateUser);
 router.get("/users", getAllUser);
 router.get("/user/:id", getUserById);
-router.get("/students", studentController);
-router.post("/add", studentAddController);
-router.delete("/delete/:id", studentDeleteController);
-router.get("/edit/:id", studentEditController);
-router.put("/update", studentUpdateController);
 
 module.exports = router;
