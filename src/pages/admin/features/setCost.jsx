@@ -223,9 +223,9 @@ const AirbnbHostSettings = () => {
               <Typography variant="h3" marginBottom={5}>
                 Estate Host Settings
               </Typography>
-              <Grid container spacing={3}>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Typography variant="body1" marginBlock={2}>Select Region:</Typography>
+                  <Typography variant="body1"   marginBlock={1}>Select Region:</Typography>
                   <Select
                     value={selectedRegion}
                     defaultValue="europe"
@@ -238,7 +238,7 @@ const AirbnbHostSettings = () => {
                 </Grid>
                 {selectedRegion && (
                   <Grid item xs={12}>
-                    <Typography variant="body1" marginBlock={2} >Select Country:</Typography>
+                    <Typography variant="body1"   marginBlock={1} >Select Country:</Typography>
 
                     <Select
                       value={selectedCountry}
@@ -255,7 +255,7 @@ const AirbnbHostSettings = () => {
                 )}
                 {selectedCountry && (
                   <Grid item xs={12}>
-                    <Typography variant="body1" marginBlock={2}>Select Currency:</Typography>
+                    <Typography variant="body1"   marginBlock={1}>Select Currency:</Typography>
                     <Select
                       value={selectedCurrency}
                       onChange={handleCurrencyChange}
@@ -271,7 +271,7 @@ const AirbnbHostSettings = () => {
                 )}
                 {selectedCurrency && (
                   <Grid item xs={12}>
-                    <Typography variant="body1" marginBlock={2}>Select Time Zone:</Typography>
+                    <Typography variant="body1"   marginBlock={1}>Select Time Zone:</Typography>
                     <Select
                       value={selectedTimeZone}
                       onChange={handleTimeZoneChange}
@@ -286,7 +286,7 @@ const AirbnbHostSettings = () => {
                   </Grid>
                 )}
                 <Grid item xs={12}>
-                  <Typography variant="body1" marginBlock={2}>
+                  <Typography variant="body1"   marginBlock={1}>
                     Select Property Category:
                   </Typography>
                   <Select 
@@ -301,11 +301,12 @@ const AirbnbHostSettings = () => {
                   </Select>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} marginBlock={1}>
                   <TextField
                     label="Host Cost"
                     type="number"
                     value={hostCost}
+                    
                     onChange={handleHostCostChange}
                   />
                 </Grid>
@@ -332,10 +333,10 @@ const AirbnbHostSettings = () => {
             >
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="current settings">
-                  <TableHead>
-                    <TableRow>
+                  <TableHead sx={{backgroundColor: "#003019"}}>
+                    <TableRow >
                       <TableCell colSpan={2}>
-                        <Typography variant="h6">Current Settings</Typography>
+                        <Typography variant="h4" color={"white"}  >Current Settings</Typography>
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -348,7 +349,13 @@ const AirbnbHostSettings = () => {
                     </TableRow>
                     <TableRow>
                       <TableCell component="th" scope="row">
-                        Host Cost:
+                        Category:
+                      </TableCell>
+                      <TableCell>{currentSettings?.category}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Host Cost (In percentage):
                       </TableCell>
                       <TableCell>{currentSettings?.hostCost}</TableCell>
                     </TableRow>

@@ -48,7 +48,7 @@ const adminRoutes = require("./src/routes/adminRoutes")
 
 
 app.use("/api", userRoute);
-app.use('/api', adminRoutes);
+app.use("/api", adminRoutes);
 app.use("/api", frontendRoute);
 app.use("/api", propertyRoute);
 app.use("/api", stripePaymentRoute);

@@ -2,8 +2,7 @@
 // adminController.js
 // Import necessary modules
 const EstateHostModel = require('../models/setCostModel');
-
-
+const FileUpload = require('../models/templateModel');
 
 
 exports.adminLogin = (req, res) => {
@@ -21,6 +20,28 @@ exports.adminLogin = (req, res) => {
   };
   
 
+  exports.uploadingTemplate = async (req, res) => {
+    try {
+      // Get the file data from the request
+      const {file} = req;
+      console.log(file);
+
+      const { originalname, buffer,encoding, mimetype } = file;
+      const newImage = new FileUpload({
+        filename: originalname,
+        data: buffer,
+        encoding :encoding,
+        contentType: mimetype,
+      });
+  
+      await newImage.save();
+  
+      res.status(201).json({ message: 'File uploaded successfully' });
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
 
 
 
@@ -68,4 +89,24 @@ exports.adminLogin = (req, res) => {
 
 
   
+    // exports.uploadingTemplate = async (req, res) => {
+  //   try {
+  //     // Get the file data from the request
+  //     const { file } = req;
+  //     console.log(file);
   
+  //     // Create a new document in the FileUpload collection
+  //     const newFileUpload = new FileUpload({
+  //       filename: file.originalname,
+  //       // Add more fields as needed to store additional information about the file
+  //     });
+  
+  //     // Save the document to the database
+  //     await newFileUpload.save();
+  
+  //     res.status(201).json({ message: 'File uploaded successfully' });
+  //   } catch (error) {
+  //     console.error('Error uploading file:', error);
+  //     res.status(500).json({ error: 'Internal server error' });
+  //   }
+  // };
