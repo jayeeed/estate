@@ -12,6 +12,7 @@ import {
 import { styled } from "@mui/system";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import styles for react-quill
+import CustomizedSnackbars from "../../../components/snackbar";
 
 const decodeHtmlEntities = (html) => {
   const txt = document.createElement("textarea");
@@ -25,10 +26,21 @@ const StyledInput = styled("input")({
 
 const LegalDocumentPreview = ({ documentType }) => {
   const customTheme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const [message, setMessage] = useState("");
+  const [type,setType] = useState("");
   const [templateHTML, setTemplateHTML] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
   const [editingTemplate, setEditingTemplate] = useState(false);
   const [editorContent, setEditorContent] = useState("");
+
+
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
 
   // Function to handle file upload
   const handleFileUpload = (event) => {
@@ -64,6 +76,7 @@ const LegalDocumentPreview = ({ documentType }) => {
       // Handle submitting renting application
       handleSubmit();
       console.log("Submitting renting application:", editorContent);
+      setMessage("Submitted renting application")
     } else if (documentType === "legalDocuments") {
       // Handle submitting legal documents
       handleSubmit();
@@ -96,7 +109,11 @@ const LegalDocumentPreview = ({ documentType }) => {
         },
       });
   
-      console.log("File upload successful:", response.data); // Log the response from the server
+      console.log("File upload successful:", response.data);
+      setOpen(true); // Log the response from the server
+      setMessage("File upload successful")
+      setType("success")
+
     } catch (error) {
       console.error("Error uploading file:", error); // Log any errors that occur during the upload process
     }
@@ -184,6 +201,10 @@ const LegalDocumentPreview = ({ documentType }) => {
         )}
 
       </Box>
+
+
+
+      <CustomizedSnackbars open={open} message={message} type={type} />
     </Box>
   );
 };
