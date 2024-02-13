@@ -26,10 +26,10 @@ const StyledInput = styled("input")({
 
 const LegalDocumentPreview = ({ documentType }) => {
   const customTheme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const [message, setMessage] = useState("");
-  const [type,setType] = useState("");
+  const [type, setType] = useState("");
   const [templateHTML, setTemplateHTML] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
   const [editingTemplate, setEditingTemplate] = useState(false);
@@ -37,10 +37,17 @@ const LegalDocumentPreview = ({ documentType }) => {
 
 
 
-  const handleClick = () => {
-    setOpen(true);
-  };
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   // Function to handle file upload
   const handleFileUpload = (event) => {
@@ -204,7 +211,7 @@ const LegalDocumentPreview = ({ documentType }) => {
 
 
 
-      <CustomizedSnackbars open={open} message={message} type={type} />
+      <CustomizedSnackbars open={open} message={message} type={type} onClose={handleClose}/>
     </Box>
   );
 };

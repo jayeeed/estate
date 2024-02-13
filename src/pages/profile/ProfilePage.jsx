@@ -234,7 +234,7 @@ function ProfilePage() {
                   aria-label="Profile Tabs"
                 >
                   <Tab
-                    label="Personal Information"
+                    label="Profile"
                     sx={{
                       fontWeight: "bold",
                       "&:hover, &:focus": {
