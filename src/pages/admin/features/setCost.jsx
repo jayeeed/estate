@@ -399,7 +399,7 @@ const AirbnbHostSettings = () => {
                     </TableRow>
                     <TableRow>
                       <TableCell component="th" scope="row">
-                        Category:
+                        Category Id:
                       </TableCell>
                       <TableCell>{currentSettings?.category}</TableCell>
                     </TableRow>
