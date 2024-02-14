@@ -11,8 +11,8 @@ const EstateHostSettingsSchema = new mongoose.Schema({
     required: true
   },
   Category: {
-    type: String,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Amenities",
   },
   Currency: {
     type: String,

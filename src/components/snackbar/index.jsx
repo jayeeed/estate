@@ -1,30 +1,29 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
-export default function CustomizedSnackbars({open, type, message, onClose}) {
-
-
+export default function CustomizedSnackbars({ open, type, message, onClose }) {
   return (
     <div>
       {/* <Button onClick={handleClick}>Open Snackbar</Button> */}
-      <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        autoHideDuration={6000}
+        onClose={onClose}
+        key={"top" + "center"}
+      >
         <Alert
           onClose={onClose}
-          autoHideDuration={5000}
           severity={type}
           variant="filled"
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
-            {message}
-         
+          {message}
         </Alert>
       </Snackbar>
     </div>
   );
 }
-
 
 //   const [open, setOpen] = React.useState(false);
 

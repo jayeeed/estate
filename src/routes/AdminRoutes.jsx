@@ -7,6 +7,8 @@ import HostUsers from "../pages/admin/users/HostUsers";
 import RenterUsers from "../pages/admin/users/RenterUsers";
 import SetCost from "../pages/admin/features/setCost";
 import Official from "../pages/admin/features/officialStuff";
+import CRUDCategory from "../pages/admin/features/cRUDCategory";
+
 
 export const AdminRoutes = () => {
   return (
@@ -15,6 +17,7 @@ export const AdminRoutes = () => {
           {/* <Route path=""> */}
             <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="/set-cost" element={<SetCost />} />
+            <Route path="/crud-category" element={<CRUDCategory />} />
             <Route path="/official" element={<Official />} />
             <Route path="/renter/users" element={<RenterUsers />} />
             <Route path="/host/users" element={<HostUsers />} />

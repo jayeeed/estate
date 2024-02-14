@@ -5,6 +5,11 @@ const sidebarContent = [
     icon: "uil:chart",
   },
   {
+    name: "Property Category",
+    path: "/admin/crud-category",
+    icon: "uil:coins",
+  },
+  {
     name: "Set Cost",
     path: "/admin/set-cost",
     icon: "uil:coins",
