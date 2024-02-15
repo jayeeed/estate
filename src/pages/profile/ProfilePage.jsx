@@ -41,7 +41,7 @@ function ProfilePage() {
   const userInfo = useAuthInfo();
   const userId = userInfo._id;
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

@@ -79,8 +79,9 @@ const UpcomingRentingTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {activeRentingData.map((rental) => (
-            <TableRow key={rental.propertyId._id}>
+          {activeRentingData.map((rental,index) => (
+            <TableRow key={index}>
+              {/* key={rental.propertyId._id} */}
               <TableCell>
                 <Box
                   component="img"
