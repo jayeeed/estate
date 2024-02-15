@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const Amenities = require("../models/amenitiesModel");
+const PropertyModel = require("../models/propertyModel");
 const TypeOfPlace = require("../models/typeOfPlaceModel");
 const { resReturn } = require("../utils/responseHelpers");
 
@@ -44,14 +45,26 @@ exports.addCategory = async (req, res) => {
   }
 };
 
+// const Property = require('../models/Property'); // Import the Property model
+
 exports.deleteCategory = async (req, res) => {
+  // console.log(req.params.id)
   try {
+    // Check if any properties are associated with the category
+    const existingProperties = await PropertyModel.find({ "placeDescribesId": req.params.id });
+   
+    if (existingProperties.length > 0) {
+      return res.status(205).send();
+    }
+
+    // If no associated properties, proceed with deletion
     await Amenities.findByIdAndDelete(req.params.id);
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 // Update category controller

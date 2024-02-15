@@ -138,7 +138,7 @@ const AirbnbHostSettings = () => {
   useEffect(() => {
     if (currentSettings.currencies && currentSettings.currencies.length > 0) {
       console.log("Current currencies:", currentSettings.currencies);
-      const currency = (currentSettings.currencies[0]);
+      const currency = currentSettings.currencies[0];
       setSelectedCurrency(currency);
       setCurrentSettings((prevSettings) => ({
         ...prevSettings,
@@ -146,7 +146,6 @@ const AirbnbHostSettings = () => {
       }));
     }
   }, [currentSettings.currencies]);
-  
 
   const fetchCountries = async () => {
     try {
@@ -201,12 +200,11 @@ const AirbnbHostSettings = () => {
     try {
       // Make a GET request to the amenities endpoint
       const response = await axios.get("/category");
-      // Assuming the response data is structured as { amenities: [...] }
       setCategory(response.data.category);
       console.log("Category:", response.data.category);
-      // Handle the retrieved amenities data as needed
+      
     } catch (error) {
-      // Handle any errors that occur during the GET request
+      
       console.error("Error fetching amenities:", error);
       // Optionally, show an error message to the user
     }
@@ -245,6 +243,15 @@ const AirbnbHostSettings = () => {
   return (
     <>
       <AdminLayout title={"Hosting Cost Setup"}>
+        <Box marginBlock={2}>
+          <Typography variant="caption">
+            {" "}
+            *Note: You just need to select, it will automaticly update your
+            current setting in the database, if your selected info are not in
+            database it will create a new one{" "}
+          </Typography>
+        </Box>
+
         <form onSubmit={handleSubmit}>
           <Box sx={{ display: "flex" }}>
             {/* Sidebar */}
@@ -261,7 +268,7 @@ const AirbnbHostSettings = () => {
                     value={selectedRegion}
                     defaultValue="europe"
                     onChange={handleRegionChange}
-                    sx={{ paddingInline: 2 }}
+                    sx={{ width: "12rem", paddingInline: 2 }}
                   >
                     <MenuItem value="global">Global</MenuItem>
                     <MenuItem value="europe">Europe</MenuItem>
@@ -277,7 +284,7 @@ const AirbnbHostSettings = () => {
                     <Select
                       value={selectedCountry}
                       onChange={handleCountryChange}
-                      sx={{ paddingInline: 2 }}
+                      sx={{ width: "12rem", paddingInline: 2 }}
                     >
                       {currentSettings.countries &&
                         currentSettings?.countries.map((country) => (
@@ -302,7 +309,7 @@ const AirbnbHostSettings = () => {
                           : ""
                       }
                       onChange={handleCurrencyChange}
-                      sx={{ paddingInline: 2 }}
+                      sx={{ width: "12rem", paddingInline: 2 }}
                     >
                       {currentSettings.currencies &&
                         currentSettings.currencies.map((currency) => (
@@ -321,7 +328,7 @@ const AirbnbHostSettings = () => {
                     <Select
                       value={selectedTimeZone}
                       onChange={handleTimeZoneChange}
-                      sx={{ paddingInline: 2 }}
+                      sx={{ width: "12rem", paddingInline: 2 }}
                     >
                       {currentSettings.timezones &&
                         currentSettings?.timezones.map((timezone) => (
@@ -339,7 +346,7 @@ const AirbnbHostSettings = () => {
                   <Select
                     value={selectedCategory}
                     onChange={handleCategoryChange}
-                    sx={{ paddingInline: 2 }}
+                    sx={{ width: "12rem", paddingInline: 2 }}
                   >
                     {category.map((categoryItem, index) => (
                       <MenuItem key={index} value={categoryItem._id}>
@@ -349,12 +356,13 @@ const AirbnbHostSettings = () => {
                   </Select>
                 </Grid>
 
-                <Grid item xs={12} marginBlock={1}>
+                <Grid item xs={12} marginBlock={2}>
                   <TextField
                     label="Host Cost"
                     type="number"
                     value={hostCost}
                     onChange={handleHostCostChange}
+                    sx={{ width: "12rem" }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -384,9 +392,11 @@ const AirbnbHostSettings = () => {
                   <TableHead sx={{ backgroundColor: "#003019" }}>
                     <TableRow>
                       <TableCell colSpan={2}>
-                        <Typography variant="h4" color={"white"}>
-                          Current Settings
-                        </Typography>
+                        <Box display={"flex"}>
+                          <Typography variant="h4" color={"white"} sx={{}}>
+                            Current Settings
+                          </Typography>
+                        </Box>
                       </TableCell>
                     </TableRow>
                   </TableHead>

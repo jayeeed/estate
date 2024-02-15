@@ -1,132 +1,4 @@
-// import { useState, useEffect } from "react";
-// import axios from "axios";
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableRow,
-//   Typography,
-//   TextField,
-//   Button,
-//   CircularProgress,
-//   Box,
-// } from "@mui/material";
-
-// const CategoryComponent = () => {
-//   const [categories, setCategories] = useState([]);
-//   const [newCategory, setNewCategory] = useState("");
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     fetchCategories();
-//   }, []);
-
-//   const fetchCategories = async () => {
-//     try {
-//       const response = await axios.get("/category");
-//       setCategories(response.data.category);
-//       setLoading(false);
-//     } catch (error) {
-//       console.error("Error fetching categories:", error);
-//     }
-//   };
-
-//   const handleAddCategory = async () => {
-//     try {
-//       await axios.post("/category", {
-//         title: newCategory,
-//         icon: "default",
-//         type: "describe",
-//       });
-//       fetchCategories();
-//       setNewCategory("");
-//     } catch (error) {
-//       console.error("Error adding category:", error);
-//     }
-//   };
-
-//   const handleDeleteCategory = async (id) => {
-//     try {
-//       await axios.delete(`/category/${id}`);
-//       fetchCategories();
-//     } catch (error) {
-//       console.error("Error deleting category:", error);
-//     }
-//   };
-
-//   return (
-//     <Box paddingInline={1}>
-//       <Box marginBlock={3}>
-//         <Typography variant="h4" align="left" gutterBottom>
-//           Categories
-//         </Typography>
-//       </Box>
-//       <Table>
-//         <TableHead style={{ backgroundColor: "#f0f0f0" }}>
-//           <TableRow>
-//             <TableCell>Title</TableCell>
-//             <TableCell>Icon</TableCell>
-//             <TableCell>Type</TableCell>
-//             <TableCell>Action</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {loading ? (
-//             <TableRow>
-//               <TableCell colSpan={4} align="center">
-//                 <CircularProgress />
-//               </TableCell>
-//             </TableRow>
-//           ) : (
-//             categories.map((category) => (
-//               <TableRow key={category._id}>
-//                 <TableCell>{category.title}</TableCell>
-//                 <TableCell>{category.icon}</TableCell>
-//                 <TableCell>{category.type}</TableCell>
-//                 <TableCell>
-//                   <Button
-//                     variant="outlined"
-//                     color="error"
-//                     onClick={() => handleDeleteCategory(category._id)}
-//                   >
-//                     Delete
-//                   </Button>
-//                 </TableCell>
-//               </TableRow>
-//             ))
-//           )}
-//         </TableBody>
-//       </Table>
-
-//       <Box marginBlock={3}>
-//         <Typography variant="h5" align="center" gutterBottom>
-//           Add New Category
-//         </Typography>
-//         <Box style={{ display: "flex", justifyContent: "center" }}>
-//           <TextField
-//             label="Category Title"
-//             value={newCategory}
-//             onChange={(e) => setNewCategory(e.target.value)}
-//             variant="outlined"
-//           />
-//           <Button
-//             variant="contained"
-//             color="primary"
-//             onClick={handleAddCategory}
-//             style={{ marginLeft: "10px" }}
-//           >
-//             Add Category
-//           </Button>
-//         </Box>
-//       </Box>
-//     </Box>
-//   );
-// };
-
-// export default CategoryComponent;
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Table,
@@ -139,17 +11,28 @@ import {
   Button,
   CircularProgress,
   Box,
-  AppBar,
 } from "@mui/material";
 import AdminLayout from "../../../layouts/adminLayout";
+import CustomizedSnackbars from "../../../components/snackbar";
 
 const CategoryComponent = () => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState({});
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [editCategory, setEditCategory] = useState({});
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   useEffect(() => {
     fetchCategories();
@@ -178,13 +61,31 @@ const CategoryComponent = () => {
 
   const handleDeleteCategory = async () => {
     try {
-      await axios.delete(`/category/${selectedCategoryId}`);
-      fetchCategories();
-      setSelectedCategoryId(null);
+      const response = await axios.delete(`/category/${selectedCategoryId}`);
+      if (response.status === 204) {
+        setMessage("Successfully deleted");
+        setType("success");
+        setOpen(true);
+        fetchCategories();
+        setSelectedCategoryId(null);
+      } else if (response.status === 205) {
+        setMessage('Cannot delete category. It has existing properties.');
+        setType("warning");
+        setOpen(true);
+      } else {
+        setMessage("An error occurred while deleting the category.");
+        setType("warning");
+        setOpen(true);
+      }
     } catch (error) {
       console.error("Error deleting category:", error);
+      setMessage("An error occurred while deleting the category.");
+      setType("error");
+      setOpen(true);
     }
   };
+  
+  
 
   const handleEditCategory = (category) => {
     setEditMode(true);
@@ -252,44 +153,54 @@ const CategoryComponent = () => {
             }}
           >
             <Typography variant="h3" align="center" gutterBottom>
-              Please a select category
+              Please select a category
             </Typography>
 
             <div>
               <Typography variant="h5" align="left" gutterBottom>
-                {editMode ? "Update Category" : "Add New Category"}
+                {editMode ? "Update Category" : "then choose"}
               </Typography>
-              <Button
-                variant="contained"
-                onClick={() =>
-                  handleEditCategory(
-                    categories.find((cat) => cat._id === selectedCategoryId)
-                  )
-                }
-              >
-                Edit
-              </Button>{" "}
-              <Button onClick={handleUpdateCategory} variant="contained">
-                Update{" "}
-              </Button>{" "}
-              <Button
-                variant="contained"
-                color="error"
-                onClick={handleDeleteCategory}
-              >
-                Delete
-              </Button>
+              {editMode ? (
+                <>
+                  <Button onClick={handleUpdateCategory} variant="contained">
+                    Update
+                  </Button>{" "}
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleEditCategory(
+                        categories.find((cat) => cat._id === selectedCategoryId)
+                      )
+                    }
+                  >
+                    Edit
+                  </Button>{" "}
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={handleDeleteCategory}
+                  >
+                    Delete
+                  </Button>{" "}
+                </>
+              )}
             </div>
           </Box>
-          <Table>
-            <TableHead style={{ backgroundColor: "#f0f0f0" }}>
+          <Table sx={{width: '100%'}}>
+          <Box style={{ maxHeight: '60vh', overflowY: 'auto',width: '100%', backgroundColor: "white", borderRadius:8}} >
+            
+            <TableHead style={{ backgroundColor: "#f0f0f0"  }}>
               <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell>Icon</TableCell>
-                <TableCell>Type</TableCell>
+                <TableCell style={{ width: '30%' }}>Title</TableCell>
+                <TableCell style={{ width: '40%' }}>Icon</TableCell>
+                <TableCell style={{ width: '30%' }}>Type</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
+              
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={3} align="center">
@@ -371,9 +282,16 @@ const CategoryComponent = () => {
                 ))
               )}
             </TableBody>
+            </Box>
           </Table>
         </form>
       </Box>
+      <CustomizedSnackbars
+        open={open}
+        message={message}
+        type={type}
+        onClose={handleClose}
+      />
     </AdminLayout>
   );
 };

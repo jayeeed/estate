@@ -45,6 +45,29 @@ exports.adminLogin = (req, res) => {
 
 
 
+  exports.viewSetedCost = async (req, res) => {
+    try {
+      // Fetch the set host costs from the database
+      const costs = await EstateHostModel.find();
+      
+  
+      // If there are set host costs, send them as a response
+      if (costs) {
+        return res.status(200).json(costs);
+      } else {
+        // If there are no set host costs, send a 404 status with an error message
+        return res.status(404).json({ message: 'No set host costs found.' });
+      }
+    } catch (error) {
+      // If any error occurs during the operation, send a 500 status with an error message
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+
+
+
 
 // Controller function to handle the POST request
  exports.estateHostSettings = async (req, res) => {
