@@ -45,7 +45,9 @@ const bookingRoute = require("./src/routes/bookingRoute");
 const reviewRoute = require("./src/routes/reviewRoute");
 const profileRoute = require("./src/routes/profileRoute");
 const adminRoutes = require("./src/routes/adminRoutes");
-const companyRoute = require("./src/routes/companyRoute");
+const companyRoute = require("./src/routes/companyRoutes");
+const subCompanyRoute = require("./src/routes/subCompanyRoutes");
+const postJobRoute = require("./src/routes/postJobRoutes");
 
 app.use("/api", userRoute);
 app.use("/api", adminRoutes);
@@ -56,6 +58,8 @@ app.use("/api", bookingRoute);
 app.use("/api", reviewRoute);
 app.use("/api", profileRoute);
 app.use("/api", companyRoute);
+app.use("/api", subCompanyRoute);
+app.use("/api", postJobRoute);
 
 // pdf generate and fetch from client
 app.post("/api/create-pdf", (req, res) => {

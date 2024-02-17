@@ -7,19 +7,25 @@ const companySchema = new mongoose.Schema(
       ref: "User",
     },
     companyName: String,
-    registrationNumber: String,
-    bankAccountNumber: String,
-    address: String,
-    additionalDetails: String,
-    appreciationDetails: String,
-    // logo: String,
-    // banner: String,
+    companyRegistrationNumber: String,
+    companyBankAccountNumber: String,
+    companyAddress: String,
+    companyAdditionalDetails: String,
+    companyAppreciationDetails: String,
+    companyLogo: {
+      type: String,
+      required: false,
+    },
+    companyBanner: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const CompanyModel = mongoose.model("company", companySchema);
+const CompanyModel = mongoose.model("Company", companySchema);
 
 module.exports = CompanyModel;

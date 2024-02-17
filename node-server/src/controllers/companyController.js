@@ -1,7 +1,7 @@
 const CompanyModel = require("../models/companyModel");
 
 // Controller function to add a new company
-const addCompany = async (req, res) => {
+exports.addCompany = async (req, res) => {
   try {
     const company = new CompanyModel(req.body);
     await company.save();
@@ -14,7 +14,7 @@ const addCompany = async (req, res) => {
 };
 
 // Controller function to get all companies
-const getAllCompanies = async (req, res) => {
+exports.getAllCompanies = async (req, res) => {
   try {
     const companies = await CompanyModel.find();
     res.status(200).json(companies);
@@ -26,7 +26,7 @@ const getAllCompanies = async (req, res) => {
 };
 
 // Controller function to get companies belonging to a user
-const getUserCompanies = async (req, res) => {
+exports.getUserCompanies = async (req, res) => {
   const userId = req.params.id;
   try {
     const companies = await CompanyModel.find({ userId });
@@ -40,7 +40,7 @@ const getUserCompanies = async (req, res) => {
 };
 
 // Controller function to get company by ID
-const getCompany = async (req, res) => {
+exports.getCompany = async (req, res) => {
   const companyId = req.params.id;
   try {
     const company = await CompanyModel.findById(companyId);
@@ -56,7 +56,7 @@ const getCompany = async (req, res) => {
 };
 
 // Controller function to update a company by ID
-const updateCompany = async (req, res) => {
+exports.updateCompany = async (req, res) => {
   const companyId = req.params.id;
   try {
     const updatedCompany = await CompanyModel.findByIdAndUpdate(
@@ -79,7 +79,7 @@ const updateCompany = async (req, res) => {
 };
 
 // Controller function to delete a company by ID
-const deleteCompany = async (req, res) => {
+exports.deleteCompany = async (req, res) => {
   const companyId = req.params.id;
   try {
     const deletedCompany = await CompanyModel.findByIdAndDelete(companyId);
@@ -92,13 +92,4 @@ const deleteCompany = async (req, res) => {
       .status(500)
       .json({ message: "Error deleting company", error: error.message });
   }
-};
-
-module.exports = {
-  addCompany,
-  getAllCompanies,
-  getUserCompanies,
-  getCompany,
-  updateCompany,
-  deleteCompany,
 };
