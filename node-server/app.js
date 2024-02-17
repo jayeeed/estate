@@ -19,7 +19,7 @@ const port = process.env.PORT || 5000;
 const dbURL =
   process.env.MONGODB_URL ||
   "mongodb+srv://ipsita:Ipsita%402023@uk-bd0.u3pngqk.mongodb.net/airbnb";
-  // "mongodb+srv://ukbd:MNjqO714lSWx6le5@uk-bd-00.kt2fhlb.mongodb.net/uk-bd";
+// "mongodb+srv://ukbd:MNjqO714lSWx6le5@uk-bd-00.kt2fhlb.mongodb.net/uk-bd";
 
 // Use CORS middleware
 app.use(
@@ -42,19 +42,18 @@ const propertyRoute = require("./src/routes/propertyRoute");
 const stripePaymentRoute = require("./src/routes/stripePaymentRoute");
 const pdfTemplate = require("./src/documents/pdfTemplate");
 const bookingRoute = require("./src/routes/bookingRoute");
-const reviewRoute = require("./src/routes/reviewRoute"); 
-const profileRoute = require("./src/routes/profileRoute"); 
-
+const reviewRoute = require("./src/routes/reviewRoute");
+const profileRoute = require("./src/routes/profileRoute");
+const companyRoute = require("./src/routes/companyRoute");
 
 app.use("/api", userRoute);
 app.use("/api", frontendRoute);
 app.use("/api", propertyRoute);
 app.use("/api", stripePaymentRoute);
 app.use("/api", bookingRoute);
-app.use("/api",reviewRoute);
+app.use("/api", reviewRoute);
 app.use("/api", profileRoute);
-
-
+app.use("/api", companyRoute);
 
 // pdf generate and fetch from client
 app.post("/api/create-pdf", (req, res) => {
@@ -94,7 +93,6 @@ const connection = mongoose.connection;
 
 connection.on("connected", () => {
   console.log("Connected to MongoDB");
-  
 
   // Start the server only after the database connection is established
   app.listen(port, () => {

@@ -1,24 +1,31 @@
-import { useState, useEffect } from 'react'
-import { Container, Box, Typography, TextField, Button, Grid, Link } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import HostLetterTemplate from './letterPreview'
+import { useState, useEffect } from "react";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Link,
+} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import HostLetterTemplate from "./letterPreview";
 import DashboardLayout from "../../layouts/hostDashboard";
-import { AddCircleRounded } from '@mui/icons-material';
+import { AddCircleRounded } from "@mui/icons-material";
 
 // import pic from "./assets/company.jpg"
-
 
 // const PropertyList = () => {
 const createCompanyProfile = () => {
   // const [count, setCount] = useState(0);
 
-  const [companyName, setCompanyName] = useState('');
-  const [registrationNumber, setRegistrationNumber] = useState('');
-  const [newAddress, setNewAddress] = useState('');
-  const [bankAccountNumber, setBankAccountNumber] = useState('');
-  const [additionalDetails, setAdditionalDetails] = useState('');
-  const [appreciationDetails, setAppreciationDetails] = useState('');
+  const [companyName, setCompanyName] = useState("");
+  const [registrationNumber, setRegistrationNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [bankAccountNumber, setBankAccountNumber] = useState("");
+  const [additionalDetails, setAdditionalDetails] = useState("");
+  const [appreciationDetails, setAppreciationDetails] = useState("");
 
   const [letter, setLetter] = useState("");
 
@@ -26,7 +33,7 @@ const createCompanyProfile = () => {
     const formattedLetter = `
       Dear Tenats,
 
-      I am writing to express my sincere appreciation for the outstanding service provided by ${companyName}. As a tenant, I have experienced exceptional professionalism and dedication from your team, making my stay at ${newAddress} truly enjoyable.
+      I am writing to express my sincere appreciation for the outstanding service provided by ${companyName}. As a tenant, I have experienced exceptional professionalism and dedication from your team, making my stay at ${address} truly enjoyable.
 
       ${appreciationDetails}
 
@@ -43,53 +50,51 @@ const createCompanyProfile = () => {
     // Remove HTML tags using a regular expression
     const strippedLetter = formattedLetter.replace(/<\/?[^>]+(>|$)/g, "");
     setLetter(strippedLetter);
-
-  }, [companyName, newAddress, appreciationDetails, additionalDetails]);
-
+  }, [companyName, address, appreciationDetails, additionalDetails]);
 
   // ... (your existing code)
 
   const handleSubmit = async () => {
     try {
       // Your server endpoint for saving data
-      const endpoint = 'http://localhost:5050/api/save-company';
+      const endpoint = "http://localhost:5050/api/add-company";
 
       // Create a FormData object to handle file uploads
       const formData = new FormData();
-      formData.append('companyName', companyName);
-      formData.append('registrationNumber', registrationNumber);
-      formData.append('newAddress', newAddress);
-      formData.append('bankAccountNumber', bankAccountNumber);
-      formData.append('additionalDetails', additionalDetails);
-      formData.append('appreciationDetails', appreciationDetails);
+      formData.append("companyName", companyName);
+      formData.append("registrationNumber", registrationNumber);
+      formData.append("address", address);
+      formData.append("bankAccountNumber", bankAccountNumber);
+      formData.append("additionalDetails", additionalDetails);
+      formData.append("appreciationDetails", appreciationDetails);
 
-      // Append logo file if selected
-      const logoInput = document.getElementById('logo-upload');
-      if (logoInput.files.length > 0) {
-        formData.append('logo', logoInput.files[0]);
-      }
+      // // Append logo file if selected
+      // const logoInput = document.getElementById("logo-upload");
+      // if (logoInput.files.length > 0) {
+      //   formData.append("logo", logoInput.files[0]);
+      // }
 
-      // Append banner file if selected
-      const bannerInput = document.getElementById('banner-upload');
-      if (bannerInput.files.length > 0) {
-        formData.append('banner', bannerInput.files[0]);
-      }
+      // // Append banner file if selected
+      // const bannerInput = document.getElementById("banner-upload");
+      // if (bannerInput.files.length > 0) {
+      //   formData.append("banner", bannerInput.files[0]);
+      // }
 
       // Make a POST request to the server
       const response = await fetch(endpoint, {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
 
       // Check if the request was successful (status code 200-299)
       if (response.ok) {
         const result = await response.json();
-        console.log('Data saved successfully:', result);
+        console.log("Data saved successfully:", result);
       } else {
-        console.error('Error saving data:', response.statusText);
+        console.error("Error saving data:", response.statusText);
       }
     } catch (error) {
-      console.error('Error saving data:', error);
+      console.error("Error saving data:", error);
     }
   };
 
@@ -99,15 +104,20 @@ const createCompanyProfile = () => {
       <Grid container spacing={2} height={"100vh"}>
         <Grid item xs={6}>
           <Container maxWidth="md">
-            <Box sx={{ marginTop: 1, display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+            <Box
+              sx={{
+                marginTop: 1,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
+            >
               <Typography component="heading" variant="h2">
                 Company Registration
               </Typography>
               <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-
                 <Grid container spacing={2}>
                   <Grid item xs={8}>
-
                     {/* Company Details */}
                     <TextField
                       label="Company Name"
@@ -126,33 +136,47 @@ const createCompanyProfile = () => {
                       required
                     />
                   </Grid>
-                  <Grid item xs={4} display={"flex"}
+                  {/* <Grid
+                    item
+                    xs={4}
+                    display={"flex"}
                     flexDirection={"column"}
                     justifyContent={"center"}
-                    alignItems={"center"} >
-
-                    {/* Logo Upload */}
-                    <input accept="image/*" id="logo-upload" type="file" style={{ display: 'none' }} />
+                    alignItems={"center"}
+                  >
+                    <input
+                      accept="image/*"
+                      id="logo-upload"
+                      type="file"
+                      style={{ display: "none" }}
+                    />
                     <label htmlFor="logo-upload">
-                      <Button variant="outlined" component="span" startIcon={<CloudUploadIcon />}>
+                      <Button
+                        variant="outlined"
+                        component="span"
+                        startIcon={<CloudUploadIcon />}
+                      >
                         Upload Logo
                       </Button>
                     </label>
                     <br />
-
-                    {/* Logo Upload */}
-                    <input accept="image/*" id="logo-upload" type="file" style={{ display: 'none' }} />
+                    <input
+                      accept="image/*"
+                      id="logo-upload"
+                      type="file"
+                      style={{ display: "none" }}
+                    />
                     <label htmlFor="logo-upload">
-                      <Button variant="outlined" component="span" startIcon={<CloudUploadIcon />}>
+                      <Button
+                        variant="outlined"
+                        component="span"
+                        startIcon={<CloudUploadIcon />}
+                      >
                         Upload Banner
                       </Button>
                     </label>
-                  </Grid>
-
-
+                  </Grid> */}
                 </Grid>
-
-
 
                 {/* Bank Registration for Tokens */}
                 <TextField
@@ -166,12 +190,12 @@ const createCompanyProfile = () => {
 
                 {/* Address Change */}
                 <TextField
-                  label="New Address"
+                  label="Address"
                   fullWidth
                   margin="normal"
-                  value={newAddress}
+                  value={address}
                   required
-                  onChange={(e) => setNewAddress(e.target.value)}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
 
                 {/* Additional Details */}
@@ -196,13 +220,14 @@ const createCompanyProfile = () => {
                   onChange={(e) => setAppreciationDetails(e.target.value)}
                 />
 
-
-
                 {/* Submit Button */}
-                <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
                   Register
-
                 </Button>
               </Box>
             </Box>
@@ -214,27 +239,24 @@ const createCompanyProfile = () => {
             {/* Replace placeholder values with actual data */}
             <HostLetterTemplate
               propertyManagementCompany={companyName}
-              propertyCompanyAddress={newAddress}
+              propertyCompanyAddress={address}
               additionalDetails={additionalDetails}
-              appreciationDetails={appreciationDetails} />
+              appreciationDetails={appreciationDetails}
+            />
           </Box>
-
         </Grid>
       </Grid>
-
     </>
-  )
+  );
 };
 
 export default createCompanyProfile;
 
-
-
-
-
-
-{/* Logo Upload */ }
-{/* <input accept="image/*" id="logo-upload" type="file" style={{ display: 'none' }} />
+{
+  /* Logo Upload */
+}
+{
+  /* <input accept="image/*" id="logo-upload" type="file" style={{ display: 'none' }} />
                 <label htmlFor="logo-upload" text-align ="center" >
                   <Avatar
                     // src={pic}
@@ -250,9 +272,12 @@ export default createCompanyProfile;
                       src={pic}
                       alt="Upload Logo"
                       style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    />  */}
-{/* </Avatar>
+                    />  */
+}
+{
+  /* </Avatar>
                   <Typography variant="outlined" component="span" startIcon={<CloudUploadIcon />}>
                   Upload Logo
                 </Typography> 
-                </label> */}
+                </label> */
+}
