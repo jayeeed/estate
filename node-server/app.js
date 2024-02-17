@@ -44,6 +44,8 @@ const pdfTemplate = require("./src/documents/pdfTemplate");
 const bookingRoute = require("./src/routes/bookingRoute");
 const reviewRoute = require("./src/routes/reviewRoute");
 const profileRoute = require("./src/routes/profileRoute");
+const adminRoutes = require("./src/routes/adminRoutes");
+const companyRoute = require("./src/routes/companyRoute");
 
 app.use("/api", userRoute);
 app.use("/api", adminRoutes);
