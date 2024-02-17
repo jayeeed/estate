@@ -3,7 +3,7 @@ import axios from "axios"; // Assuming you're using Axios for HTTP requests
 import {
   Box,
   Button,
-  Divider,
+  // Divider,
   FormLabel,
   Toolbar,
   Typography,
@@ -12,6 +12,7 @@ import {
 import { styled } from "@mui/system";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import styles for react-quill
+import CustomizedSnackbars from "../../../components/snackbar";
 
 const decodeHtmlEntities = (html) => {
   const txt = document.createElement("textarea");
@@ -25,10 +26,28 @@ const StyledInput = styled("input")({
 
 const LegalDocumentPreview = ({ documentType }) => {
   const customTheme = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
   const [templateHTML, setTemplateHTML] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
   const [editingTemplate, setEditingTemplate] = useState(false);
   const [editorContent, setEditorContent] = useState("");
+
+
+
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   // Function to handle file upload
   const handleFileUpload = (event) => {
@@ -64,6 +83,7 @@ const LegalDocumentPreview = ({ documentType }) => {
       // Handle submitting renting application
       handleSubmit();
       console.log("Submitting renting application:", editorContent);
+      setMessage("Submitted renting application")
     } else if (documentType === "legalDocuments") {
       // Handle submitting legal documents
       handleSubmit();
@@ -71,32 +91,41 @@ const LegalDocumentPreview = ({ documentType }) => {
     }
   };
 
-  // Function to handle creating a new template
-  // Function to handle creating a new template
-  const handleCreateTemplate = () => {
-    setEditingTemplate(true);
-    setEditorContent("");
-  };
+  // const formData = new FormData();
+  // formData.append("file", uploadedFile); // Assuming 'file' is the key expected by your server for the uploaded file
+  // // Append other form data fields as needed
+  // formData.append("field1", value1);
+  // formData.append("field2", value2);
+  
+  // handleSubmit(formData);
+  
 
   // Function to handle submitting the uploaded file data
   const handleSubmit = async () => {
     try {
-      // Prepare the data to be sent to the server
+      // Create a FormData object to store the file data
       const formData = new FormData();
       formData.append("file", uploadedFile); // Assuming 'file' is the key expected by your server for the uploaded file
 
+      // console.log(formData)
+  
       // Make a POST request to your server to save the uploaded file data
-      const response = await axios.post("/api/upload", formData, {
+      const response = await axios.post("/admin/templateUpload", formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Ensure the correct content type for file upload
         },
       });
+  
+      console.log("File upload successful:", response.data);
+      setOpen(true); // Log the response from the server
+      setMessage("File upload successful")
+      setType("success")
 
-      console.log("File upload successful:", response.data); // Log the response from the server
     } catch (error) {
       console.error("Error uploading file:", error); // Log any errors that occur during the upload process
     }
   };
+  
 
   return (
     <Box>
@@ -178,29 +207,11 @@ const LegalDocumentPreview = ({ documentType }) => {
           </Box>
         )}
 
-        {!uploadedFile && (
-          <Box>
-            {/* <Typography
-              variant="h3"
-              fontWeight={customTheme.typography.fontWeightBold}
-              sx={{ color: customTheme.palette.primary.main }}
-            >
-              Create New
-            </Typography>
-            <Divider />
-
-            <Box mt={1}>
-              <Button
-                onClick={handleCreateTemplate}
-                variant="contained"
-                sx={{ backgroundColor: customTheme.palette.secondary.main }}
-              >
-                Create Template
-              </Button>
-            </Box> */}
-          </Box>
-        )}
       </Box>
+
+
+
+      <CustomizedSnackbars open={open} message={message} type={type} onClose={handleClose}/>
     </Box>
   );
 };

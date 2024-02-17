@@ -15,6 +15,7 @@ import {
   ListItemAvatar,
   Paper,
   Hidden,
+  Modal,
   //Avatar
 } from "@mui/material";
 
@@ -38,7 +39,7 @@ function MyTrips() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setRentingStatus(response.data);
         //setReviewStatus(response.data.reviewStatus);
       })
@@ -50,22 +51,25 @@ function MyTrips() {
   //console.log(rentingStatus);
 
   return (
-    <div style={{marginInline:"1rem"}}>
-      <Box>
-        <h3>Review The stay</h3>
+    <>
+      <Box marginInline={3}>
+        <Typography variant="h3">Review The stay</Typography>
       </Box>
-      <br></br>
-
-      <Grid container rowGap={2} columnGap={2}>
-        {rentingStatus.map((rental) => (
-          <Box
-          fullWidth   
-          >
-            <Grid item xs={12} sx={{
-              borderRadius: "10px",
-              boxShadow: 3,
-            }}>
-              <ListItem>
+      <Box marginBlock={3} width={"100%"}>
+        <Grid container gap={2} justifyItems={"center"} justifyContent={"center"}>
+          {rentingStatus.map((rental, index) => (
+            // <Box marginBlock={2} >
+            <Grid
+              item
+              xs={12} md={10} lg={5}
+              key={index}
+              sx={{
+                borderRadius: "10px",
+                boxShadow: 3,
+                // minWidth: "420px"
+              }}
+            >
+              <ListItem sx={{margin:0}}>
                 <ListItemAvatar>
                   <Box
                     component="img"
@@ -73,7 +77,7 @@ function MyTrips() {
                     mr={2}
                     width={"8.625rem"}
                     height={"6.625rem"}
-                    borderRadius="10px"
+                    borderRadius={4}
                     bgcolor="#e0eeff"
                     display="flex"
                     textAlign="center"
@@ -116,15 +120,10 @@ function MyTrips() {
                     variant="contained"
                     onClick={handleOpen}
                   >
-
-                      Review the stay
-                  
+                    Review the stay
                   </Button>
                   <ReviewModal
-                    size="lg"
-                    //aria-labelledby="contained-modal-title-vcenter" centered
-                    aria-labelledby="spring-modal-title"
-                    aria-describedby="spring-modal-description"
+                    // size="lg"
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
@@ -152,10 +151,12 @@ function MyTrips() {
                 </div>
               )}
             </Grid>
-          </Box>
-        ))}
-      </Grid>
-    </div>
+
+          ))}
+        </Grid>
+      </Box>
+
+    </>
   );
 }
 

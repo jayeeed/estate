@@ -4,20 +4,18 @@ import { Box, Card, Grid, Typography } from "@mui/material";
 import DashboardCard from "../../../components/dashboardCard/DashboardCard";
 import { MonetizationOnOutlined } from "@mui/icons-material";
 import { theme } from "../../../assets/themes/theme";
-
+import HostCostView from "../features/costView";
 
 const AdminDashboard = () => {
   return (
     <AdminLayout title={"Admin Dashborad"}>
-
       <Grid container spacing={2}>
+        <Grid item lg={8}>
 
-
-
-
-
-
-
+        </Grid>
+        <Grid item xs={12}  md={8} lg={4} justifyContent={"end"} justifyItems={"end"} paddingInline={0}>
+        <HostCostView />
+        </Grid>
 
 
         {/* <Grid item xs={12}>
@@ -144,14 +142,6 @@ const AdminDashboard = () => {
             color={"#ff0000"}
           />
         </Grid> */}
-      
-      
-      
-      
-      
-      
-      
-      
       </Grid>
     </AdminLayout>
   );

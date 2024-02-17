@@ -44,9 +44,9 @@ const pdfTemplate = require("./src/documents/pdfTemplate");
 const bookingRoute = require("./src/routes/bookingRoute");
 const reviewRoute = require("./src/routes/reviewRoute");
 const profileRoute = require("./src/routes/profileRoute");
-const companyRoute = require("./src/routes/companyRoute");
 
 app.use("/api", userRoute);
+app.use("/api", adminRoutes);
 app.use("/api", frontendRoute);
 app.use("/api", propertyRoute);
 app.use("/api", stripePaymentRoute);

@@ -19,191 +19,384 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import axios from "axios";
+import CustomizedSnackbars from "../../../components/snackbar";
 
 const AirbnbHostSettings = () => {
+  const [open, setOpen] = useState(false);
+
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("europe");
+  const [currentSettings, setCurrentSettings] = useState({
+    selectedRegion: selectedRegion,
+    selectedCountry: "",
+    selectedCurrency: "",
+    selectedTimeZone: "",
+    hostCost: 0,
+    subscriptionActive: false,
+    category: "",
+  });
+  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [hostCost, setHostCost] = useState(0);
   const [subscriptionActive, setSubscriptionActive] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState("global");
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
-  const [selectedTimeZone, setSelectedTimeZone] = useState("UTC");
-  const [currentSettings, setCurrentSettings] = useState({
-    selectedRegion: selectedRegion, // Initialize selectedRegion in currentSettings
-  });
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [selectedTimeZone, setSelectedTimeZone] = useState("");
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleRegionChange = (e) => {
     const region = e.target.value;
     setSelectedRegion(region);
-
-    // Reset currency and time zone when region changes
-    setSelectedCurrency("USD");
-    setSelectedTimeZone("UTC");
-
-    // Update currentSettings with the selected region
+    setSelectedCountry(""); // Reset selected country when region changes
     setCurrentSettings((prevSettings) => ({
       ...prevSettings,
       selectedRegion: region,
+      selectedCountry: "",
+      selectedCurrency: "",
+      selectedTimeZone: "",
     }));
   };
 
-  // const handleRegionChange = (e) => {
-  //   const region = e.target.value;
-  //   setSelectedRegion(region);
-
-  //   // Reset currency and time zone when region changes
-  //   setSelectedCurrency("USD");
-  //   setSelectedTimeZone("UTC");
-  // };
-
-  useEffect(() => {
-    // Fetch settings when any of the filter options change
-    fetchSettings();
-  }, [
-    hostCost,
-    subscriptionActive,
-    selectedRegion,
-    selectedCurrency,
-    selectedTimeZone,
-  ]);
-
-  const fetchSettings = async () => {
-    // Simulate fetching settings from the server based on the selected region
-    // You can replace this with actual API calls to get region-specific data
-    const regionSettings = getRegionSpecificSettings(selectedRegion);
-
-    // Update the currentSettings state with fetched settings
-    setCurrentSettings({
-      hostCost,
-      subscriptionActive,
-      selectedCurrency,
-      selectedRegion,
-      selectedTimeZone,
-      ...regionSettings,
-    });
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setSelectedCountry(country);
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      selectedCountry: country,
+      selectedCurrency: "",
+      selectedTimeZone: "",
+    }));
   };
 
-  const getRegionSpecificSettings = (region) => {
-    switch (region) {
-      case "australia":
-        return {
-          availableCurrencies: ["AUD", "NZD"],
-          availableTimeZones: ["Australia/Sydney", "Australia/Melbourne"],
-        };
-      default:
-        // Global settings
-        return {
-          availableCurrencies: ["USD", "EUR"],
-          availableTimeZones: ["UTC", "GMT"],
-        };
+  const handleCurrencyChange = (e) => {
+    const currency = e.target.value;
+    setSelectedCurrency(currency);
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      selectedCurrency: currency,
+    }));
+  };
+
+  const handleTimeZoneChange = (e) => {
+    const timeZone = e.target.value;
+    setSelectedTimeZone(timeZone);
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      selectedTimeZone: timeZone,
+    }));
+  };
+
+  const handleSubscriptionChange = (e) => {
+    const checked = e.target.checked;
+    setSubscriptionActive(checked);
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      subscriptionActive: checked,
+    }));
+  };
+
+  const handleHostCostChange = (e) => {
+    const cost = e.target.value;
+    setHostCost(cost);
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      hostCost: cost,
+    }));
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    setCurrentSettings((prevSettings) => ({
+      ...prevSettings,
+      category: e.target.value,
+    }));
+  };
+
+  useEffect(() => {
+    fetchCountries();
+  }, [selectedRegion]);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      fetchSettings();
+    }
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  useEffect(() => {
+    if (currentSettings.currencies && currentSettings.currencies.length > 0) {
+      console.log("Current currencies:", currentSettings.currencies);
+      const currency = currentSettings.currencies[0];
+      setSelectedCurrency(currency);
+      setCurrentSettings((prevSettings) => ({
+        ...prevSettings,
+        selectedCurrency: currency,
+      }));
+    }
+  }, [currentSettings.currencies]);
+
+  const fetchCountries = async () => {
+    try {
+      const response = await fetch(
+        `https://restcountries.com/v3.1/region/${selectedRegion}`
+      );
+      const data = await response.json();
+      if (data && data.length > 0) {
+        const countries = data.map((country) => country.name.common);
+        setCurrentSettings((prevSettings) => ({
+          ...prevSettings,
+          countries: countries,
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching countries:", error);
     }
   };
 
-  const handleSubmit = (e) => {
+  const fetchSettings = async () => {
+    try {
+      const response = await fetch(
+        `https://restcountries.com/v3.1/name/${selectedCountry}`
+      );
+      const data = await response.json();
+
+      if (data && data.length > 0) {
+        const countryData = data[0];
+        const currencies = Object.keys(countryData.currencies || {});
+        const timezones = countryData.timezones || [];
+
+        setCurrentSettings((prevSettings) => ({
+          ...prevSettings,
+          currencies: currencies,
+          timezones: timezones,
+        }));
+
+        // Reset selected currency and time zone if not in the new lists
+        if (!currencies.includes(selectedCurrency)) {
+          setSelectedCurrency("");
+        }
+        if (!timezones.includes(selectedTimeZone)) {
+          setSelectedTimeZone("");
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching settings:", error);
+    }
+  };
+
+  const fetchCategory = async () => {
+    try {
+      // Make a GET request to the amenities endpoint
+      const response = await axios.get("/category");
+      setCategory(response.data.category);
+      console.log("Category:", response.data.category);
+      
+    } catch (error) {
+      
+      console.error("Error fetching amenities:", error);
+      // Optionally, show an error message to the user
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic to handle form submission, e.g., send data to an API
-    console.log("Form submitted with data:", {
-      hostCost,
-      subscriptionActive,
-      selectedRegion,
-      selectedCurrency,
-      selectedTimeZone,
-    });
-    // Optionally, display a success message or handle errors
+    try {
+      const formData = {
+        hostCost: hostCost,
+        subscriptionActive: subscriptionActive,
+        Region: selectedRegion,
+        Country: selectedCountry,
+        Currency: selectedCurrency,
+        TimeZone: selectedTimeZone,
+        Category: selectedCategory,
+      };
+      // console.log(formData);
+      // Make a POST request to your API endpoint with the form data
+      const response = await axios.post("/set-cost", formData);
+
+      // // Handle the response as needed
+      console.log("Form submitted successfully:", response.data);
+      setOpen(true);
+      setMessage(`Rate fixed the ${selectedCountry}`);
+      setType("success");
+
+      // Optionally, you can reset the form fields or show a success message to the user
+    } catch (error) {
+      // Handle any errors that occur during the POST request
+      console.error("Error submitting form:", error);
+      // Optionally, you can show an error message to the user
+    }
   };
 
   return (
     <>
       <AdminLayout title={"Hosting Cost Setup"}>
+        <Box marginBlock={2}>
+          <Typography variant="caption">
+            {" "}
+            *Note: You just need to select, it will automaticly update your
+            current setting in the database, if your selected info are not in
+            database it will create a new one{" "}
+          </Typography>
+        </Box>
+
         <form onSubmit={handleSubmit}>
           <Box sx={{ display: "flex" }}>
             {/* Sidebar */}
-            <Box sx={{ width: "300px", flexShrink: 0, p: 3 }}>
-              <Typography variant="h3" marginBottom={5}>
+            <Box sx={{ width: "300px", flexShrink: 0, paddingBlock: 1 }}>
+              <Typography variant="h3" marginBottom={2}>
                 Estate Host Settings
               </Typography>
-              <Grid container spacing={3}>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
+                  <Typography variant="body1" marginBlock={1}>
+                    Select Region:
+                  </Typography>
+                  <Select
+                    value={selectedRegion}
+                    defaultValue="europe"
+                    onChange={handleRegionChange}
+                    sx={{ width: "12rem", paddingInline: 2 }}
+                  >
+                    <MenuItem value="global">Global</MenuItem>
+                    <MenuItem value="europe">Europe</MenuItem>
+                    <MenuItem value="asia">Asia</MenuItem>
+                  </Select>
+                </Grid>
+                {selectedRegion && (
+                  <Grid item xs={12}>
+                    <Typography variant="body1" marginBlock={1}>
+                      Select Country:
+                    </Typography>
+
+                    <Select
+                      value={selectedCountry}
+                      onChange={handleCountryChange}
+                      sx={{ width: "12rem", paddingInline: 2 }}
+                    >
+                      {currentSettings.countries &&
+                        currentSettings?.countries.map((country) => (
+                          <MenuItem key={country} value={country}>
+                            {country}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </Grid>
+                )}
+                {selectedCountry && (
+                  <Grid item xs={12}>
+                    <Typography variant="body1" marginBlock={1}>
+                      Select Currency:
+                    </Typography>
+                    <Select
+                      value={selectedCurrency}
+                      defaultValue={
+                        currentSettings.currencies &&
+                        currentSettings.currencies.length > 0
+                          ? currentSettings.currencies[0]
+                          : ""
+                      }
+                      onChange={handleCurrencyChange}
+                      sx={{ width: "12rem", paddingInline: 2 }}
+                    >
+                      {currentSettings.currencies &&
+                        currentSettings.currencies.map((currency) => (
+                          <MenuItem key={currency} value={currency}>
+                            {currency}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </Grid>
+                )}
+                {selectedCurrency && (
+                  <Grid item xs={12}>
+                    <Typography variant="body1" marginBlock={1}>
+                      Select Time Zone:
+                    </Typography>
+                    <Select
+                      value={selectedTimeZone}
+                      onChange={handleTimeZoneChange}
+                      sx={{ width: "12rem", paddingInline: 2 }}
+                    >
+                      {currentSettings.timezones &&
+                        currentSettings?.timezones.map((timezone) => (
+                          <MenuItem key={timezone} value={timezone}>
+                            {timezone}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </Grid>
+                )}
+                <Grid item xs={12}>
+                  <Typography variant="body1" marginBlock={1}>
+                    Select Property Category:
+                  </Typography>
+                  <Select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                    sx={{ width: "12rem", paddingInline: 2 }}
+                  >
+                    {category.map((categoryItem, index) => (
+                      <MenuItem key={index} value={categoryItem._id}>
+                        {categoryItem.title}{" "}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+
+                <Grid item xs={12} marginBlock={2}>
                   <TextField
-                    label="Host Cost per Property"
+                    label="Host Cost"
                     type="number"
                     value={hostCost}
-                    variant="outlined"
-                    onChange={(e) => setHostCost(parseFloat(e.target.value))}
+                    onChange={handleHostCostChange}
+                    sx={{ width: "12rem" }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <Checkbox
                     checked={subscriptionActive}
-                    onChange={() => setSubscriptionActive(!subscriptionActive)}
+                    onChange={handleSubscriptionChange}
                   />
                   <Typography variant="caption">
                     Activate Subscription
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body1">Select Region:</Typography>
-                  <Select value={selectedRegion} onChange={handleRegionChange}>
-                    <MenuItem value="global"> Global </MenuItem>
-                    <MenuItem value="australia"> Australia </MenuItem>
-                    {/* Add more regions as needed */}
-                  </Select>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body1">Select Currency:</Typography>
-
-                  <Select
-                    value={selectedCurrency}
-                    onChange={(e) => setSelectedCurrency(e.target.value)}
-                  >
-                    {(currentSettings?.availableCurrencies || []).map(
-                      (currency) => (
-                        <MenuItem
-                          key={currency}
-                          value={currency}
-                          sx={{ whiteSpace: "pre" }}
-                        >
-                          &nbsp;{currency}&nbsp;
-                        </MenuItem>
-                      )
-                    )}
-                  </Select>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body1">Select Time Zone:</Typography>
-                  <Select
-                    value={selectedTimeZone}
-                    onChange={(e) => setSelectedTimeZone(e.target.value)}
-                  >
-                    {(currentSettings?.availableTimeZones || []).map(
-                      (timeZone) => (
-                        <MenuItem
-                          key={timeZone}
-                          value={timeZone}
-                          sx={{ whiteSpace: "pre" }}
-                        >
-                          &nbsp;{timeZone}&nbsp;
-                        </MenuItem>
-                      )
-                    )}
-                  </Select>
-                </Grid>
               </Grid>
             </Box>
-            {/* Main Content */}
+            {/* Table */}
             <Box
               component="main"
               sx={{
                 flexGrow: 1,
                 bgcolor: "background.default",
-                p: 3,
+                paddingBlock: 2,
+                paddingInline: 3,
                 borderRadius: "12px",
               }}
             >
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="current settings">
-                  <TableHead>
+                  <TableHead sx={{ backgroundColor: "#003019" }}>
                     <TableRow>
                       <TableCell colSpan={2}>
-                        <Typography variant="h6">Current Settings</Typography>
+                        <Box display={"flex"}>
+                          <Typography variant="h4" color={"white"} sx={{}}>
+                            Current Settings
+                          </Typography>
+                        </Box>
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -212,12 +405,17 @@ const AirbnbHostSettings = () => {
                       <TableCell component="th" scope="row">
                         Region/Country:
                       </TableCell>
-                      <TableCell>{currentSettings?.selectedRegion}</TableCell>
+                      <TableCell>{currentSettings?.selectedCountry}</TableCell>
                     </TableRow>
-
                     <TableRow>
                       <TableCell component="th" scope="row">
-                        Host Cost:
+                        Category Id:
+                      </TableCell>
+                      <TableCell>{currentSettings?.category}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Host Cost (In percentage):
                       </TableCell>
                       <TableCell>{currentSettings?.hostCost}</TableCell>
                     </TableRow>
@@ -235,6 +433,7 @@ const AirbnbHostSettings = () => {
                       </TableCell>
                       <TableCell>{currentSettings?.selectedCurrency}</TableCell>
                     </TableRow>
+
                     <TableRow>
                       <TableCell component="th" scope="row">
                         Time Zone:
@@ -244,35 +443,43 @@ const AirbnbHostSettings = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              {/* <Box sx={{ p: 3 }}>
-                <h3>Current Settings:</h3>
-                <p style={{ margin: "8px 0" }}>
-                  Host Cost: {currentSettings?.hostCost}
-                </p>
-                <p style={{ margin: "8px 0" }}>
-                  Subscription Active:{" "}
-                  {currentSettings?.subscriptionActive ? "Yes" : "No"}
-                </p>
-                <p style={{ margin: "8px 0" }}>
-                  Currency: {currentSettings?.selectedCurrency}
-                </p>
-                <p style={{ margin: "8px 0" }}>
-                  Time Zone: {currentSettings?.selectedTimeZone}
-                </p>
-              </Box> */}
             </Box>
           </Box>
-          <Box textAlign={"right"}>
-            <br />
-
-            <Button variant="contained" type="submit">
-              Fix this rule
+          <Box textAlign={"right"} marginBlock={3}>
+            <Button type="submit" variant="contained">
+              Fix this Rate
             </Button>
           </Box>
         </form>
+
+        <CustomizedSnackbars
+          open={open}
+          message={message}
+          type={type}
+          onClose={handleClose}
+        />
       </AdminLayout>
     </>
   );
 };
 
 export default AirbnbHostSettings;
+
+{
+  /* <Box sx={{ p: 3 }}>
+    <h3>Current Settings:</h3>
+    <p style={{ margin: "8px 0" }}>
+      Host Cost: {currentSettings?.hostCost}
+    </p>
+    <p style={{ margin: "8px 0" }}>
+      Subscription Active:{" "}
+      {currentSettings?.subscriptionActive ? "Yes" : "No"}
+    </p>
+    <p style={{ margin: "8px 0" }}>
+      Currency: {currentSettings?.selectedCurrency}
+    </p>
+    <p style={{ margin: "8px 0" }}>
+      Time Zone: {currentSettings?.selectedTimeZone}
+    </p>
+  </Box> */
+}

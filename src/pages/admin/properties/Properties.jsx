@@ -5,7 +5,7 @@ import { Box, Chip, Grid, IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // import { Icon } from "@iconify/react";
 import CustomHashLoader from "../../../components/customLoader/CustomHashLoader";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Capitalize from "../../../components/capitalize/Capitalize";
 import { getAllProperties } from "../../../redux/features/AllPropertyForAdminSlice";
 import { MoreHoriz } from "@mui/icons-material";
@@ -20,7 +20,7 @@ const Properties = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // if (properties.length > 0) {

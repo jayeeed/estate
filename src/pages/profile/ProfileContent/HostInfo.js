@@ -48,3 +48,31 @@ export default HostProfileInfo;
 // Make sure to adapt the code to match your project's API endpoints and data structure.
 
 // Let me know if you need further help!
+
+
+<div style={{ display: "flex" }}>
+{/* Left side */}
+<div style={{ flex: 1 }}>
+  <Typography variant="body1">
+    <strong>User Name:</strong> {userInfo.name}
+  </Typography>
+  <Typography variant="body1">
+    <strong>Date of Birth:</strong> {userInfo.regex_data.dob}
+  </Typography>
+  <Typography variant="body1">
+    <strong>Full Name:</strong>{" "}
+    {`${userInfo.personalInfo.firstName} ${userInfo.personalInfo.lastName}`}
+  </Typography>
+</div>
+{/* Right side */}
+<div style={{ flex: 1 }}>
+  <Typography variant="subtitle1" color="textSecondary">
+    <strong>Email:</strong> {userInfo.email}
+  </Typography>
+
+  <Typography variant="body1">
+    <strong>Phone Number:</strong>{" "}
+    {userInfo.personalInfo.phoneNumber}
+  </Typography>
+</div>
+</div>

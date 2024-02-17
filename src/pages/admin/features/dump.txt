@@ -171,3 +171,154 @@ const AirbnbHostSettings = () => {
   
   export default AirbnbHostSettings;
   
+
+
+    // const getRegionSpecificSettings = (region) => {
+  //   switch (region) {
+  //     case "australia":
+  //       return {
+  //         availableCurrencies: ["AUD", "NZD"],
+  //         availableTimeZones: ["Australia/Sydney", "Australia/Melbourne"],
+  //       };
+  //     default:
+  //       // Global settings
+  //       return {
+  //         availableCurrencies: ["USD", "EUR"],
+  //         availableTimeZones: ["UTC", "GMT"],
+  //       };
+  //   }
+  // };
+
+
+
+
+
+
+
+  // import { useState, useEffect } from "react";
+// import axios from "axios";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableRow,
+//   Typography,
+//   TextField,
+//   Button,
+//   CircularProgress,
+//   Box,
+// } from "@mui/material";
+
+// const CategoryComponent = () => {
+//   const [categories, setCategories] = useState([]);
+//   const [newCategory, setNewCategory] = useState("");
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     fetchCategories();
+//   }, []);
+
+//   const fetchCategories = async () => {
+//     try {
+//       const response = await axios.get("/category");
+//       setCategories(response.data.category);
+//       setLoading(false);
+//     } catch (error) {
+//       console.error("Error fetching categories:", error);
+//     }
+//   };
+
+//   const handleAddCategory = async () => {
+//     try {
+//       await axios.post("/category", {
+//         title: newCategory,
+//         icon: "default",
+//         type: "describe",
+//       });
+//       fetchCategories();
+//       setNewCategory("");
+//     } catch (error) {
+//       console.error("Error adding category:", error);
+//     }
+//   };
+
+//   const handleDeleteCategory = async (id) => {
+//     try {
+//       await axios.delete(`/category/${id}`);
+//       fetchCategories();
+//     } catch (error) {
+//       console.error("Error deleting category:", error);
+//     }
+//   };
+
+//   return (
+//     <Box paddingInline={1}>
+//       <Box marginBlock={3}>
+//         <Typography variant="h4" align="left" gutterBottom>
+//           Categories
+//         </Typography>
+//       </Box>
+//       <Table>
+//         <TableHead style={{ backgroundColor: "#f0f0f0" }}>
+//           <TableRow>
+//             <TableCell>Title</TableCell>
+//             <TableCell>Icon</TableCell>
+//             <TableCell>Type</TableCell>
+//             <TableCell>Action</TableCell>
+//           </TableRow>
+//         </TableHead>
+//         <TableBody>
+//           {loading ? (
+//             <TableRow>
+//               <TableCell colSpan={4} align="center">
+//                 <CircularProgress />
+//               </TableCell>
+//             </TableRow>
+//           ) : (
+//             categories.map((category) => (
+//               <TableRow key={category._id}>
+//                 <TableCell>{category.title}</TableCell>
+//                 <TableCell>{category.icon}</TableCell>
+//                 <TableCell>{category.type}</TableCell>
+//                 <TableCell>
+//                   <Button
+//                     variant="outlined"
+//                     color="error"
+//                     onClick={() => handleDeleteCategory(category._id)}
+//                   >
+//                     Delete
+//                   </Button>
+//                 </TableCell>
+//               </TableRow>
+//             ))
+//           )}
+//         </TableBody>
+//       </Table>
+
+//       <Box marginBlock={3}>
+//         <Typography variant="h5" align="center" gutterBottom>
+//           Add New Category
+//         </Typography>
+//         <Box style={{ display: "flex", justifyContent: "center" }}>
+//           <TextField
+//             label="Category Title"
+//             value={newCategory}
+//             onChange={(e) => setNewCategory(e.target.value)}
+//             variant="outlined"
+//           />
+//           <Button
+//             variant="contained"
+//             color="primary"
+//             onClick={handleAddCategory}
+//             style={{ marginLeft: "10px" }}
+//           >
+//             Add Category
+//           </Button>
+//         </Box>
+//       </Box>
+//     </Box>
+//   );
+// };
+
+// export default CategoryComponent;

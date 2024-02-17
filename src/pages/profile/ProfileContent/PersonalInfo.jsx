@@ -75,8 +75,8 @@ const PersonalInfo = () => {
       )}
 
       <Grid container spacing={2}>
-        {tilesPersonal.map((tiles) => (
-          <Grid item xs={12} sx={{ textAlign: "start" }}>
+        {tilesPersonal.map((tiles,index) => (
+          <Grid item xs={12} sx={{ textAlign: "start" }} key={index}>
             <Box
               style={{
                 width: "50%",

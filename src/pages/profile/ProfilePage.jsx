@@ -41,7 +41,7 @@ function ProfilePage() {
   const userInfo = useAuthInfo();
   const userId = userInfo._id;
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -234,7 +234,7 @@ function ProfilePage() {
                   aria-label="Profile Tabs"
                 >
                   <Tab
-                    label="Personal Information"
+                    label="Profile"
                     sx={{
                       fontWeight: "bold",
                       "&:hover, &:focus": {

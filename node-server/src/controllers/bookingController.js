@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const Booking = require("../models/bookingModel");
 const User = require("../models/userModel/userModel");
 const Payment = require("../models/paymentModel");

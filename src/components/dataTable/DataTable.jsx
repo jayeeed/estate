@@ -33,6 +33,7 @@ const DataTable = ({ data, columns }) => {
           marginBottom: "10px",
           display: "flex",
           alignItems: "center",
+          
           justifyContent: "flex-end", // Change to "flex-end" for proper alignment
         }}
       >
@@ -54,7 +55,8 @@ const DataTable = ({ data, columns }) => {
           }}
         />
       </div>
-      <div style={{ height: "100vh", width: "100%" }}>
+      <div style={{ height: "100vh", width: "100%", backgroundColor: "white", borderRadius:8
+    }}>
         <DataGrid
           sx={{ boxShadow: dtheme.palette.boxShadow, border: "none", p: 3 }}
           rows={filteredData}

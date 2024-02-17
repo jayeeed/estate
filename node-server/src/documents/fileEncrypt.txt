@@ -1,0 +1,43 @@
+const fs = require('fs');
+const crypto = require('crypto');
+const path = require('path');
+
+// Function to encrypt and save file
+const encryptAndSaveFile = (fileData, originalFilename, uploadPath) => {
+  // Generate a unique encrypted filename
+  const encryptedFilename = crypto.randomBytes(16).toString('hex') + path.extname(originalFilename);
+
+  // Encrypt the file data (you can adjust the encryption algorithm and key as needed)
+  const cipher = crypto.createCipher('aes-256-cbc', 'yourEncryptionKey');
+  const encryptedData = Buffer.concat([cipher.update(fileData), cipher.final()]);
+
+  // Save the encrypted file to disk
+  fs.writeFileSync(path.join(uploadPath, encryptedFilename), encryptedData);
+
+  return encryptedFilename;
+};
+
+// Function to retrieve and decrypt file
+const retrieveAndDecryptFile = (encryptedFilename, uploadPath) => {
+  // Read the encrypted file from disk
+  const encryptedData = fs.readFileSync(path.join(uploadPath, encryptedFilename));
+
+  // Decrypt the file data
+  const decipher = crypto.createDecipher('aes-256-cbc', 'yourEncryptionKey');
+  const decryptedData = Buffer.concat([decipher.update(encryptedData), decipher.final()]);
+
+  return decryptedData;
+};
+
+// Usage example
+const fileData = fs.readFileSync('path/to/original/file.txt');
+const originalFilename = 'file.txt';
+const uploadPath = 'path/to/upload/folder';
+
+// Encrypt and save the file
+const encryptedFilename = encryptAndSaveFile(fileData, originalFilename, uploadPath);
+console.log('Encrypted filename:', encryptedFilename);
+
+// Retrieve and decrypt the file
+const decryptedData = retrieveAndDecryptFile(encryptedFilename, uploadPath);
+console.log('Decrypted file data:', decryptedData.toString());
