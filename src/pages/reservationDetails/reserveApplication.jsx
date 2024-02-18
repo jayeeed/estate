@@ -1,58 +1,62 @@
-// ReservationRequestForm.jsx
+import React, { useState } from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  FormGroup,
+  FormLabel,
+} from "@mui/material";
 
-import { useState } from "react";
-import axios from "axios";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { useParams } from "react-router-dom";
-import { FormLabel, Box } from "@mui/material";
-import { useTheme } from "@emotion/react";
-
-const ReserveApply = () => {
+const RentalApplicationForm = () => {
   const [guestName, setGuestName] = useState("");
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [additionalDetails, setAdditionalDetails] = useState("");
-  const { propertyId } = useParams();
-  const ctheme = useTheme();
-  console.log(propertyId);
+  const [sharePersonalInfo, setSharePersonalInfo] = useState(false);
+  const [shareEmploymentInfo, setShareEmploymentInfo] = useState(false);
+  const [shareFinancialInfo, setShareFinancialInfo] = useState(false);
+  const [shareRentalHistory, setShareRentalHistory] = useState(false);
+  const [shareBackgroundInfo, setShareBackgroundInfo] = useState(false);
 
   const handleRequestSubmit = async () => {
     try {
-      // Send the reservation request to the server
-      const response = await axios.post("/api/reservation-requests", {
+      const response = await axios.post("YOUR_API_ENDPOINT", {
         guestName,
         checkInDate,
         checkOutDate,
         additionalDetails,
+        sharePersonalInfo,
+        shareFinancialInfo,
+        // Include other form fields as needed
       });
-
-      console.log("Reservation request submitted:", response.data);
-      // You can redirect or show a success message here
+      console.log("Form submitted successfully:", response.data);
+      // Optionally, handle success response here (e.g., show a success message)
     } catch (error) {
-      console.error("Error submitting reservation request:", error);
-      // Handle error, show an error message, or redirect to an error page
+      console.error("Error submitting form:", error);
+      // Optionally, handle error response here (e.g., show an error message)
     }
   };
 
   return (
     <Box
-
+      p={"10px"}
       m={"10px"}
-    //   boxShadow={ctheme.palette.boxShadow}
-      boxShadow={"0px 0px 18px 0px #6363633b"}
+      boxShadow={"0px 0px 14px 0px #6363633b"}
       borderRadius={"20px"}
     >
       <Card>
         <CardContent>
-          <Typography variant="h3">
+          <Typography variant="h3" color={"red"}>
             {" "}
             This property is now in on demand!!!{" "}
           </Typography>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom marginBlock={1}>
             Reservation Request
           </Typography>
           <form>
@@ -64,26 +68,51 @@ const ReserveApply = () => {
               onChange={(e) => setGuestName(e.target.value)}
               required
             />
-            <Box marginBlock={1}>
-              <FormLabel> Check-In Date </FormLabel>
-              <TextField
-                type="date"
-                fullWidth
-                margin="dense"
-                value={checkInDate}
-                onChange={(e) => setCheckInDate(e.target.value)}
-                required
-              />
-              <FormLabel> Check-Out Date </FormLabel>
-              <TextField
-                type="date"
-                fullWidth
-                margin="dense"
-                value={checkOutDate}
-                onChange={(e) => setCheckOutDate(e.target.value)}
-                required
-              />
+            {/* Inline form for Check-In and Check-Out dates */}
+            <Box
+              display={"flex"}
+              spacing={0}
+              textAlign={"center"}
+              justifyContent={"space-between"}
+              marginBlock={1}
+            >
+              <Box width={"48%"}>
+              
+                <TextField
+                
+                  type="date"
+                  value={checkInDate}
+                  onChange={(e) => setCheckInDate(e.target.value)}
+                  required
+                  
+                  onFocus={(e) => (e.target.type = "date")}
+                  onBlur={(e) => (e.target.type = "text")}
+                  InputProps={{
+                    inputProps: {
+                      placeholder: "Check-In",
+                      
+                    },
+                  }}
+                />
+              </Box>
+              <Box width={"48%"}>
+              
+                <TextField
+                  type="date"
+                  value={checkOutDate}
+                  onChange={(e) => setCheckOutDate(e.target.value)}
+                  required
+                  onFocus={(e) => (e.target.type = "date")}
+                  onBlur={(e) => (e.target.type = "text")}
+                  InputProps={{
+                    inputProps: {
+                      placeholder: "Check-Out",
+                    },
+                  }}
+                />
+              </Box>
             </Box>
+
             <TextField
               label="What's the purpose?"
               fullWidth
@@ -93,6 +122,31 @@ const ReserveApply = () => {
               value={additionalDetails}
               onChange={(e) => setAdditionalDetails(e.target.value)}
             />
+            {/* Checkboxes for sharing personal information */}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={sharePersonalInfo}
+                  onChange={(e) => setSharePersonalInfo(e.target.checked)}
+                  color="primary"
+                />
+              }
+              sx={{ marginBlock: 1 }}
+              label="I consent to share my personal information with the property host."
+            />
+            {/* Checkboxes for other sections */}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={sharePersonalInfo}
+                  onChange={(e) => setShareFinancialInfo(e.target.checked)}
+                  color="primary"
+                />
+              }
+              sx={{ marginBlock: 1 }}
+              label="I consent to share my financial information with the property host."
+            />
+            {/* Add similar checkboxes for other sections such as employment, financial, rental history, background info */}
             <Button
               type="button"
               variant="contained"
@@ -110,4 +164,4 @@ const ReserveApply = () => {
   );
 };
 
-export default ReserveApply;
+export default RentalApplicationForm;

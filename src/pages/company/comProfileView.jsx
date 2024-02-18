@@ -13,6 +13,10 @@ import {
   Tab,
 } from "@mui/material";
 import "./pany.css"; // Import the external CSS file
+import { useAuthInfo } from "../../helpers/AuthCheck";
+import axios from "axios";
+
+
 
 // Custom TabPanel component
 // eslint-disable-next-line react/prop-types
@@ -32,22 +36,70 @@ const CustomTabPanel = ({ children, value, index, ...other }) => {
 
 const CompanyProfilePanels = () => {
   const [value, setValue] = useState(0);
+  const [companyData, setCompanyData] = useState(null);
+  const userInfo = useAuthInfo();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  useEffect(() => {
+    const fetchCompanyData = async () => {
+      try {
+        const response = await axios.get(`/user/companies/${userInfo._id}`);
+        setCompanyData(response.data);
+      } catch (error) {
+        console.error("Error fetching company data:", error);
+      }
+    };
+
+    fetchCompanyData();
+  }, []); // Empty dependency array to ensure the effect runs only once
+
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("/get-all-jobs"); // Replace '/api/jobs' with your actual endpoint
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+   
+    const fetchProperties = async () => {
+      try {
+        const response = await axios.get(`/user/properties/${userInfo._id}`);
+        setProperties(response.data.properties);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching properties:", error);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={0}>
       {/* Left side content */}
       <Grid item xs={12} sm={7} md={8}>
-        <Box className="root" marginBlock={2}>
+        <Box className="root" marginBlock={2} marginInline={1}>
           <CardMedia
             component="img"
             alt="Banner"
             height="250px"
             image="src/pages/company/assets/house.jpg"
             className="banner"
+            sx={{ borderRadius: 4}}
           />
           <Box className="content" display={"block"} position={"relative"}>
             <Box
@@ -76,6 +128,22 @@ const CompanyProfilePanels = () => {
               <Typography variant="body1">
                 Address: Science lab, Dhaka-1205{" "}
               </Typography>
+              {/* 
+              {companyData.map((company) => (
+                <>
+
+                  <Typography gutterBottom variant="h4" component="div">
+                    {company.companyName}
+                  </Typography>
+                  <Typography variant="body1">
+                    Registration Number: {company.companyRegistrationNumber}
+                  </Typography>
+                  <Typography variant="body1">
+                    Address: {company.companyAddress}
+                  </Typography>
+                </>
+              ))} */}
+
               <Typography variant="body1" className="details">
                 History: Lorem ipsum dolor sit amet consectetur adipisicing
                 elit. Minima, ratione necessitatibus ducimus eaque incidunt
@@ -142,8 +210,34 @@ const CompanyProfilePanels = () => {
                 repudiandae, nulla quam mollitia sit quo?
               </Typography>
             </CustomTabPanel>
-
+            {/* this is for Job  */}
             <CustomTabPanel value={value} index={2}>
+              {/* <Grid container spacing={3}>
+      {jobs.map(job => (
+        <Grid item key={job._id} xs={12} sm={6} md={4}>
+          <Card sx={{ height: '100%' }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {job.jobTitle}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Company: {job.companyName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Location: {job.location}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Start Date: {new Date(job.startDate).toLocaleDateString()}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Description: {job.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid> */}
+
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={8} md={6}>
                   <Card sx={{ marginBottom: 2 }}>
@@ -235,7 +329,29 @@ const CompanyProfilePanels = () => {
       {/* Right side property cards */}
       <Grid item xs={12} sm={5} md={4}>
         <Box marginInline={2}>
-          <Card sx={{ marginBlock: 2 }}>
+          {properties.map((property,index) => (
+            <Card key={index} sx={{ marginBlock: 2, borderRadius: 4 }}>
+              <CardMedia
+                component="img"
+                alt={property.title}
+                height="200"
+                sx={{ objectFit: "cover" }}
+                image={property.images[0].url}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h4" component="div">
+                  {property.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {property.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+
+        <Box marginInline={2}>
+          <Card sx={{ marginBlock: 2, borderRadius: 4 }}>
             <CardMedia
               component="img"
               alt="Property 1"
@@ -251,7 +367,7 @@ const CompanyProfilePanels = () => {
               </Typography>
             </CardContent>
           </Card>
-          <Card sx={{ marginBlock: 2 }}>
+          <Card sx={{ marginBlock: 2, borderRadius: 4 }}>
             <CardMedia
               component="img"
               alt="Property 1"

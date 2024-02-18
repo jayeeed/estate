@@ -230,7 +230,6 @@ const Reserve = ({ propertyValues }) => {
   };
 
   return (
-    <div>
       <Box
         p={"20px"}
         m={"10px"}
@@ -569,7 +568,7 @@ const Reserve = ({ propertyValues }) => {
           </Typography>
         </Box>
       </Box>
-    </div>
+    
   );
 };
 
