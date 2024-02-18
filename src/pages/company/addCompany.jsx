@@ -138,7 +138,7 @@ const createCompanyProfile = () => {
                       required
                     />
                   </Grid>
-                  {/* <Grid
+                  <Grid
                     item
                     xs={4}
                     display={"flex"}
@@ -177,7 +177,7 @@ const createCompanyProfile = () => {
                         Upload Banner
                       </Button>
                     </label>
-                  </Grid> */}
+                  </Grid>
                 </Grid>
 
                 {/* Bank Registration for Tokens */}
