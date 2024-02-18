@@ -26,6 +26,7 @@ const createCompanyProfile = () => {
   const [bankAccountNumber, setBankAccountNumber] = useState("");
   const [additionalDetails, setAdditionalDetails] = useState("");
   const [appreciationDetails, setAppreciationDetails] = useState("");
+  const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [letter, setLetter] = useState("");
 
@@ -57,7 +58,7 @@ const createCompanyProfile = () => {
   const handleSubmit = async () => {
     try {
       // Your server endpoint for saving data
-      const endpoint = "http://localhost:5050/api/add-company";
+      const endpoint = `${VITE_API_BASE_URL}/add-company`;
 
       // Create a FormData object to handle file uploads
       const formData = new FormData();
@@ -68,17 +69,17 @@ const createCompanyProfile = () => {
       formData.append("additionalDetails", additionalDetails);
       formData.append("appreciationDetails", appreciationDetails);
 
-      // // Append logo file if selected
-      // const logoInput = document.getElementById("logo-upload");
-      // if (logoInput.files.length > 0) {
-      //   formData.append("logo", logoInput.files[0]);
-      // }
+      // Append logo file if selected
+      const logoInput = document.getElementById("logo-upload");
+      if (logoInput.files.length > 0) {
+        formData.append("logo", logoInput.files[0]);
+      }
 
-      // // Append banner file if selected
-      // const bannerInput = document.getElementById("banner-upload");
-      // if (bannerInput.files.length > 0) {
-      //   formData.append("banner", bannerInput.files[0]);
-      // }
+      // Append banner file if selected
+      const bannerInput = document.getElementById("banner-upload");
+      if (bannerInput.files.length > 0) {
+        formData.append("banner", bannerInput.files[0]);
+      }
 
       // Make a POST request to the server
       const response = await fetch(endpoint, {
@@ -101,12 +102,13 @@ const createCompanyProfile = () => {
   return (
     <>
       {/* <DashboardLayout title={"Company info"}> */}
-      <Grid container spacing={2} height={"100vh"}>
+      <Grid container spacing={0} height={"100vh"}>
         <Grid item xs={6}>
           <Container maxWidth="md">
             <Box
               sx={{
                 marginTop: 1,
+                paddingInline: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "start",
@@ -235,15 +237,13 @@ const createCompanyProfile = () => {
         </Grid>
 
         <Grid item xs={6}>
-          <Box>
-            {/* Replace placeholder values with actual data */}
-            <HostLetterTemplate
-              propertyManagementCompany={companyName}
-              propertyCompanyAddress={address}
-              additionalDetails={additionalDetails}
-              appreciationDetails={appreciationDetails}
-            />
-          </Box>
+          {/* Replace placeholder values with actual data */}
+          <HostLetterTemplate
+            propertyManagementCompany={companyName}
+            propertyCompanyAddress={address}
+            additionalDetails={additionalDetails}
+            appreciationDetails={appreciationDetails}
+          />
         </Grid>
       </Grid>
     </>

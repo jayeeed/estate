@@ -175,7 +175,7 @@ export default function ReservationDetails() {
 
   return (
     <AppLayout>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Grid container spacing={4}>
           {loading ? (
             <CustomHashLoader />
