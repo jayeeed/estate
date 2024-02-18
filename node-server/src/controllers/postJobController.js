@@ -3,11 +3,17 @@ const PostJobModel = require("../models/postJobModel");
 // Controller function to create a new job posting
 exports.createJob = async (req, res, next) => {
   try {
-    const { company, jobTitle, companyName, location, startDate, description } =
-      req.body;
+    const {
+      companyId,
+      jobTitle,
+      companyName,
+      location,
+      startDate,
+      description,
+    } = req.body;
 
     const job = await PostJobModel.create({
-      company,
+      companyId,
       jobTitle,
       companyName,
       location,

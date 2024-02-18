@@ -5,13 +5,32 @@ const subCompanySchema = new mongoose.Schema(
     companyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
+      required: true,
     },
-    subCompanyName: String,
-    subCompanyRegistrationNumber: String,
-    subCompanybankAccountNumber: String,
-    subCompanyAddress: String,
-    subCompanyAdditionalDetails: String,
-    subCompanyAppreciationDetails: String,
+    subCompanyName: {
+      type: String,
+      required: true,
+    },
+    subCompanyRegistrationNumber: {
+      type: String,
+      required: true,
+    },
+    subCompanybankAccountNumber: {
+      type: String,
+      required: true,
+    },
+    subCompanyAddress: {
+      type: String,
+      required: true,
+    },
+    subCompanyAdditionalDetails: {
+      type: String,
+      required: true,
+    },
+    subCompanyAppreciationDetails: {
+      type: String,
+      required: true,
+    },
     subCompanyLogo: {
       type: String,
       required: false,
