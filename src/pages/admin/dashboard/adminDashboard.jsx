@@ -11,90 +11,104 @@ const AdminDashboard = () => {
     <AdminLayout title={"Admin Dashborad"}>
       <Grid container spacing={2}>
         <Grid item lg={8}>
-
-        </Grid>
-        <Grid item xs={12}  md={8} lg={4} justifyContent={"end"} justifyItems={"end"} paddingInline={0}>
-        <HostCostView />
-        </Grid>
-
-
-        {/* <Grid item xs={12}>
-          <h4>Finance info</h4>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <DashboardCard
-            icon={"clarity:dashboard-line"}
-            title={"Spend this month"}
-            subTitle={"Total"}
-            countNumber={"$654"}
-            color={"#2980b9"}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <DashboardCard
-            icon={"mdi:dollar"}
-            title={"Earnings"}
-            subTitle={"Total"}
-            countNumber={"$642.39"}
-            color={"#27ae60"}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card
-            sx={{
-              boxShadow:"14px 17px 40px 4px rgba(112, 144, 176, 0.18)",
-              borderRadius: "20px",
-              position: "relative",
-              width: "100%",
-              height: "100%",
-              bgcolor: "#ffffff",
-            }}
-          >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              p={3}
-              boxShadow={"14px 17px 40px 4px rgba(112, 144, 176, 0.18)"}
-              bgcolor={"#ffffff"}
-              borderRadius={"20px"}
-            >
-              <Box
-                p={1}
-                mr={2}
-                width={"40px"}
-                height={"40px"}
-                borderRadius={"50px"}
-                bgcolor={"#e0eeff"}
-                display={"flex"}
-                textAlign={"center"}
-                alignItems={"center"}
-                justifyContent={"center"}
-              >
-                <MonetizationOnOutlined
-                  sx={{ fontSize: "30px", color: "#8e44ad" }}
-                />
-              </Box>
-              <Box>
-                <Typography
-                  variant="body1"
-                  fontSize={"14px"}
-                  color={"#7f7f7f"}
-                  fontWeight={"600"}
-                >
-                  Sales
-                </Typography>
-                <Typography variant="h5" fontWeight={"bold"}>
-                  $574.34
-                </Typography>
-                <Typography variant="body1" fontSize={"14px"} color={"#7f7f7f"}>
-                  <span style={{ color: "#27ae60" }}> +23%</span> since last
-                  month
-                </Typography>
-              </Box>
+          <Box fullWidth sx={{ mt: 3, display: "flex" }}>
+            <Grid container spacing={0}  ></Grid>
+              <h4>Finance info</h4>
+           
+            <Grid item  >
+              <DashboardCard
+                icon={"clarity:dashboard-line"}
+                title={"Spend this month"}
+                subTitle={"Total"}
+                countNumber={"$654"}
+                color={"#2980b9"}
+              />
+            </Grid>
+            <Box  >
+              <DashboardCard
+                icon={"mdi:dollar"}
+                title={"Earnings"}
+                subTitle={"Total"}
+                countNumber={"$642.39"}
+                color={"#27ae60"}
+              />
             </Box>
-          </Card>
+            <Box  >
+              <Card
+                sx={{
+                  boxShadow: "14px 17px 40px 4px rgba(112, 144, 176, 0.18)",
+                  borderRadius: "20px",
+                  position: "relative",
+                  width: "100%",
+                  height: "100%",
+                  bgcolor: "#ffffff",
+                }}
+              >
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                  p={3}
+                  boxShadow={"14px 17px 40px 4px rgba(112, 144, 176, 0.18)"}
+                  bgcolor={"#ffffff"}
+                  borderRadius={"20px"}
+                >
+                  <Box
+                    p={1}
+                    mr={2}
+                    width={"40px"}
+                    height={"40px"}
+                    borderRadius={"50px"}
+                    bgcolor={"#e0eeff"}
+                    display={"flex"}
+                    textAlign={"center"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                  >
+                    <MonetizationOnOutlined
+                      sx={{ fontSize: "30px", color: "#8e44ad" }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="body1"
+                      fontSize={"14px"}
+                      color={"#7f7f7f"}
+                      fontWeight={"600"}
+                    >
+                      Sales
+                    </Typography>
+                    <Typography variant="h5" fontWeight={"bold"}>
+                      $574.34
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      fontSize={"14px"}
+                      color={"#7f7f7f"}
+                    >
+                      <span style={{ color: "#27ae60" }}> +23%</span> since last
+                      month
+                    </Typography>
+                  </Box>
+                </Box>
+              </Card>
+            </Box>
+          </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sx={{ mt: 3 }}>
+
+        <Grid
+          item
+          xs={12}
+          md={8}
+          lg={4}
+          justifyContent={"end"}
+          justifyItems={"end"}
+          paddingInline={0}
+        >
+          <HostCostView />
+        </Grid>
+
+        {/* <Grid item xs={12} sx={{ mt: 3 }}>
           <h4>User & properties info</h4>
         </Grid>
         <Grid item xs={12} md={4}>

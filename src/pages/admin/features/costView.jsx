@@ -12,6 +12,8 @@ import {
   Paper,
 } from '@mui/material';
 
+
+
 const HostCostView = () => {
   const [hostCosts, setHostCosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,15 +32,24 @@ const HostCostView = () => {
     }
   };
 
+
   return (
     <Box marginBlock={2} marginInline={1} >
-      <Typography variant="h3" marginBlock={2}>Cost view</Typography>
+      <Typography variant="h4" fontWeight={"bold"} marginBlock={2}>Cost view</Typography>
       <Box>
         {loading ? (
           <Typography>Loading...</Typography>
         ) : (
-          <TableContainer component={Paper}  style={{ width: '100%',borderRadius:8 }}>
-            <Table>
+          <TableContainer component={Paper}   sx={{
+            width: '100%',
+            maxHeight: 400,
+            borderRadius: 4,
+            overflowY: 'auto',
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+          }}>
+            <Table stickyHeader>
               <TableHead >  
               {/* style={{ backgroundColor: "#f0f0f0"  }} */}
                 <TableRow>

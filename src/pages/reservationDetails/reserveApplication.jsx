@@ -23,10 +23,12 @@ const RentalApplicationForm = () => {
   const [shareFinancialInfo, setShareFinancialInfo] = useState(false);
   const [shareRentalHistory, setShareRentalHistory] = useState(false);
   const [shareBackgroundInfo, setShareBackgroundInfo] = useState(false);
+  const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
   const handleRequestSubmit = async () => {
     try {
-      const response = await axios.post("YOUR_API_ENDPOINT", {
+      const response = await axios.post(`VITE_API_BASE_URL/${"endpoint"}`, {
         guestName,
         checkInDate,
         checkOutDate,
