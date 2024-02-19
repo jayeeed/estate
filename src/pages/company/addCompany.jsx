@@ -18,25 +18,26 @@ import { AddCircleRounded } from "@mui/icons-material";
 
 // const PropertyList = () => {
 const CreateCompanyProfile = () => {
-  const [companyName, setCompanyName] = useState('');
-  const [registrationNumber, setRegistrationNumber] = useState('');
-  const [bankAccountNumber, setBankAccountNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [additionalDetails, setAdditionalDetails] = useState('');
-  const [appreciationDetails, setAppreciationDetails] = useState('');
-  const [logoFile, setLogoFile] = useState(null);
-  const [bannerFile, setBannerFile] = useState(null);
+  const [companyName, setCompanyName] = useState("");
+  const [companyRegistrationNumber, setCompanyRegistrationNumber] =
+    useState("");
+  const [companyBankAccountNumber, setCompanyBankAccountNumber] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyAdditionalDetails, setCompanyAdditionalDetails] = useState("");
+  const [companyAppreciationDetails, setCompanyAppreciationDetails] =
+    useState("");
+  const [companyLogo, setCompanyLogo] = useState(null);
+  const [companyBanner, setCompanyBanner] = useState(null);
 
   const handleLogoUpload = (e) => {
     const file = e.target.files[0];
-    setLogoFile(file);
+    setCompanyLogo(file);
   };
 
   const handleBannerUpload = (e) => {
     const file = e.target.files[0];
-    setBannerFile(file);
+    setCompanyBanner(file);
   };
-
 
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -46,9 +47,9 @@ const CreateCompanyProfile = () => {
     const formattedLetter = `
       Dear Tenats,
 
-      I am writing to express my sincere appreciation for the outstanding service provided by ${companyName}. As a tenant, I have experienced exceptional professionalism and dedication from your team, making my stay at ${address} truly enjoyable.
+      I am writing to express my sincere appreciation for the outstanding service provided by ${companyName}. As a tenant, I have experienced exceptional professionalism and dedication from your team, making my stay at ${companyAddress} truly enjoyable.
 
-      ${appreciationDetails}
+      ${companyAppreciationDetails}
 
       The attention to detail and prompt response to any concerns have truly set ${companyName} apart. I feel fortunate to be a part of a community managed by such a dedicated and reliable property management company.
 
@@ -63,13 +64,15 @@ const CreateCompanyProfile = () => {
     // Remove HTML tags using a regular expression
     const strippedLetter = formattedLetter.replace(/<\/?[^>]+(>|$)/g, "");
     setLetter(strippedLetter);
-  }, [companyName, address, appreciationDetails, additionalDetails]);
-
-
+  }, [
+    companyName,
+    companyAddress,
+    companyAppreciationDetails,
+    companyAdditionalDetails,
+  ]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-
 
   // Here you can send the formData to your backend for further processing
   // For example, using fetch or axios to send a POST request to your API endpoint
@@ -91,28 +94,29 @@ const CreateCompanyProfile = () => {
       // Your server endpoint for saving data
       const endpoint = `${VITE_API_BASE_URL}/add-company`;
 
-
       // Form data
       const formData = {
         companyName,
-        registrationNumber,
-        bankAccountNumber,
-        address,
-        additionalDetails,
-        appreciationDetails,
-        logoFile,
-        bannerFile,
+        companyRegistrationNumber,
+        companyBankAccountNumber,
+        companyAddress,
+        companyAdditionalDetails,
+        companyAppreciationDetails,
+        // companyLogo,
+        // companyBanner,
       };
 
       // Log the form data for demonstration purposes
-      console.log('Form Data:', formData);
+      console.log("Form Data:", formData);
 
       // Make a POST request to the server
       const response = await fetch(endpoint, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-
 
       // Check if the request was successful (status code 200-299)
       if (response.ok) {
@@ -136,15 +140,19 @@ const CreateCompanyProfile = () => {
               sx={{
                 marginTop: 1,
                 paddingInline: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'start',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
               }}
             >
               <Typography component="heading" variant="h2">
                 Company Registration
               </Typography>
-              <form onSubmit={handleSubmit} encType="multipart/form-data" style={{ marginTop: 1 }}>
+              <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                style={{ marginTop: 1 }}
+              >
                 <Grid container spacing={2}>
                   <Grid item xs={8}>
                     {/* Company Details */}
@@ -160,8 +168,10 @@ const CreateCompanyProfile = () => {
                       label="Registration Number"
                       fullWidth
                       margin="normal"
-                      value={registrationNumber}
-                      onChange={(e) => setRegistrationNumber(e.target.value)}
+                      value={companyRegistrationNumber}
+                      onChange={(e) =>
+                        setCompanyRegistrationNumber(e.target.value)
+                      }
                       required
                     />
                   </Grid>
@@ -209,25 +219,20 @@ const CreateCompanyProfile = () => {
                   </Grid>
                 </Grid>
 
-
-
-
-
-
                 <TextField
                   label="Bank Account Number"
                   fullWidth
                   margin="normal"
-                  value={bankAccountNumber}
-                  onChange={(e) => setBankAccountNumber(e.target.value)}
+                  value={companyBankAccountNumber}
+                  onChange={(e) => setCompanyBankAccountNumber(e.target.value)}
                   required
                 />
                 <TextField
-                  label="Address"
+                  label="companyAddress"
                   fullWidth
                   margin="normal"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={companyAddress}
+                  onChange={(e) => setCompanyAddress(e.target.value)}
                   required
                 />
                 <TextField
@@ -236,8 +241,8 @@ const CreateCompanyProfile = () => {
                   multiline
                   rows={4}
                   margin="normal"
-                  value={additionalDetails}
-                  onChange={(e) => setAdditionalDetails(e.target.value)}
+                  value={companyAdditionalDetails}
+                  onChange={(e) => setCompanyAdditionalDetails(e.target.value)}
                 />
                 <TextField
                   label="Appreciation Details"
@@ -245,10 +250,11 @@ const CreateCompanyProfile = () => {
                   multiline
                   rows={4}
                   margin="normal"
-                  value={appreciationDetails}
-                  onChange={(e) => setAppreciationDetails(e.target.value)}
+                  value={companyAppreciationDetails}
+                  onChange={(e) =>
+                    setCompanyAppreciationDetails(e.target.value)
+                  }
                 />
-
 
                 <Button
                   type="submit"
@@ -267,9 +273,9 @@ const CreateCompanyProfile = () => {
           {/* Replace placeholder values with actual data */}
           <HostLetterTemplate
             propertyManagementCompany={companyName}
-            propertyCompanyAddress={address}
-            additionalDetails={additionalDetails}
-            appreciationDetails={appreciationDetails}
+            propertyCompanycompanyAddress={companyAddress}
+            companyAdditionalDetails={companyAdditionalDetails}
+            companyAppreciationDetails={companyAppreciationDetails}
           />
         </Grid>
       </Grid>
