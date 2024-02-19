@@ -148,16 +148,51 @@ exports.getPropertyAllDetails = async (req, res, next) => {
 
 // Query properties where status is "active"
 // eslint-disable-next-line no-undef
+// exports.getActiveProperties = async (req, res, next) => {
+//   try {
+//     const activeProperties = await AllProperty.find({ status: { $in: ["active", "on-demand"] } });
+
+
+//     return resReturn(res, 200, { activeProperties });
+//   } catch (error) {
+//     return resReturn(res, 500, { error: error.message });
+//   }
+// };
+
+
+const PAGE_SIZE_DEFAULT = 20;
+
 exports.getActiveProperties = async (req, res, next) => {
   try {
-    const activeProperties = await AllProperty.find({ status: { $in: ["active", "on-demand"] } });
+    const page = parseInt(req.query.page) || 1; // Parse the page query parameter, default to 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || PAGE_SIZE_DEFAULT; // Parse the pageSize query parameter, default to 20 if not provided
 
+    // Calculate the skip value for pagination
+    const skip = (page - 1) * pageSize;
 
-    return resReturn(res, 200, { activeProperties });
+    // Query active properties with pagination
+    const activeProperties = await AllProperty.find({ status: { $in: ["active", "on-demand"] } })
+      .skip(skip)
+      .limit(pageSize);
+
+    // Count total number of active properties
+    const totalProperties = await AllProperty.countDocuments({ status: { $in: ["active", "on-demand"] } });
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalProperties / pageSize);
+
+    // Return paginated data
+    return resReturn(res, 200, { activeProperties, totalPages });
   } catch (error) {
     return resReturn(res, 500, { error: error.message });
   }
 };
+
+
+
+
+
+
 
 // Update property
 exports.updateProperty = async (req, res, next) => {

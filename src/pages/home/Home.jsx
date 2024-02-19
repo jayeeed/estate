@@ -55,11 +55,36 @@ export default function Home() {
  
 
   const dispatch = useDispatch();
-  const { properties } = useSelector((state) => state.properties);
+  // const { properties } = useSelector((state) => state.properties);
 
   const [matchedProperties, setMatchedProperties] = useState("");
   const [loading, setLoading] = useState(false);
   const userInfo = useAuthInfo();
+
+  const { properties, totalPages } = useSelector((state) => state.properties);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // Set default page size
+
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getActiveProperties({ page: currentPage, pageSize }))
+      .then(() => setLoading(false))
+      .catch((error) => {
+        console.error('Error fetching active properties:', error);
+        setLoading(false);
+      });
+  }, [dispatch, currentPage, pageSize]);
+
+  const handleScroll = () => {
+    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
+    if (bottom && currentPage < totalPages && !loading) {
+      setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
+    }
+  };
+
+
+
 
   const [recommended_properties, setrecommended_properties] = useState([]);
 
@@ -132,90 +157,70 @@ export default function Home() {
     setOpenMap(false);
   };
 
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
+
+
+
+
+
+
   return (
     <AppLayout>
       <>
-        <Container maxWidth="xl">
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <h3 style={{ marginTop: "10px" }}>Active Properties</h3>
+      <Container maxWidth="xl">
+      <Grid container spacing={4}>
+        {loading && currentPage === 1 ? (
+          <CustomHashLoader />
+        ) : properties && properties.length > 0 ? (
+          properties.map((data, index) => (
+            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+              <ReservationCard
+                propertyId={data._id}
+                matchedProperties={matchedProperties}
+                image1={data.images[0]?.url}
+                image2={data.images[1]?.url}
+                image3={data.images[2]?.url}
+                title={`${data.located.address?.state}, ${data.located.address?.country}`}
+                subtitle={data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}
+                price={data.price}
+                review={data.review}
+              />
             </Grid>
-            {loading ? (
-              <CustomHashLoader />
-            ) : (
-              <>
-                {properties && properties.length > 0 ? (
-                  properties
-                    // .filter((data) => data.status === "active")
-                    .map((data, index) => (
-                      <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                        <ReservationCard
-                          propertyId={data._id}
-                          matchedProperties={matchedProperties}
-                          image1={data.images[0]?.url}
-                          image2={data.images[1]?.url}
-                          image3={data.images[2]?.url}
-                          title={`${data.located.address?.state}, ${data.located.address?.country}`}
-                          subtitle={
-                            data.title.length > 60
-                              ? `${data.title.substring(0, 60)}...`
-                              : data.title
-                          }
-                          price={data.price}
-                          // review={data.review.overAllRating}
-                          review={data.review}
-                        />
-                      </Grid>
-                    ))
-                ) : (
-                  <CustomHashLoader />
-                )}
-              </>
-            )}
+          ))
+        ) : (
+          <p>No properties found.</p>
+        )}
+      </Grid>
+      {loading && currentPage > 1 && <CustomHashLoader />} {/* Show loader when loading more properties */}
+    </Container>
 
-            {/* Display recommended properties */}
-            {/* fixed the bug of recomended id issue for jayeed */}
 
-            {recommended_properties && recommended_properties.length > 0 ? (
-              <Grid item xs={12}>
-                <h3 style={{ marginTop: "10px" }}>Recommended Properties</h3>
-              </Grid>
-            ) : (
-              ""
-            )}
-            {loading ? (
-              <CustomHashLoader />
-            ) : (
-              <>
-                {recommended_properties && recommended_properties.length > 0
-                  ? recommended_properties.map((propertyId, index) => (
-                      <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                        {/* Render your recommended property using the propertyId */}
-                        <ReservationCard propertyId={propertyId} />
-                      </Grid>
-                    ))
-                  : ""}
-              </>
-            )}
 
-            <Grid item xs={12}>
-              <h3 style={{ marginTop: "10px" }}>Demo Properties</h3>
-            </Grid>
-            {images.map((card, index) => (
-              <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                <ReservationCardCopy
-                  image1={card.image1}
-                  image2={card.image2}
-                  image3={card.image3}
-                  title={"Chaing Rai, Thailand"}
-                  subtitle={"29 km to Lam Nam Kok National Park Aug 19 - 24"}
-                  price={card.price}
-                  review={"4.9"}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <Box
           position={"fixed"}
           sx={{
