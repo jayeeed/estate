@@ -158,7 +158,7 @@ const CategoryComponent = () => {
 
             <div>
               <Typography variant="h5" align="left" gutterBottom>
-                {editMode ? "Update Category" : "then choose"}
+                {editMode ? "Update Category" : "Actions"}
               </Typography>
               {editMode ? (
                 <>

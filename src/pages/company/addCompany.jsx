@@ -67,6 +67,7 @@ const createCompanyProfile = () => {
       formData.append("address", address);
       formData.append("bankAccountNumber", bankAccountNumber);
       formData.append("additionalDetails", additionalDetails);
+      formData.append("letter", letter);
       formData.append("appreciationDetails", appreciationDetails);
 
       // Append logo file if selected
