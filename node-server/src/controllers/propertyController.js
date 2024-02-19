@@ -181,8 +181,9 @@ exports.getActiveProperties = async (req, res, next) => {
     // Calculate total pages
     const totalPages = Math.ceil(totalProperties / pageSize);
 
+
     // Return paginated data
-    return resReturn(res, 200, { activeProperties, totalPages });
+    return resReturn(res, 200, { activeProperties, totalPages } );
   } catch (error) {
     return resReturn(res, 500, { error: error.message });
   }

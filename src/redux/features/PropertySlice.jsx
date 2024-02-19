@@ -5,9 +5,10 @@
 // Async action to get properties with pagination
 export const getActiveProperties = createAsyncThunk(
   "properties/getActiveProperties",
-  async ({ page, pageSize = 20 }, { rejectWithValue }) => {
+  async ({ page =1, pageSize = 20 }, { rejectWithValue }) => {
     try {
       const response = await getApi(`/getActiveProperties?page=${page}&pageSize=${pageSize}`);
+      console.log(response.data)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.error);
@@ -41,7 +42,7 @@ export const getActiveProperties = createAsyncThunk(
         })
         .addCase(getActiveProperties.fulfilled, (state, action) => {
           state.status = "succeeded";
-          state.properties = action.payload.properties;
+          state.properties = action.payload.activeProperties;
           state.totalPages = action.payload.totalPages;
         })
         .addCase(getActiveProperties.rejected, (state, action) => {
