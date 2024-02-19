@@ -61,26 +61,8 @@ export default function Home() {
   const { properties } = useSelector((state) => state.properties);
   // console.log(properties)
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Set default page size
-
-  useEffect(() => {
-    setLoading(true);
-    dispatch(getActiveProperties({ page: currentPage, pageSize }))
-      .then(() => setLoading(false))
-      .catch((error) => {
-        console.error("Error fetching active properties:", error);
-        setLoading(false);
-      });
-  }, [dispatch, currentPage, pageSize]);
-
-  const handleScroll = () => {
-    const bottom =
-      Math.ceil(window.innerHeight + window.scrollY) >=
-      document.documentElement.scrollHeight;
-    if (bottom && currentPage < totalPages && !loading) {
-      setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
-    }
-  };
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(12); // Set default page size
 
   const [recommended_properties, setrecommended_properties] = useState([]);
 
@@ -134,20 +116,45 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useEffect(() => {
+  //   // Check if properties is an empty array or "falsy"
+  //   // if (!properties || (Array.isArray(properties) && properties.length === 0)) {
+
+  //   setLoading(true);
+  //   dispatch(getActiveProperties({ page: currentPage, pageSize }));
+
+  //   setLoading(false);
+  //   // }
+  // }, [dispatch, properties]);
+
   useEffect(() => {
-    // Check if properties is an empty array or "falsy"
-    // if (!properties || (Array.isArray(properties) && properties.length === 0)) {
+    if (currentPage > 1) {
+      setLoading(true);
+      dispatch(getActiveProperties({ page: currentPage, pageSize }))
+        .then(() => setLoading(false))
+        .catch((error) => {
+          console.error("Error fetching active properties:", error);
+          setLoading(false);
+        });
+    } else {
+      setLoading(true);
+      dispatch(getActiveProperties({ page: currentPage, pageSize }));
 
-    setLoading(true);
-    dispatch(getActiveProperties({ page: currentPage, pageSize }));
-
-    setLoading(false);
-    // }
-  }, [dispatch, properties]);
+      setLoading(false);
+    }
+  }, [dispatch, currentPage, properties]);
 
   const [openMap, setOpenMap] = useState(false);
   const closeDrawer = () => {
     setOpenMap(false);
+  };
+
+  const handleScroll = () => {
+    const bottom =
+      Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
+    if (bottom && currentPage < totalPages && !loading) {
+      setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
+    }
   };
 
   useEffect(() => {
@@ -185,10 +192,56 @@ export default function Home() {
                 </Grid>
               ))
             ) : (
-              <p>No properties found.</p>
+              <CustomHashLoader />
+            //  <p> No property left </p>
             )}
+          
+         
+    
+            {/* Display recommended properties */}
+            {/* fixed the bug of recomended id issue for jayeed */}
+
+            {recommended_properties && recommended_properties.length > 0 ? (
+              <Grid item xs={12}>
+                <h3 style={{ marginTop: "10px" }}>Recommended Properties</h3>
+              </Grid>
+            ) : (
+              ""
+            )}
+            {loading ? (
+              <CustomHashLoader />
+            ) : (
+              <>
+                {recommended_properties && recommended_properties.length > 0
+                  ? recommended_properties.map((propertyId, index) => (
+                      <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                        {/* Render your recommended property using the propertyId */}
+                        <ReservationCard propertyId={propertyId} />
+                      </Grid>
+                    ))
+                  : ""}
+              </>
+            )}
+
+            <Grid item xs={12}>
+              <h3 style={{ marginTop: "10px" }}>Demo Properties</h3>
+            </Grid>
+            {images.map((card, index) => (
+              <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                <ReservationCardCopy
+                  image1={card.image1}
+                  image2={card.image2}
+                  image3={card.image3}
+                  title={"Chaing Rai, Thailand"}
+                  subtitle={"29 km to Lam Nam Kok National Park Aug 19 - 24"}
+                  price={card.price}
+                  review={"4.9"}
+                />
+              </Grid>
+            ))}
           </Grid>
         </Container>
+
         <Box
           position={"fixed"}
           sx={{
@@ -311,7 +364,7 @@ export default function Home() {
         <ChatButton onClick={toggleChat} />{" "}
         {/* Add the ChatButton component/fahim */}
       </>
-      {loading && currentPage > 1 && <CustomHashLoader />}{" "}
+    
       {/* Show loader when loading more properties */}
       {isChatOpen && <ChatWindow onClose={toggleChat} />}{" "}
       {/* Show the chat window when isChatOpen is true/fahim */}

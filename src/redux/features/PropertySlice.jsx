@@ -8,7 +8,7 @@ export const getActiveProperties = createAsyncThunk(
   async ({ page =1, pageSize = 20 }, { rejectWithValue }) => {
     try {
       const response = await getApi(`/getActiveProperties?page=${page}&pageSize=${pageSize}`);
-      console.log(response.data)
+      // console.log(response.data)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.error);
