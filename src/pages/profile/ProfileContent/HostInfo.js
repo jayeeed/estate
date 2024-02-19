@@ -76,3 +76,63 @@ export default HostProfileInfo;
   </Typography>
 </div>
 </div>
+
+
+
+<Box>
+{/* Left side */}
+<Grid container rowSpacing={1} columnSpacing={3} justifyContent="flex-start">
+  <Grid item xs={6}>
+    <Typography variant="body1" align="right">
+      <strong>User Name:</strong>
+    </Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1">{userInfo.name}</Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1" align="right">
+      <strong>Date of Birth:</strong>
+    </Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1">
+      {userInfo.regex_data.dob}
+    </Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1" align="right">
+      <strong>Full Name:</strong>
+    </Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1">
+      {`${userInfo.personalInfo.firstName} ${userInfo.personalInfo.lastName}`}
+    </Typography>
+  </Grid>
+</Grid>
+
+{/* Right side */}
+<Grid container rowSpacing={1} columnSpacing={3} justifyContent="flex-end">
+  <Grid item xs={6}>
+    <Typography variant="body1" align="right">
+      <strong>Email:</strong>
+    </Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1" align="left">
+      {userInfo.email}
+    </Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1" align="right">
+      <strong>Phone Number:</strong>
+    </Typography>
+  </Grid>
+  <Grid item xs={6}>
+    <Typography variant="body1" align="left">
+      {userInfo.personalInfo.phoneNumber}
+    </Typography>
+  </Grid>
+</Grid>
+</Box>

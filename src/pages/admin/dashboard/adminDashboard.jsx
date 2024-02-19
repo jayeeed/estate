@@ -9,8 +9,8 @@ import HostCostView from "../features/costView";
 const AdminDashboard = () => {
   return (
     <AdminLayout title={"Admin Dashborad"}>
-      <Grid container spacing={2}>
-        <Grid item lg={8}>
+      {/* <Grid container spacing={2}> */}
+        {/* <Grid item lg={8}>
           <Box fullWidth sx={{ mt: 3, display: "flex" }}>
             <Grid container spacing={0}  ></Grid>
               <h4>Finance info</h4>
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
           paddingInline={0}
         >
           <HostCostView />
-        </Grid>
+        </Grid> */}
 
         {/* <Grid item xs={12} sx={{ mt: 3 }}>
           <h4>User & properties info</h4>
@@ -156,7 +156,7 @@ const AdminDashboard = () => {
             color={"#ff0000"}
           />
         </Grid> */}
-      </Grid>
+      {/* </Grid> */}
     </AdminLayout>
   );
 };

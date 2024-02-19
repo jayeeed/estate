@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, useTheme } from "@mui/material";
 import GlobalModalForProfile from "./GlobalModalForProfile";
 import "../ProfilePage.css";
 
 // import { CheckBox, Favorite } from "@mui/icons-material";
 import { useAuthInfo } from "../../../helpers/AuthCheck";
-import { useTheme } from "@emotion/react";
 
 const PersonalInfo = () => {
   const [globalModalForProfile, setGlobalModalForProfile] = useState(false);
@@ -55,20 +54,24 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <Box>
-        <Typography variant="subtitle2">
-          <big> Personal </big> <br />
-          Details to help property managers validate who you are and assess your
+      <Box marginBlock={1}>
+        <Typography variant="body1">
+          <big> Personal </big>
+        
+        </Typography>
+      {" "}
+        <Typography variant="caption" >
+        Details to help property managers validate who you are and assess your
           identity, employment and income.
         </Typography>
-        <br></br>
       </Box>
 
       {isGreen ? (
         <>
-          <Typography>
+          <Typography marginTop={2}>
             You have succesfully Updated your renter profile.
           </Typography>
+          <br/>
         </>
       ) : (
         <br />
@@ -89,12 +92,12 @@ const PersonalInfo = () => {
                 fontSize: "1rem",
                 border: "1px solid",
                 // boxShadow: btheme.palette.boxShadow,
-                color: btheme.heading,
+                color: "white"
               }}
-              variant="outlined"
+              variant={btheme.mixins}
               onClick={handleTiles}
             >
-              <Typography variant={btheme.typography.menuCaption} > {tiles} </Typography>
+             {tiles} 
             </Box>
           </Grid>
         ))}

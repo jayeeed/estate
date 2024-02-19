@@ -58,7 +58,7 @@ function ProfilePage() {
 
       if (!response.ok) {
         console.error(
-          "Failed to send image. Server responded with " + response.status,
+          "Failed to send image. Server responded with " + response.status
         );
         return;
       }
@@ -151,6 +151,12 @@ function ProfilePage() {
                   <Typography variant="h6" gutterBottom>
                     {userInfo.name}
                   </Typography>
+                  <Typography variant="h6" gutterBottom>
+                    {userInfo.email}
+                  </Typography>
+                  <Typography variant="h6" gutterBottom>
+                    {userInfo.personalInfo.phoneNumber}
+                  </Typography>
                   {/* 
                   <Button
                     variant="outlined"
@@ -165,6 +171,94 @@ function ProfilePage() {
                   >
                     Edit Profile
                   </Button> */}
+                </Box>
+              </Paper>
+              <Paper
+                sx={{
+                  boxShadow: 3,
+                  p: 4,
+                  m: 2,
+                  borderRadius: 3,
+                }}
+              >
+                <Box>
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: "bold" }}
+                    gutterBottom
+                  >
+                    Outstanding
+                  </Typography>
+                  <Typography>$5000</Typography>
+                  <Divider />
+
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: "bold" }}
+                    gutterBottom
+                  >
+                    Deposits
+                  </Typography>
+                  <Typography>$8000</Typography>
+                  <Divider />
+
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: "bold" }}
+                    gutterBottom
+                  >
+                    Credits
+                  </Typography>
+                  
+                  <Typography>$1000</Typography>
+                  <Divider />
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ display: "flex", gap: 1 }}
+                    gutterBottom
+                  >
+
+                  </Typography>
+                </Box>
+
+                <Divider
+                  sx={{
+                    m: 2,
+                  }}
+                />
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ display: "flex", gap: 1 }}
+                    gutterBottom
+                  >
+                    Reports
+
+                  </Typography>
+              
+
+                <Divider
+                  sx={{
+                    m: 2,
+                  }}
+                />
+                
+                <Box>
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: "bold" }}
+                    gutterBottom
+                  >
+                    Verify your identity
+                  </Typography>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Before you book or Host on Estate, you’ll need to complete
+                    this step.
+                  </Typography>
+
+                  {/* <Verification /> */}
+                  <Confirmation />
+
+                  {/* userId={ userInfo._id } */}
                 </Box>
               </Paper>
               <Paper
@@ -206,7 +300,7 @@ function ProfilePage() {
                     Verify your identity
                   </Typography>
                   <Typography variant="subtitle1" gutterBottom>
-                    Before you book or Host on Airbnb, you’ll need to complete
+                    Before you book or Host on Estate, you’ll need to complete
                     this step.
                   </Typography>
 
