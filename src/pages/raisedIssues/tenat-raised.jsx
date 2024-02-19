@@ -8,34 +8,39 @@ import { Typography } from "@mui/material";
 
 const IssueSidebar = ({ propertyId }) => {
   const [issueDescription, setIssueDescription] = useState("");
+  const [file, setFile] = useState(null);
   const [isDrawerOpen, setDrawerOpen] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Make an Axios POST request to submit the form data
-      const response = await axios.post("/api/submit-issue", {
-        propertyId,
-        issueDescription,
+      const formData = new FormData();
+      formData.append("propertyId", propertyId);
+      formData.append("issueDescription", issueDescription);
+      formData.append("image", file);
+
+      const response = await axios.post("/api/submit-issue", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      // Assuming your API returns some response data
       console.log("Form submitted successfully:", response.data);
 
-      // Optionally, you can reset the form after submission
       setIssueDescription("");
-
-      // Callback to handle form submission in the parent component
-      //   onFormSubmit(response.data);
+      setFile(null);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleDrawerClose = () => {
     setDrawerOpen(false);
-
   };
 
   return (
@@ -44,10 +49,12 @@ const IssueSidebar = ({ propertyId }) => {
         <Typography variant="h2">Raise Issue</Typography>
         <Box marginBlock={5}>
           {propertyId && (
-            <Typography variant="body1">You are raising an issue for property with ID:
-            <br/> {propertyId}</Typography>
+            <Typography variant="body1">
+              You are raising an issue for property with ID:
+              <br /> {propertyId}
+            </Typography>
           )}
-          <form onSubmit={handleSubmit} style={{ marginBlock:"8px"}}>
+          <form onSubmit={handleSubmit} style={{ marginBlock: "8px" }}>
             <label>
               Issue Description:
               <TextareaAutosize
@@ -57,14 +64,20 @@ const IssueSidebar = ({ propertyId }) => {
                 style={{ width: "100%", marginBottom: "10px" }}
               />
             </label>
+            <label>
+              Upload Image:
+              <input type="file" onChange={handleFileChange} />
+            </label>
             <Button type="submit" variant="contained" color="primary">
               Submit Issue
+            </Button>{" "}
+            <Button
+              onClick={handleDrawerClose}
+              variant="outlined"
+              color="secondary"
+            >
+              Close
             </Button>
-            {" "}
-            <Button onClick={handleDrawerClose} variant="outlined" color="secondary">
-            Close
-          </Button>
-
           </form>
         </Box>
       </Box>
@@ -73,22 +86,3 @@ const IssueSidebar = ({ propertyId }) => {
 };
 
 export default IssueSidebar;
-
-// const handleFormSubmit = async (formData) => {
-//     try {
-//       // Assuming you have a function to handle form submission in the parent component
-//       // (e.g., saving the issue to the database)
-//       console.log('Submitting form data:', formData);
-
-//       // Make a request to submit the issue to the server
-//       const response = await axios.post('/api/submit-issue', formData);
-
-//       // Optionally, you can log or handle the response from the server
-//       console.log('Server response:', response.data);
-
-//       // Reset the selectedPropertyId to close the sidebar
-//       setSelectedPropertyId(null);
-//     } catch (error) {
-//       console.error('Error handling form submission:', error);
-//     }
-//   };
