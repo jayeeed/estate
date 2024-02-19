@@ -17,15 +17,27 @@ import { AddCircleRounded } from "@mui/icons-material";
 // import pic from "./assets/company.jpg"
 
 // const PropertyList = () => {
-const createCompanyProfile = () => {
-  // const [count, setCount] = useState(0);
+const CreateCompanyProfile = () => {
+  const [companyName, setCompanyName] = useState('');
+  const [registrationNumber, setRegistrationNumber] = useState('');
+  const [bankAccountNumber, setBankAccountNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [additionalDetails, setAdditionalDetails] = useState('');
+  const [appreciationDetails, setAppreciationDetails] = useState('');
+  const [logoFile, setLogoFile] = useState(null);
+  const [bannerFile, setBannerFile] = useState(null);
 
-  const [companyName, setCompanyName] = useState("");
-  const [registrationNumber, setRegistrationNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [bankAccountNumber, setBankAccountNumber] = useState("");
-  const [additionalDetails, setAdditionalDetails] = useState("");
-  const [appreciationDetails, setAppreciationDetails] = useState("");
+  const handleLogoUpload = (e) => {
+    const file = e.target.files[0];
+    setLogoFile(file);
+  };
+
+  const handleBannerUpload = (e) => {
+    const file = e.target.files[0];
+    setBannerFile(file);
+  };
+
+
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [letter, setLetter] = useState("");
@@ -53,40 +65,54 @@ const createCompanyProfile = () => {
     setLetter(strippedLetter);
   }, [companyName, address, appreciationDetails, additionalDetails]);
 
-  // ... (your existing code)
 
-  const handleSubmit = async () => {
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+
+  // Here you can send the formData to your backend for further processing
+  // For example, using fetch or axios to send a POST request to your API endpoint
+  // fetch('your-api-endpoint', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(formData),
+  // })
+  //   .then(response => response.json())
+  //   .then(data => console.log('Response from server:', data))
+  //   .catch(error => console.error('Error:', error));
+  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       // Your server endpoint for saving data
       const endpoint = `${VITE_API_BASE_URL}/add-company`;
 
-      // Create a FormData object to handle file uploads
-      const formData = new FormData();
-      formData.append("companyName", companyName);
-      formData.append("registrationNumber", registrationNumber);
-      formData.append("address", address);
-      formData.append("bankAccountNumber", bankAccountNumber);
-      formData.append("additionalDetails", additionalDetails);
-      formData.append("letter", letter);
-      formData.append("appreciationDetails", appreciationDetails);
 
-      // Append logo file if selected
-      const logoInput = document.getElementById("logo-upload");
-      if (logoInput.files.length > 0) {
-        formData.append("logo", logoInput.files[0]);
-      }
+      // Form data
+      const formData = {
+        companyName,
+        registrationNumber,
+        bankAccountNumber,
+        address,
+        additionalDetails,
+        appreciationDetails,
+        logoFile,
+        bannerFile,
+      };
 
-      // Append banner file if selected
-      const bannerInput = document.getElementById("banner-upload");
-      if (bannerInput.files.length > 0) {
-        formData.append("banner", bannerInput.files[0]);
-      }
+      // Log the form data for demonstration purposes
+      console.log('Form Data:', formData);
 
       // Make a POST request to the server
       const response = await fetch(endpoint, {
         method: "POST",
         body: formData,
       });
+
 
       // Check if the request was successful (status code 200-299)
       if (response.ok) {
@@ -110,15 +136,15 @@ const createCompanyProfile = () => {
               sx={{
                 marginTop: 1,
                 paddingInline: 2,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "start",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'start',
               }}
             >
               <Typography component="heading" variant="h2">
                 Company Registration
               </Typography>
-              <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <form onSubmit={handleSubmit} encType="multipart/form-data" style={{ marginTop: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={8}>
                     {/* Company Details */}
@@ -152,6 +178,7 @@ const createCompanyProfile = () => {
                       id="logo-upload"
                       type="file"
                       style={{ display: "none" }}
+                      onChange={handleLogoUpload}
                     />
                     <label htmlFor="logo-upload">
                       <Button
@@ -168,6 +195,7 @@ const createCompanyProfile = () => {
                       id="logo-upload"
                       type="file"
                       style={{ display: "none" }}
+                      onChange={handleBannerUpload}
                     />
                     <label htmlFor="logo-upload">
                       <Button
@@ -181,7 +209,11 @@ const createCompanyProfile = () => {
                   </Grid>
                 </Grid>
 
-                {/* Bank Registration for Tokens */}
+
+
+
+
+
                 <TextField
                   label="Bank Account Number"
                   fullWidth
@@ -190,18 +222,14 @@ const createCompanyProfile = () => {
                   onChange={(e) => setBankAccountNumber(e.target.value)}
                   required
                 />
-
-                {/* Address Change */}
                 <TextField
                   label="Address"
                   fullWidth
                   margin="normal"
                   value={address}
-                  required
                   onChange={(e) => setAddress(e.target.value)}
+                  required
                 />
-
-                {/* Additional Details */}
                 <TextField
                   label="Additional Details"
                   fullWidth
@@ -211,8 +239,6 @@ const createCompanyProfile = () => {
                   value={additionalDetails}
                   onChange={(e) => setAdditionalDetails(e.target.value)}
                 />
-
-                {/* appreciationDetails Details */}
                 <TextField
                   label="Appreciation Details"
                   fullWidth
@@ -223,7 +249,7 @@ const createCompanyProfile = () => {
                   onChange={(e) => setAppreciationDetails(e.target.value)}
                 />
 
-                {/* Submit Button */}
+
                 <Button
                   type="submit"
                   fullWidth
@@ -232,7 +258,7 @@ const createCompanyProfile = () => {
                 >
                   Register
                 </Button>
-              </Box>
+              </form>
             </Box>
           </Container>
         </Grid>
@@ -251,7 +277,7 @@ const createCompanyProfile = () => {
   );
 };
 
-export default createCompanyProfile;
+export default CreateCompanyProfile;
 
 {
   /* Logo Upload */
