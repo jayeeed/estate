@@ -156,7 +156,6 @@ const AirbnbHostSettings = () => {
         selectedTimeZone: timeZone,
       }));
     }
-
   }, [currentSettings.currencies, currentSettings.timezones]);
 
   const fetchCountries = async () => {
@@ -257,7 +256,7 @@ const AirbnbHostSettings = () => {
     <>
       <AdminLayout title={"Hosting Cost Setup"}>
         <Box marginBlock={2}>
-          <Typography variant="caption">
+          <Typography variant="caption" textAlign="center">
             {" "}
             *Note: You just need to select, it will automaticly update your
             current setting in the database, if your selected info are not in
@@ -266,22 +265,25 @@ const AirbnbHostSettings = () => {
         </Box>
 
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display: "flex" }}>
+          <Grid container spacing={0}>
             {/* Sidebar */}
-            <Box sx={{ width: "300px", flexShrink: 0, paddingBlock: 1 }}>
-              <Typography variant="h3" marginBottom={2}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Box padding={2}>
+              <Typography variant="h3" marginBottom={2} >
                 Estate Host Settings
               </Typography>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
+              <Grid container spacing={2} justifyContent={"center"} justifyItems={"center"} alignItems={"center"} >
+                <Grid item xs={12} >
                   <Typography variant="body1" marginBlock={1}>
                     Select Region:
                   </Typography>
-                  <Select required
+                  <Select
+                 
+                    required
                     value={selectedRegion}
                     defaultValue="europe"
                     onChange={handleRegionChange}
-                    sx={{ width: "12rem", paddingInline: 2 }}
+                    sx={{ width: "90%", paddingInline: 2 ,marginInline:"auto" }}
                   >
                     <MenuItem value="global">Global</MenuItem>
                     <MenuItem value="europe">Europe</MenuItem>
@@ -294,17 +296,15 @@ const AirbnbHostSettings = () => {
                       Select Country:
                     </Typography>
 
-                    <Select required
-                      
-                      
+                    <Select
+                      required
                       value={selectedCountry}
                       onChange={handleCountryChange}
-                   
-                      sx={{ width: "12rem", paddingInline: 2 }}
+                      sx={{ width: "90%", paddingInline: 2 }}
                     >
                       {currentSettings.countries &&
                         currentSettings?.countries.map((country) => (
-                          <MenuItem key={country} value={country}>
+                          <MenuItem key={country} value={country} >
                             {country}
                           </MenuItem>
                         ))}
@@ -316,7 +316,8 @@ const AirbnbHostSettings = () => {
                     <Typography variant="body1" marginBlock={1}>
                       Select Currency:
                     </Typography>
-                    <Select required
+                    <Select
+                      required
                       value={selectedCurrency}
                       defaultValue={
                         currentSettings.currencies &&
@@ -325,10 +326,10 @@ const AirbnbHostSettings = () => {
                           : ""
                       }
                       onChange={handleCurrencyChange}
-                      sx={{ width: "12rem", paddingInline: 2 }}
+                      sx={{ width: "90%", paddingInline: 2 }}
                     >
                       {currentSettings.currencies &&
-                        currentSettings.currencies.map((currency,index) => (
+                        currentSettings.currencies.map((currency, index) => (
                           <MenuItem key={index} value={currency}>
                             {currency}
                           </MenuItem>
@@ -341,9 +342,10 @@ const AirbnbHostSettings = () => {
                     <Typography variant="body1" marginBlock={1}>
                       Select Time Zone:
                     </Typography>
-                    <Select required
+                    <Select
+                      required
                       value={selectedTimeZone}
-                      sx={{ width: "12rem", paddingInline: 2 }}
+                      sx={{ width: "90%", paddingInline: 2 }}
                       defaultValue={
                         currentSettings.timezones &&
                         currentSettings.timezones.length > 0
@@ -353,7 +355,7 @@ const AirbnbHostSettings = () => {
                       onChange={handleTimeZoneChange}
                     >
                       {currentSettings.timezones &&
-                        currentSettings?.timezones.map((timezone,index) => (
+                        currentSettings?.timezones.map((timezone, index) => (
                           <MenuItem key={index} value={timezone}>
                             {timezone}
                           </MenuItem>
@@ -365,10 +367,11 @@ const AirbnbHostSettings = () => {
                   <Typography variant="body1" marginBlock={1}>
                     Select Property Category:
                   </Typography>
-                  <Select required
+                  <Select
+                    required
                     value={selectedCategory}
                     onChange={handleCategoryChange}
-                    sx={{ width: "12rem", paddingInline: 2 }}
+                    sx={{ width: "90%", paddingInline: 2 }}
                   >
                     {category.map((categoryItem, index) => (
                       <MenuItem key={index} value={categoryItem._id}>
@@ -385,12 +388,11 @@ const AirbnbHostSettings = () => {
                     required
                     value={hostCost}
                     onChange={handleHostCostChange}
-                    sx={{ width: "12rem" }}
-                   
+                    sx={{ width: "90%",  }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Checkbox
+                  <Checkbox 
                     checked={subscriptionActive}
                     onChange={handleSubscriptionChange}
                   />
@@ -399,83 +401,95 @@ const AirbnbHostSettings = () => {
                   </Typography>
                 </Grid>
               </Grid>
-            </Box>
+              </Box>
+              
+            </Grid>
             {/* Table */}
-            <Box
-              component="main"
-              sx={{
-                flexGrow: 1,
-                bgcolor: "background.default",
-                paddingBlock: 2,
-                paddingInline: 3,
-                borderRadius: "12px",
-              }}
-            >
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="current settings">
-                  <TableHead sx={{ backgroundColor: "#003019" }}>
-                    <TableRow>
-                      <TableCell colSpan={2}>
-                        <Box display={"flex"}>
-                          <Typography variant="h4" color={"white"} sx={{}}>
-                            Current Settings
-                          </Typography>
-                          {loading && (
-                            <CircularProgress
-                              sx={{ paddingInline: 1, mt: 0 }}
-                              size={26}
-                              color="inherit"
-                            />
-                          )}
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Region/Country:
-                      </TableCell>
-                      <TableCell>{currentSettings?.selectedCountry}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Category Id:
-                      </TableCell>
-                      <TableCell>{currentSettings?.category}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Host Cost (In percentage):
-                      </TableCell>
-                      <TableCell>{currentSettings?.hostCost}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Subscription Active:
-                      </TableCell>
-                      <TableCell>
-                        {currentSettings?.subscriptionActive ? "Yes" : "No"}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Currency:
-                      </TableCell>
-                      <TableCell>{currentSettings?.selectedCurrency}</TableCell>
-                    </TableRow>
+            <Grid item xs={12} sm={6} md={8}>
+              <Box
+                // component="main"
+                sx={{
+                  
+                  flexGrow: 1,
+                  bgcolor: "background.default",
+                  paddingBlock: 2,
+                  paddingInline: 3,
+                  borderRadius: "12px",
+                  overflowX: 'auto'
+                }}
+              >
+                <TableContainer component={Paper}>
+                  <Table  aria-label="current settings">
+                    <TableHead sx={{ backgroundColor: "#003019" }}>
+                      <TableRow>
+                        <TableCell colSpan={2}>
+                          <Box display={"flex"}>
+                            <Typography variant="h4" color={"white"} sx={{}}>
+                              Current Settings
+                            </Typography>
+                            {loading && (
+                              <CircularProgress
+                                sx={{ paddingInline: 1, mt: 0 }}
+                                size={26}
+                                color="inherit"
+                              />
+                            )}
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          Region/Country:
+                        </TableCell>
+                        <TableCell>
+                          {currentSettings?.selectedCountry}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          Category Id:
+                        </TableCell>
+                        <TableCell>{currentSettings?.category}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          Host Cost (In percentage):
+                        </TableCell>
+                        <TableCell>{currentSettings?.hostCost}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          Subscription Active:
+                        </TableCell>
+                        <TableCell>
+                          {currentSettings?.subscriptionActive ? "Yes" : "No"}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          Currency:
+                        </TableCell>
+                        <TableCell>
+                          {currentSettings?.selectedCurrency}
+                        </TableCell>
+                      </TableRow>
 
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Time Zone:
-                      </TableCell>
-                      <TableCell>{currentSettings?.selectedTimeZone}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
-          </Box>
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          Time Zone:
+                        </TableCell>
+                        <TableCell>
+                          {currentSettings?.selectedTimeZone}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </Grid>
+          </Grid>
           <Box textAlign={"right"} marginBlock={3}>
             <Button type="submit" variant="contained">
               Fix this Rate

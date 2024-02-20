@@ -13,21 +13,21 @@ const AdminLayout = ({ children, title }) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }} position={"relative"}>
+    <Box sx={{ display: "flex", position: "relative" }}>
       {isMdScreen ||
         (drawerOpen && (
           <Box
             onClick={toggleDrawer}
-            bgcolor={"#00000050"}
-            position={"absolute"}
-            left={"0"}
-            right={"0"}
-            top={"0"}
-            zIndex={"5"}
-            bottom={"0"}
+            sx={{
+              backgroundColor: "#00000050",
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              zIndex: 5,
+              bottom: 0,
+            }}
           />
-
-        
         ))}
       <SideBar setOpen={setDrawerOpen} open={drawerOpen} />
       <Box
@@ -47,4 +47,4 @@ const AdminLayout = ({ children, title }) => {
   );
 };
 
-export default AdminLayout; 
+export default AdminLayout;
