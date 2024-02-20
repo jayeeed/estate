@@ -18,12 +18,14 @@ import {
   TableHead,
   TableRow,
   Paper,
+  CircularProgress,
 } from "@mui/material";
 import axios from "axios";
 import CustomizedSnackbars from "../../../components/snackbar";
 
 const AirbnbHostSettings = () => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading indicator
 
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
@@ -145,7 +147,17 @@ const AirbnbHostSettings = () => {
         selectedCurrency: currency,
       }));
     }
-  }, [currentSettings.currencies]);
+    if (currentSettings.timezones && currentSettings.timezones.length > 0) {
+      console.log("Current timeZone:", currentSettings.timezones);
+      const timeZone = currentSettings.timezones[0];
+      setSelectedTimeZone(timeZone);
+      setCurrentSettings((prevSettings) => ({
+        ...prevSettings,
+        selectedTimeZone: timeZone,
+      }));
+    }
+
+  }, [currentSettings.currencies, currentSettings.timezones]);
 
   const fetchCountries = async () => {
     try {
@@ -202,9 +214,7 @@ const AirbnbHostSettings = () => {
       const response = await axios.get("/category");
       setCategory(response.data.category);
       console.log("Category:", response.data.category);
-      
     } catch (error) {
-      
       console.error("Error fetching amenities:", error);
       // Optionally, show an error message to the user
     }
@@ -212,6 +222,7 @@ const AirbnbHostSettings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true when saving template
     try {
       const formData = {
         hostCost: hostCost,
@@ -237,6 +248,8 @@ const AirbnbHostSettings = () => {
       // Handle any errors that occur during the POST request
       console.error("Error submitting form:", error);
       // Optionally, you can show an error message to the user
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -264,7 +277,7 @@ const AirbnbHostSettings = () => {
                   <Typography variant="body1" marginBlock={1}>
                     Select Region:
                   </Typography>
-                  <Select
+                  <Select required
                     value={selectedRegion}
                     defaultValue="europe"
                     onChange={handleRegionChange}
@@ -281,9 +294,12 @@ const AirbnbHostSettings = () => {
                       Select Country:
                     </Typography>
 
-                    <Select
+                    <Select required
+                      
+                      
                       value={selectedCountry}
                       onChange={handleCountryChange}
+                   
                       sx={{ width: "12rem", paddingInline: 2 }}
                     >
                       {currentSettings.countries &&
@@ -300,7 +316,7 @@ const AirbnbHostSettings = () => {
                     <Typography variant="body1" marginBlock={1}>
                       Select Currency:
                     </Typography>
-                    <Select
+                    <Select required
                       value={selectedCurrency}
                       defaultValue={
                         currentSettings.currencies &&
@@ -312,8 +328,8 @@ const AirbnbHostSettings = () => {
                       sx={{ width: "12rem", paddingInline: 2 }}
                     >
                       {currentSettings.currencies &&
-                        currentSettings.currencies.map((currency) => (
-                          <MenuItem key={currency} value={currency}>
+                        currentSettings.currencies.map((currency,index) => (
+                          <MenuItem key={index} value={currency}>
                             {currency}
                           </MenuItem>
                         ))}
@@ -325,14 +341,20 @@ const AirbnbHostSettings = () => {
                     <Typography variant="body1" marginBlock={1}>
                       Select Time Zone:
                     </Typography>
-                    <Select
+                    <Select required
                       value={selectedTimeZone}
-                      onChange={handleTimeZoneChange}
                       sx={{ width: "12rem", paddingInline: 2 }}
+                      defaultValue={
+                        currentSettings.timezones &&
+                        currentSettings.timezones.length > 0
+                          ? currentSettings.timezones[0]
+                          : ""
+                      }
+                      onChange={handleTimeZoneChange}
                     >
                       {currentSettings.timezones &&
-                        currentSettings?.timezones.map((timezone) => (
-                          <MenuItem key={timezone} value={timezone}>
+                        currentSettings?.timezones.map((timezone,index) => (
+                          <MenuItem key={index} value={timezone}>
                             {timezone}
                           </MenuItem>
                         ))}
@@ -343,7 +365,7 @@ const AirbnbHostSettings = () => {
                   <Typography variant="body1" marginBlock={1}>
                     Select Property Category:
                   </Typography>
-                  <Select
+                  <Select required
                     value={selectedCategory}
                     onChange={handleCategoryChange}
                     sx={{ width: "12rem", paddingInline: 2 }}
@@ -360,9 +382,11 @@ const AirbnbHostSettings = () => {
                   <TextField
                     label="Host Cost"
                     type="number"
+                    required
                     value={hostCost}
                     onChange={handleHostCostChange}
                     sx={{ width: "12rem" }}
+                   
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -396,6 +420,13 @@ const AirbnbHostSettings = () => {
                           <Typography variant="h4" color={"white"} sx={{}}>
                             Current Settings
                           </Typography>
+                          {loading && (
+                            <CircularProgress
+                              sx={{ paddingInline: 1, mt: 0 }}
+                              size={26}
+                              color="inherit"
+                            />
+                          )}
                         </Box>
                       </TableCell>
                     </TableRow>
