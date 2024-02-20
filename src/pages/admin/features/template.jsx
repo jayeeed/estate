@@ -184,11 +184,9 @@ const LegalDocumentPreview = ({ documentType }) => {
             color="primary"
             sx={{ mr: 2 }}
           >
-            {loading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Save Template"
-            )}
+   
+              Save Template
+           
           </Button>
         )}
         {uploadedFile && (
