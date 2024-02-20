@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/dataTable/DataTable";
 import AdminLayout from "../../../layouts/adminLayout";
-import { Box, Chip, Grid, IconButton } from "@mui/material";
+import { Box, Chip, Grid, IconButton,Pagination} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // import { Icon } from "@iconify/react";
 import CustomHashLoader from "../../../components/customLoader/CustomHashLoader";
@@ -21,6 +21,23 @@ const Properties = () => {
   const [data, setData] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  // Inside your Properties component
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10; // Define your page size
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  // Calculate startIndex and endIndex based on currentPage and pageSize
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, data.length);
+
+  const propertiesForPage = data.slice(startIndex, endIndex);
+
+  // Pass propertiesForPage to your DataTable component
+
+  // Inside your JSX
 
   useEffect(() => {
     // if (properties.length > 0) {
@@ -35,7 +52,7 @@ const Properties = () => {
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error)
+        console.log(error);
       });
   }, [dispatch, properties.length]);
 
@@ -253,13 +270,20 @@ const Properties = () => {
   return (
     <AdminLayout title="All properties">
       <Grid container spacing={2}>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           {loading ? (
             <CustomHashLoader />
           ) : (
             <DataTable data={data} columns={columns} />
           )}
         </Grid>
+        {/* Pagination controls */}
+        <Pagination
+          count={Math.ceil(data.length / pageSize)}
+          page={currentPage}
+          onChange={(event, page) => handlePageChange(page)}
+        />
+        ;
       </Grid>
     </AdminLayout>
   );

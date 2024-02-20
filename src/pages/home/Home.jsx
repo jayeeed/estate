@@ -27,7 +27,6 @@ import { useAuthInfo } from "../../helpers/AuthCheck";
 import ChatButton from "../../components/chat_window/ChatButton"; //added for chatbot/fahim
 import ChatWindow from "../../components/chat_window/ChatWindow"; //added for chatbot/fahim
 
-
 const iconControl = (price) => {
   const width = 10 + price.length * 8;
   return new L.divIcon({
@@ -44,7 +43,6 @@ const iconControl = (price) => {
 };
 
 export default function Home() {
-
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   // const VITE_AI_URL = import.meta.env.VITE_AI_URL;
@@ -52,14 +50,19 @@ export default function Home() {
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
   };
- 
 
   const dispatch = useDispatch();
-  const { properties } = useSelector((state) => state.properties);
+  // const { properties } = useSelector((state) => state.properties);
 
   const [matchedProperties, setMatchedProperties] = useState("");
   const [loading, setLoading] = useState(false);
   const userInfo = useAuthInfo();
+
+  const { properties } = useSelector((state) => state.properties);
+  // console.log(properties)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(12); // Set default page size
 
   const [recommended_properties, setrecommended_properties] = useState([]);
 
@@ -85,10 +88,6 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching recommended properties:", error);
     }
-
-
-
-    
   };
 
   const getPropertiesFromWishlist = () => {
@@ -117,62 +116,88 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    // Check if properties is an empty array or "falsy"
-    // if (!properties || (Array.isArray(properties) && properties.length === 0)) {
+  // useEffect(() => {
+  //   // Check if properties is an empty array or "falsy"
+  //   // if (!properties || (Array.isArray(properties) && properties.length === 0)) {
 
-    setLoading(true);
-    dispatch(getActiveProperties());
-    setLoading(false);
-    // }
-  }, [dispatch, properties]);
+  //   setLoading(true);
+  //   dispatch(getActiveProperties({ page: currentPage, pageSize }));
+
+  //   setLoading(false);
+  //   // }
+  // }, [dispatch, properties]);
+
+  useEffect(() => {
+    if (currentPage > 1) {
+      setLoading(true);
+      dispatch(getActiveProperties({ page: currentPage, pageSize }))
+        .then(() => setLoading(false))
+        .catch((error) => {
+          console.error("Error fetching active properties:", error);
+          setLoading(false);
+        });
+    } else {
+      setLoading(true);
+      dispatch(getActiveProperties({ page: currentPage, pageSize }));
+
+      setLoading(false);
+    }
+  }, [dispatch, currentPage, properties]);
 
   const [openMap, setOpenMap] = useState(false);
   const closeDrawer = () => {
     setOpenMap(false);
   };
 
+  const handleScroll = () => {
+    const bottom =
+      Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
+    if (bottom && currentPage < totalPages && !loading) {
+      setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
     <AppLayout>
       <>
         <Container maxWidth="xl">
           <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <h3 style={{ marginTop: "10px" }}>Active Properties</h3>
-            </Grid>
-            {loading ? (
+            {loading && currentPage === 1 ? (
               <CustomHashLoader />
+            ) : properties && properties.length > 0 ? (
+              properties.map((data, index) => (
+                <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                  <ReservationCard
+                    propertyId={data._id}
+                    matchedProperties={matchedProperties}
+                    image1={data.images[0]?.url}
+                    image2={data.images[1]?.url}
+                    image3={data.images[2]?.url}
+                    title={`${data.located.address?.state}, ${data.located.address?.country}`}
+                    subtitle={
+                      data.title.length > 60
+                        ? `${data.title.substring(0, 60)}...`
+                        : data.title
+                    }
+                    price={data.price}
+                    review={data.review}
+                  />
+                </Grid>
+              ))
             ) : (
-              <>
-                {properties && properties.length > 0 ? (
-                  properties
-                    // .filter((data) => data.status === "active")
-                    .map((data, index) => (
-                      <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                        <ReservationCard
-                          propertyId={data._id}
-                          matchedProperties={matchedProperties}
-                          image1={data.images[0]?.url}
-                          image2={data.images[1]?.url}
-                          image3={data.images[2]?.url}
-                          title={`${data.located.address?.state}, ${data.located.address?.country}`}
-                          subtitle={
-                            data.title.length > 60
-                              ? `${data.title.substring(0, 60)}...`
-                              : data.title
-                          }
-                          price={data.price}
-                          // review={data.review.overAllRating}
-                          review={data.review}
-                        />
-                      </Grid>
-                    ))
-                ) : (
-                  <CustomHashLoader />
-                )}
-              </>
+              <CustomHashLoader />
+            //  <p> No property left </p>
             )}
-
+          
+         
+    
             {/* Display recommended properties */}
             {/* fixed the bug of recomended id issue for jayeed */}
 
@@ -216,6 +241,7 @@ export default function Home() {
             ))}
           </Grid>
         </Container>
+
         <Box
           position={"fixed"}
           sx={{
@@ -338,6 +364,8 @@ export default function Home() {
         <ChatButton onClick={toggleChat} />{" "}
         {/* Add the ChatButton component/fahim */}
       </>
+    
+      {/* Show loader when loading more properties */}
       {isChatOpen && <ChatWindow onClose={toggleChat} />}{" "}
       {/* Show the chat window when isChatOpen is true/fahim */}
     </AppLayout>

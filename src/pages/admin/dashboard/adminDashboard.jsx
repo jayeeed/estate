@@ -9,13 +9,15 @@ import HostCostView from "../features/costView";
 const AdminDashboard = () => {
   return (
     <AdminLayout title={"Admin Dashborad"}>
-      {/* <Grid container spacing={2}> */}
-        {/* <Grid item lg={8}>
-          <Box fullWidth sx={{ mt: 3, display: "flex" }}>
-            <Grid container spacing={0}  ></Grid>
-              <h4>Finance info</h4>
-           
-            <Grid item  >
+      <Grid container spacing={2}>
+        <Grid item lg={8}>
+          <Grid container spacing={0} gap={2}>
+           <Grid item xs={12} marginBlock={2}>
+           <h4>Finance info</h4>
+
+           </Grid>
+
+            <Grid item xs={5}>
               <DashboardCard
                 icon={"clarity:dashboard-line"}
                 title={"Spend this month"}
@@ -24,7 +26,7 @@ const AdminDashboard = () => {
                 color={"#2980b9"}
               />
             </Grid>
-            <Box  >
+            <Grid item  xs={5}>
               <DashboardCard
                 icon={"mdi:dollar"}
                 title={"Earnings"}
@@ -32,8 +34,9 @@ const AdminDashboard = () => {
                 countNumber={"$642.39"}
                 color={"#27ae60"}
               />
-            </Box>
-            <Box  >
+            </Grid>
+
+            <Grid item xs={5} >
               <Card
                 sx={{
                   boxShadow: "14px 17px 40px 4px rgba(112, 144, 176, 0.18)",
@@ -91,8 +94,7 @@ const AdminDashboard = () => {
                   </Box>
                 </Box>
               </Card>
-            </Box>
-          </Box>
+            </Grid>
           </Grid>
         </Grid>
 
@@ -106,7 +108,7 @@ const AdminDashboard = () => {
           paddingInline={0}
         >
           <HostCostView />
-        </Grid> */}
+        </Grid>
 
         {/* <Grid item xs={12} sx={{ mt: 3 }}>
           <h4>User & properties info</h4>
@@ -156,7 +158,7 @@ const AdminDashboard = () => {
             color={"#ff0000"}
           />
         </Grid> */}
-      {/* </Grid> */}
+      </Grid>
     </AdminLayout>
   );
 };

@@ -33,7 +33,7 @@ const AdminLayout = ({ children, title }) => {
       <Box
         p={3}
         sx={{
-          background: "#f4f9ff",
+          background: "#ddecff",
           minHeight: "100vh",
           width: "-webkit-fill-available",
           marginLeft: isMdScreen ? "270px" : "0",
