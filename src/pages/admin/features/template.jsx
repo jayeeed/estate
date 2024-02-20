@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   // Divider,
+  CircularProgress,
   FormLabel,
   Toolbar,
   Typography,
@@ -34,15 +35,14 @@ const LegalDocumentPreview = ({ documentType }) => {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [editingTemplate, setEditingTemplate] = useState(false);
   const [editorContent, setEditorContent] = useState("");
-
-
+  const [loading, setLoading] = useState(false); // State for loading indicator
 
   // const handleClick = () => {
   //   setOpen(true);
   // };
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -78,12 +78,13 @@ const LegalDocumentPreview = ({ documentType }) => {
   const handleSaveTemplate = () => {
     updateTemplate(editorContent);
     setEditingTemplate(false);
-    // Submit the document based on the documentType
+    setLoading(true); // Set loading state to true when saving template
+
     if (documentType === "rentingApplication") {
       // Handle submitting renting application
       handleSubmit();
       console.log("Submitting renting application:", editorContent);
-      setMessage("Submitted renting application")
+      setMessage("Submitted renting application");
     } else if (documentType === "legalDocuments") {
       // Handle submitting legal documents
       handleSubmit();
@@ -91,41 +92,37 @@ const LegalDocumentPreview = ({ documentType }) => {
     }
   };
 
-  // const formData = new FormData();
-  // formData.append("file", uploadedFile); // Assuming 'file' is the key expected by your server for the uploaded file
-  // // Append other form data fields as needed
-  // formData.append("field1", value1);
-  // formData.append("field2", value2);
-  
   // handleSubmit(formData);
-  
 
   // Function to handle submitting the uploaded file data
   const handleSubmit = async () => {
     try {
       // Create a FormData object to store the file data
+      setLoading(true); // Set loading state to true when saving template
+
       const formData = new FormData();
-      formData.append("file", uploadedFile); // Assuming 'file' is the key expected by your server for the uploaded file
+      formData.append("file", uploadedFile);
+      formData.append("documentType", documentType);
 
       // console.log(formData)
-  
+
       // Make a POST request to your server to save the uploaded file data
       const response = await axios.post("/admin/templateUpload", formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Ensure the correct content type for file upload
         },
       });
-  
+
       console.log("File upload successful:", response.data);
       setOpen(true); // Log the response from the server
-      setMessage("File upload successful")
-      setType("success")
-
+      setMessage("File upload successful");
+      setType("success");
     } catch (error) {
       console.error("Error uploading file:", error); // Log any errors that occur during the upload process
+    } finally {
+      setLoading(false); // Set loading state back to false after upload is done
     }
   };
-  
 
   return (
     <Box>
@@ -147,13 +144,19 @@ const LegalDocumentPreview = ({ documentType }) => {
         >
           Legal Document Preview
         </Typography>
+       
+        {loading && <CircularProgress sx={{ paddingInline: 1 }} size={26} color="inherit" />}
+
         <FormLabel htmlFor="fileInput">
+          {/* {loading && } */}
+
           <StyledInput
             id="fileInput"
             type="file"
             accept=".html"
             onChange={handleFileUpload}
           />
+
           <Button
             variant="contained"
             component="span"
@@ -181,11 +184,20 @@ const LegalDocumentPreview = ({ documentType }) => {
             color="primary"
             sx={{ mr: 2 }}
           >
-            Save Template
+            {loading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Save Template"
+            )}
           </Button>
         )}
         {uploadedFile && (
-          <Button onClick={handleSubmit} variant="contained" color="primary">
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            color="primary"
+            disabled={loading}
+          >
             Submit
           </Button>
         )}
@@ -206,12 +218,14 @@ const LegalDocumentPreview = ({ documentType }) => {
             )}
           </Box>
         )}
-
       </Box>
 
-
-
-      <CustomizedSnackbars open={open} message={message} type={type} onClose={handleClose}/>
+      <CustomizedSnackbars
+        open={open}
+        message={message}
+        type={type}
+        onClose={handleClose}
+      />
     </Box>
   );
 };

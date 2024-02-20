@@ -24,7 +24,8 @@ exports.adminLogin = (req, res) => {
     try {
       // Get the file data from the request
       const {file} = req;
-      console.log(file);
+      const { documentType } = req.body; 
+      console.log(file,documentType);
 
       const { originalname, buffer,encoding, mimetype } = file;
       const newImage = new FileUpload({
@@ -32,6 +33,7 @@ exports.adminLogin = (req, res) => {
         data: buffer,
         encoding :encoding,
         contentType: mimetype,
+        documentType: documentType,
       });
   
       await newImage.save();
@@ -69,43 +71,55 @@ exports.adminLogin = (req, res) => {
 
 
 
-// Controller function to handle the POST request
- exports.estateHostSettings = async (req, res) => {
-  try {
-    // Extract the form data from the request body
-    const {
-      hostCost,
-      subscriptionActive,
-       Region,
-       Country,
-       Category,
-       Currency,
-       TimeZone
-    } = req.body;
-
-    // Create a new instance of EstateHostSettings with the form data
-    const formData = new EstateHostModel({
-      hostCost,
-      subscriptionActive,
-       Region,
-       Country,
-       Category,
-       Currency,
-       TimeZone
-    });
-    console.log(formData);
-
-    // Save the form data to the database
-    await formData.save();
-
-    // Send a success response
-    res.status(200).json({ message: 'Form data submitted successfully' });
-  } catch (error) {
-    // Handle any errors that occur during the submission process
-    console.error('Error submitting form data:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
+  exports.estateHostSettings = async (req, res) => {
+    try {
+      // Extract the form data from the request body
+      const {
+        hostCost,
+        subscriptionActive,
+        Region,
+        Country,
+        Category,
+        Currency,
+        TimeZone
+      } = req.body;
+  
+      // Check if there is an existing record with the same Region, Country, Category, Currency, and TimeZone
+      let existingRecord = await EstateHostModel.findOne({
+        Region,
+        Country,
+        Category,
+        Currency,
+        TimeZone
+      });
+  
+      if (existingRecord) {
+        // If the record already exists, update it with the new values
+        existingRecord.hostCost = hostCost;
+        existingRecord.subscriptionActive = subscriptionActive;
+        await existingRecord.save();
+        res.status(200).json({ message: 'Form data updated successfully' });
+      } else {
+        // If the record does not exist, create a new one
+        const formData = new EstateHostModel({
+          hostCost,
+          subscriptionActive,
+          Region,
+          Country,
+          Category,
+          Currency,
+          TimeZone
+        });
+        await formData.save();
+        res.status(200).json({ message: 'Form data submitted successfully' });
+      }
+    } catch (error) {
+      // Handle any errors that occur during the submission process
+      console.error('Error submitting form data:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
 
 
 

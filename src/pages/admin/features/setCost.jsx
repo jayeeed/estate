@@ -227,7 +227,7 @@ const AirbnbHostSettings = () => {
       const response = await axios.post("/set-cost", formData);
 
       // // Handle the response as needed
-      console.log("Form submitted successfully:", response.data);
+      console.log("server response:", response.data.message);
       setOpen(true);
       setMessage(`Rate fixed the ${selectedCountry}`);
       setType("success");

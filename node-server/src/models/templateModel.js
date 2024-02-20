@@ -8,6 +8,7 @@ const fileUploadSchema = new mongoose.Schema({
   encoding: String,
   contentType: String,
   // Add more fields as needed to store additional information about the file
+  documentType: String,
 });
 
 const FileUpload = mongoose.model('FileUpload', fileUploadSchema);
