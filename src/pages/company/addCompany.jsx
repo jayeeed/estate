@@ -13,6 +13,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import HostLetterTemplate from "./letterPreview";
 import DashboardLayout from "../../layouts/hostDashboard";
 import { AddCircleRounded } from "@mui/icons-material";
+import { Buffer } from "buffer";
 
 // import pic from "./assets/company.jpg"
 
@@ -71,22 +72,14 @@ const CreateCompanyProfile = () => {
     companyAdditionalDetails,
   ]);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
+  const convertToBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
 
-  // Here you can send the formData to your backend for further processing
-  // For example, using fetch or axios to send a POST request to your API endpoint
-  // fetch('your-api-endpoint', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(formData),
-  // })
-  //   .then(response => response.json())
-  //   .then(data => console.log('Response from server:', data))
-  //   .catch(error => console.error('Error:', error));
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -102,8 +95,9 @@ const CreateCompanyProfile = () => {
         companyAddress,
         companyAdditionalDetails,
         companyAppreciationDetails,
-        // companyLogo,
-        // companyBanner,
+        // Store the logo and banner as base64 strings
+        companyLogo: await convertToBase64(companyLogo),
+        companyBanner: await convertToBase64(companyBanner),
       };
 
       // Log the form data for demonstration purposes
@@ -202,12 +196,12 @@ const CreateCompanyProfile = () => {
                     <br />
                     <input
                       accept="image/*"
-                      id="logo-upload"
+                      id="banner-upload"
                       type="file"
                       style={{ display: "none" }}
                       onChange={handleBannerUpload}
                     />
-                    <label htmlFor="logo-upload">
+                    <label htmlFor="banner-upload">
                       <Button
                         variant="outlined"
                         component="span"
@@ -284,33 +278,3 @@ const CreateCompanyProfile = () => {
 };
 
 export default CreateCompanyProfile;
-
-{
-  /* Logo Upload */
-}
-{
-  /* <input accept="image/*" id="logo-upload" type="file" style={{ display: 'none' }} />
-                <label htmlFor="logo-upload" text-align ="center" >
-                  <Avatar
-                    // src={pic}
-                    variant="rounded"
-                    sx={{
-                      width: 120,
-                      height: 120,
-                      backgroundColor: '#f0f0f0',
-                      cursor: 'pointer',
-                    }}
-                  >
-                  {/* <img
-                      src={pic}
-                      alt="Upload Logo"
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    />  */
-}
-{
-  /* </Avatar>
-                  <Typography variant="outlined" component="span" startIcon={<CloudUploadIcon />}>
-                  Upload Logo
-                </Typography> 
-                </label> */
-}

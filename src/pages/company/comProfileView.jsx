@@ -16,8 +16,6 @@ import "./pany.css"; // Import the external CSS file
 import { useAuthInfo } from "../../helpers/AuthCheck";
 import axios from "axios";
 
-
-
 // Custom TabPanel component
 // eslint-disable-next-line react/prop-types
 const CustomTabPanel = ({ children, value, index, ...other }) => {
@@ -74,7 +72,6 @@ const CompanyProfilePanels = () => {
   const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-   
     const fetchProperties = async () => {
       try {
         const response = await axios.get(`/user/properties/${userInfo._id}`);
@@ -99,7 +96,7 @@ const CompanyProfilePanels = () => {
             height="250px"
             image="src/pages/company/assets/house.jpg"
             className="banner"
-            sx={{ borderRadius: 4}}
+            sx={{ borderRadius: 4 }}
           />
           <Box className="content" display={"block"} position={"relative"}>
             <Box
@@ -329,7 +326,7 @@ const CompanyProfilePanels = () => {
       {/* Right side property cards */}
       <Grid item xs={12} sm={5} md={4}>
         <Box marginInline={2}>
-          {properties.map((property,index) => (
+          {properties.map((property, index) => (
             <Card key={index} sx={{ marginBlock: 2, borderRadius: 4 }}>
               <CardMedia
                 component="img"
