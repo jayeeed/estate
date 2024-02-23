@@ -46,6 +46,7 @@ const CompanyProfilePanels = () => {
       try {
         const response = await axios.get(`/user/companies/${userInfo._id}`);
         setCompanyData(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error("Error fetching company data:", error);
       }

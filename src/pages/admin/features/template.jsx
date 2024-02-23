@@ -89,6 +89,7 @@ const LegalDocumentPreview = ({ documentType }) => {
       // Handle submitting legal documents
       handleSubmit();
       console.log("Submitting legal documents:", editorContent);
+      setMessage("Submitted legal documents");
     }
   };
 
