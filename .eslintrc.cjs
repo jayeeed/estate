@@ -51,3 +51,10 @@ module.exports = {
   },
 }
 
+// import { ESLint } from "eslint";
+
+// const config = {
+//   // your config here
+// };
+
+// export default config;
