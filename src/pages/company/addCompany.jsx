@@ -169,6 +169,21 @@ const CreateCompanyProfile = () => {
       reader.onerror = (error) => reject(error);
       reader.readAsDataURL(file);
     });
+    // Function to clear form fields
+const clearFormFields = () => {
+  setCompanyName("");
+  setCompanyRegistrationNumber("");
+  setCompanyBankAccountNumber("");
+  setCompanyAddress("");
+  setCompanyAdditionalDetails("");
+  setCompanyAppreciationDetails("");
+  setLetter(""); // Assuming letter is a state variable
+  setCompanyLogo(null); // Assuming companyLogo is a state variable
+  setCompanyBanner(null); // Assuming companyBanner is a state variable
+};
+const navigateToCompanyViewPage = () => {
+  window.location.href = '/company'; // Replace '/companyView' with the URL you want to navigate to
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -214,7 +229,11 @@ const CreateCompanyProfile = () => {
         setIsSuccessSnackbarOpen(true);
         setMessage("You successfully created a company");
         setType("success");
+        clearFormFields();
         handleSuccessSnackbarOpen();
+        navigateToCompanyViewPage();
+
+
       } else {
         console.error("Error saving data:", response.statusText);
       }

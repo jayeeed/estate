@@ -242,6 +242,15 @@ const AirbnbHostSettings = () => {
       setMessage(`Rate fixed the ${selectedCountry}`);
       setType("success");
 
+      // Reset the form fields
+      setHostCost(0);
+      setSubscriptionActive(false);
+      setSelectedRegion("europe");
+      setSelectedCountry("");
+      setSelectedCurrency("");
+      setSelectedTimeZone("");
+      setSelectedCategory("");
+      
       // Optionally, you can reset the form fields or show a success message to the user
     } catch (error) {
       // Handle any errors that occur during the POST request
@@ -269,157 +278,164 @@ const AirbnbHostSettings = () => {
             {/* Sidebar */}
             <Grid item xs={12} sm={6} md={3}>
               <Box padding={2}>
-              <Typography variant="h3" marginBottom={2} >
-                Estate Host Settings
-              </Typography>
-              <Grid container spacing={2} justifyContent={"center"} justifyItems={"center"} alignItems={"center"} >
-                <Grid item xs={12} >
-                  <Typography variant="body1" marginBlock={1}>
-                    Select Region:
-                  </Typography>
-                  <Select
-                 
-                    required
-                    value={selectedRegion}
-                    defaultValue="europe"
-                    onChange={handleRegionChange}
-                    sx={{ width: "90%", paddingInline: 2 ,marginInline:"auto" }}
-                  >
-                    <MenuItem value="global">Global</MenuItem>
-                    <MenuItem value="europe">Europe</MenuItem>
-                    <MenuItem value="asia">Asia</MenuItem>
-                  </Select>
-                </Grid>
-                {selectedRegion && (
+                <Typography variant="h3" marginBottom={2}>
+                  Estate Host Settings
+                </Typography>
+                <Grid
+                  container
+                  spacing={2}
+                  justifyContent={"center"}
+                  justifyItems={"center"}
+                  alignItems={"center"}
+                >
                   <Grid item xs={12}>
                     <Typography variant="body1" marginBlock={1}>
-                      Select Country:
+                      Select Region:
                     </Typography>
+                    <Select
+                      required
+                      value={selectedRegion}
+                      defaultValue="europe"
+                      onChange={handleRegionChange}
+                      sx={{
+                        width: "90%",
+                        paddingInline: 2,
+                        marginInline: "auto",
+                      }}
+                    >
+                      <MenuItem value="global">Global</MenuItem>
+                      <MenuItem value="europe">Europe</MenuItem>
+                      <MenuItem value="asia">Asia</MenuItem>
+                    </Select>
+                  </Grid>
+                  {selectedRegion && (
+                    <Grid item xs={12}>
+                      <Typography variant="body1" marginBlock={1}>
+                        Select Country:
+                      </Typography>
 
-                    <Select
-                      required
-                      value={selectedCountry}
-                      onChange={handleCountryChange}
-                      sx={{ width: "90%", paddingInline: 2 }}
-                    >
-                      {currentSettings.countries &&
-                        currentSettings?.countries.map((country) => (
-                          <MenuItem key={country} value={country} >
-                            {country}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </Grid>
-                )}
-                {selectedCountry && (
+                      <Select
+                        required
+                        value={selectedCountry}
+                        onChange={handleCountryChange}
+                        sx={{ width: "90%", paddingInline: 2 }}
+                      >
+                        {currentSettings.countries &&
+                          currentSettings?.countries.map((country) => (
+                            <MenuItem key={country} value={country}>
+                              {country}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </Grid>
+                  )}
+                  {selectedCountry && (
+                    <Grid item xs={12}>
+                      <Typography variant="body1" marginBlock={1}>
+                        Select Currency:
+                      </Typography>
+                      <Select
+                        required
+                        value={selectedCurrency}
+                        defaultValue={
+                          currentSettings.currencies &&
+                          currentSettings.currencies.length > 0
+                            ? currentSettings.currencies[0]
+                            : ""
+                        }
+                        onChange={handleCurrencyChange}
+                        sx={{ width: "90%", paddingInline: 2 }}
+                      >
+                        {currentSettings.currencies &&
+                          currentSettings.currencies.map((currency, index) => (
+                            <MenuItem key={index} value={currency}>
+                              {currency}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </Grid>
+                  )}
+                  {selectedCurrency && (
+                    <Grid item xs={12}>
+                      <Typography variant="body1" marginBlock={1}>
+                        Select Time Zone:
+                      </Typography>
+                      <Select
+                        required
+                        value={selectedTimeZone}
+                        sx={{ width: "90%", paddingInline: 2 }}
+                        defaultValue={
+                          currentSettings.timezones &&
+                          currentSettings.timezones.length > 0
+                            ? currentSettings.timezones[0]
+                            : ""
+                        }
+                        onChange={handleTimeZoneChange}
+                      >
+                        {currentSettings.timezones &&
+                          currentSettings?.timezones.map((timezone, index) => (
+                            <MenuItem key={index} value={timezone}>
+                              {timezone}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </Grid>
+                  )}
                   <Grid item xs={12}>
                     <Typography variant="body1" marginBlock={1}>
-                      Select Currency:
+                      Select Property Category:
                     </Typography>
                     <Select
                       required
-                      value={selectedCurrency}
-                      defaultValue={
-                        currentSettings.currencies &&
-                        currentSettings.currencies.length > 0
-                          ? currentSettings.currencies[0]
-                          : ""
-                      }
-                      onChange={handleCurrencyChange}
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
                       sx={{ width: "90%", paddingInline: 2 }}
                     >
-                      {currentSettings.currencies &&
-                        currentSettings.currencies.map((currency, index) => (
-                          <MenuItem key={index} value={currency}>
-                            {currency}
-                          </MenuItem>
-                        ))}
+                      {category.map((categoryItem, index) => (
+                        <MenuItem key={index} value={categoryItem._id}>
+                          {categoryItem.title}{" "}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </Grid>
-                )}
-                {selectedCurrency && (
-                  <Grid item xs={12}>
-                    <Typography variant="body1" marginBlock={1}>
-                      Select Time Zone:
-                    </Typography>
-                    <Select
-                      required
-                      value={selectedTimeZone}
-                      sx={{ width: "90%", paddingInline: 2 }}
-                      defaultValue={
-                        currentSettings.timezones &&
-                        currentSettings.timezones.length > 0
-                          ? currentSettings.timezones[0]
-                          : ""
-                      }
-                      onChange={handleTimeZoneChange}
-                    >
-                      {currentSettings.timezones &&
-                        currentSettings?.timezones.map((timezone, index) => (
-                          <MenuItem key={index} value={timezone}>
-                            {timezone}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </Grid>
-                )}
-                <Grid item xs={12}>
-                  <Typography variant="body1" marginBlock={1}>
-                    Select Property Category:
-                  </Typography>
-                  <Select
-                    required
-                    value={selectedCategory}
-                    onChange={handleCategoryChange}
-                    sx={{ width: "90%", paddingInline: 2 }}
-                  >
-                    {category.map((categoryItem, index) => (
-                      <MenuItem key={index} value={categoryItem._id}>
-                        {categoryItem.title}{" "}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </Grid>
 
-                <Grid item xs={12} marginBlock={2}>
-                  <TextField
-                    label="Host Cost"
-                    type="number"
-                    required
-                    value={hostCost}
-                    onChange={handleHostCostChange}
-                    sx={{ width: "90%",  }}
-                  />
+                  <Grid item xs={12} marginBlock={2}>
+                    <TextField
+                      label="Host Cost"
+                      type="number"
+                      required
+                      value={hostCost}
+                      onChange={handleHostCostChange}
+                      sx={{ width: "90%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Checkbox
+                      checked={subscriptionActive}
+                      onChange={handleSubscriptionChange}
+                    />
+                    <Typography variant="caption">
+                      Activate Subscription
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Checkbox 
-                    checked={subscriptionActive}
-                    onChange={handleSubscriptionChange}
-                  />
-                  <Typography variant="caption">
-                    Activate Subscription
-                  </Typography>
-                </Grid>
-              </Grid>
               </Box>
-              
             </Grid>
             {/* Table */}
-            <Grid item xs={12} sm={6} md={8}>
+            <Grid item xs={12} sm={6} md={9}>
               <Box
                 // component="main"
                 sx={{
-                  
                   flexGrow: 1,
                   bgcolor: "background.default",
                   paddingBlock: 2,
                   paddingInline: 3,
                   borderRadius: "12px",
-                  overflowX: 'auto'
+                  overflowX: "auto",
                 }}
               >
                 <TableContainer component={Paper}>
-                  <Table  aria-label="current settings">
+                  <Table aria-label="current settings">
                     <TableHead sx={{ backgroundColor: "#003019" }}>
                       <TableRow>
                         <TableCell colSpan={2}>
