@@ -177,8 +177,8 @@ const RaisedIssues = ({ onClose }) => {
           <Typography variant="h4" className="title">
             All Issues
           </Typography>
-          <TableContainer component={Paper} sx={{marginBlock:3}}>
-            <Table marginBlock={3}>
+          <TableContainer component={Paper} sx={{ marginBlock: 3 }}>
+            <Table>
               <TableBody>
                 {allIssues.map((issue) => (
                   <TableRow key={issue.id}>
@@ -202,7 +202,7 @@ const RaisedIssues = ({ onClose }) => {
           <Typography variant="h4" className="title">
             Open Issues
           </Typography>
-          <TableContainer component={Paper} sx={{marginBlock:3}}>
+          <TableContainer component={Paper} sx={{ marginBlock: 3 }}>
             <Table marginBlock={3}>
               <TableBody>
                 {openIssues.map((issue) => (
@@ -225,7 +225,7 @@ const RaisedIssues = ({ onClose }) => {
           <Typography variant="h4" className="title">
             Closed Issues
           </Typography>
-          <TableContainer component={Paper} sx={{marginBlock:3}}>
+          <TableContainer component={Paper} sx={{ marginBlock: 3 }}>
             <Table marginBlock={3}>
               <TableBody>
                 {closedIssues.map((issue) => (
