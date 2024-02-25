@@ -5,14 +5,36 @@ import ChatIcon from '@mui/icons-material/Chat';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import io from 'socket.io-client';
 
-const ChatBox = ({ title, onClose, onMinimize, position}) => {
+const ChatBox = ({ title, onClose, onMinimize, position, sender, receiver }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [minimized, setMinimized] = useState(false);
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    // Connect to the WebSocket server
+    const newSocket = io('http://localhost:5000');
+    setSocket(newSocket);
+
+    // Subscribe to the chat room
+    newSocket.emit('subscribe', { sender, receiver });
+
+    // Listen for incoming messages
+    newSocket.on('message', (message) => {
+      setMessages([...messages, message]);
+    });
+
+    return () => {
+      // Disconnect the socket when the component unmounts
+      newSocket.disconnect();
+    };
+  }, [sender, receiver, messages]);
 
   const handleSendMessage = () => {
-    setMessages([...messages, { sender: 'You', text: newMessage }]);
+    // Send the message to the server
+    socket.emit('sendMessage', { sender, receiver, text: newMessage });
     setNewMessage('');
   };
 
@@ -24,9 +46,9 @@ const ChatBox = ({ title, onClose, onMinimize, position}) => {
   const handleClose = () => {
     onClose(); // Notify the parent component about closing
   };
-  // Dynamically calculate position based on the number of open chat boxes
-  // const [newMessage, setNewMessage] = useState('');
+
   useEffect(() => {
+    // Dynamically calculate position based on the number of open chat boxes
     const handleResize = () => {
       const newRight = window.innerWidth - position.right - document.getElementById(`chat-box`).offsetWidth;
       // No need to use setPosition here, as position is received as a prop
@@ -41,11 +63,11 @@ const ChatBox = ({ title, onClose, onMinimize, position}) => {
 
   return (
     <Paper
-    id={`chat-box`}
+      id={`chat-box`}
       style={{
         position: 'fixed',
-        bottom: 16,
-        right: 16,
+        bottom: position.bottom,
+        right: position.right,
         zIndex: 10,
         maxWidth: 400,
         width: '100%',
@@ -102,7 +124,6 @@ const ChatBox = ({ title, onClose, onMinimize, position}) => {
 };
 
 export default ChatBox;
-
 
 
 // // You will need to install socket.io-client and axios using npm or yarn
