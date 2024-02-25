@@ -198,6 +198,10 @@ exports.getUserById = async (req, res, next) => {
   }
 };
 
+
+
+
+
 // get all user
 exports.getAllUser = async (req, res, next) => {
   try {
@@ -251,8 +255,33 @@ exports.updateUser = async (req, res, next) => {
   }
 };
 
-// reset user password
+// Define a route to handle updating user type
+exports.updateUserType = async (req, res) => {
+  try {
+    // Assuming userId and userType are passed in the request body
+    const { userId, userType } = req.body;
 
+    // Find the user by userId and update the userType
+    const user = await User.findByIdAndUpdate(userId, { type: userType }, { new: true });
+
+    // Send a response indicating success
+    res.status(200).json({ message: 'User type updated successfully', user });
+  } catch (error) {
+    // If an error occurs, send an error response
+    console.error('Error updating user type:', error);
+    res.status(500).json({ error: 'Failed to update user type' });
+  }
+};
+
+
+
+
+
+
+
+
+
+// reset user password
 exports.resetPassword = async (req, res, next) => {
   const { email } = req.body;
 

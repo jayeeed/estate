@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { Button, TextField, IconButton, Paper } from "@mui/material";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -11,6 +10,7 @@ const ChatBox = ({
   title,
   onClose,
   onMinimize,
+  position,
   sender,
   receiver,
 }) => {
@@ -19,9 +19,6 @@ const ChatBox = ({
   const [minimized, setMinimized] = useState(false);
   const [socket, setSocket] = useState(null);
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-
-
   const formatDate = (date) => {
     const today = new Date();
     const yesterday = new Date(today);
@@ -71,20 +68,20 @@ const ChatBox = ({
     setMessages(dummyMessages); // Set initial messages with dummy data
   }, []);
 
-  useEffect(() => {
-    const newSocket = io(`${VITE_API_BASE_URL}/notiChat`);
-    setSocket(newSocket);
+  // useEffect(() => {
+  //   const newSocket = io(`${VITE_API_BASE_URL}/notiChat`);
+  //   setSocket(newSocket);
 
-    newSocket.emit('subscribe', { sender, receiver });
+  //   newSocket.emit('subscribe', { sender, receiver });
 
-    newSocket.on('message', (message) => {
-      setMessages(prevMessages => [...prevMessages, { ...message, receivedAt: new Date() }]);
-    });
+  //   newSocket.on('message', (message) => {
+  //     setMessages(prevMessages => [...prevMessages, { ...message, receivedAt: new Date() }]);
+  //   });
 
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [sender, receiver]);
+  //   return () => {
+  //     newSocket.disconnect();
+  //   };
+  // }, [sender, receiver]);
 
   const handleSendMessage = () => {
     if (socket) {
@@ -112,17 +109,29 @@ const ChatBox = ({
     onClose();
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      // Dynamically calculate position based on the number of open chat boxes
+      const newRight =
+        window.innerWidth -
+        position.right -
+        document.getElementById(`chat-box`).offsetWidth;
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [position]);
 
   return (
     <Paper
       id={`chat-box`}
       style={{
         position: "fixed",
-        // bottom: position.bottom,
-        // right: position.right,
-        bottom: 16,
-        right: 16,
+        bottom: position.bottom,
+        right: position.right,
         zIndex: 10,
         maxWidth: 400,
         width: "100%",
@@ -134,33 +143,19 @@ const ChatBox = ({
           style={{
             display: "flex",
             alignItems: "center",
-            alignContent: "center",
-            justifyContent: "space-between",
             padding: "8px",
-            backgroundColor: "#075e54",
+            backgroundColor: "#3f51b5",
             color: "#fff",
           }}
         >
-          <h3
-            onClick={handleMinimize}
-            style={{ cursor: "pointer", width: "75%" }}
-          >
-            {minimized ? (
-              <>
-                <ChatIcon /> {title}
-              </>
-            ) : (
-              <>
-                <ExpandMoreIcon /> {title}
-              </>
-            )}
-          </h3>
-
+          <h2>{title}</h2>
           <IconButton
-            onClick={handleClose}
-            style={{ color: "inherit" }}
-            onMouseDown={(e) => e.stopPropagation()} // Stop event propagation
+            onClick={handleMinimize}
+            style={{ marginLeft: "auto", color: "inherit" }}
           >
+            {minimized ? <ChatIcon /> : <ExpandMoreIcon />}
+          </IconButton>
+          <IconButton onClick={handleClose} style={{ color: "inherit" }}>
             <CloseIcon />
           </IconButton>
         </div>
@@ -237,21 +232,3 @@ const ChatBox = ({
 };
 
 export default ChatBox;
-
-
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     // Dynamically calculate position based on the number of open chat boxes
-  //     const newRight =
-  //       window.innerWidth -
-  //       position.right -
-  //       document.getElementById(`chat-box`).offsetWidth;
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, [position]);

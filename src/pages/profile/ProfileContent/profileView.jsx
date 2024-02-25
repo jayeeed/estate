@@ -13,6 +13,7 @@ import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 const ProfileView = () => {
   const userInfo = useAuthInfo();
+  console.log(userInfo);
 
   return (
     <Box p={1}>

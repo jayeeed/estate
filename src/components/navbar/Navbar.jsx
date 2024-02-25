@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Badge,
@@ -22,6 +22,9 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import AvatarMenu from "../avater";
 import SearchMobile from "../searchFilter/SearchMobile";
 import Logo from "./Logo";
+import { useDispatch } from "react-redux";
+import { updateUserType } from "../../redux/features/AuthSlice"; // Import your updateUserType action from authSlice
+
 // import VoiceSearch from "../VoiceSearch/VoiceSearch";
 
 const StyledToolbar = styled(Toolbar)({
@@ -54,6 +57,9 @@ ElevationScroll.propTypes = {
 
 export default function Navbar(props) {
   const location = useLocation();
+  const dispatch = useDispatch(); // Access the dispatch function from Redux
+  const [userType, setUserType] = useState("renter"); // Initialize user type as "host"
+
 
   let showCategory;
   let showSearchFilter;
@@ -69,6 +75,17 @@ export default function Navbar(props) {
     containerWidth = "xl";
     // containerWidth = "lg";
   }
+
+  const handleUserTypeChange = () => {
+    // Toggle between "host" and "renter" when the button is clicked
+    const newType = userType === "host" ? "renter" : "host";
+    setUserType(newType);
+  
+    // Dispatch the updateUserType thunk action with userId and new user type
+    dispatch(updateUserType({ userId: /* Add your userId here */, userType: newType }));
+  };
+  
+
 
   return (
     <>
@@ -122,8 +139,9 @@ export default function Navbar(props) {
                         md: "block",
                       },
                     }}
+                    onClick={handleUserTypeChange}
                   >
-                    Switch to hosting
+                    Switch to {userType === "host" ? "Renting" : "Hosting"}
                   </Button>
                 </Link>
 

@@ -50,6 +50,9 @@ const PropertyList = () => {
 
   const theme = useTheme();
 
+console.log(useAuthInfo);
+
+
 
 
   // const handleApplication = (event) => {
@@ -223,7 +226,7 @@ const PropertyList = () => {
   }
 
 
-console.log(userProperties)
+console.log(userInfo)
 
   return (
     <DashboardLayout title={"Property list"}>

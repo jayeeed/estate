@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Box,
@@ -13,6 +13,7 @@ import images from "./Images";
 import ReservationCard from "../../components/reservationCard";
 import AppLayout from "../../layouts/appLayout";
 import { getActiveProperties } from "../../redux/features/PropertySlice";
+import { updateUserType } from "../../redux/features/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CustomHashLoader from "../../components/customLoader/CustomHashLoader";
 import ReservationCardCopy from "../../components/reservationCard/index copy";
@@ -311,7 +312,7 @@ export default function Home() {
                               width={"250px"}
                               style={{ borderRadius: "10px" }}
                               alt=""
-                              srcset=""
+                              // srcset=""
                             />
                             <div
                               style={{

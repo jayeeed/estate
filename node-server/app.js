@@ -48,6 +48,7 @@ const adminRoutes = require("./src/routes/adminRoutes");
 const companyRoute = require("./src/routes/companyRoutes");
 const subCompanyRoute = require("./src/routes/subCompanyRoutes");
 const postJobRoute = require("./src/routes/postJobRoutes");
+const chatRoute = require("./src/routes/chatRoute")
 
 app.use("/api", userRoute);
 app.use("/api", adminRoutes);
@@ -60,6 +61,7 @@ app.use("/api", profileRoute);
 app.use("/api", companyRoute);
 app.use("/api", subCompanyRoute);
 app.use("/api", postJobRoute);
+app.use("/api", chatRoute);
 
 // pdf generate and fetch from client
 app.post("/api/create-pdf", (req, res) => {

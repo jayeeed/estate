@@ -6,6 +6,7 @@ const {
   verifyOTP,
   logoutUser,
   updateUser,
+  updateUserType,
   getAllUser,
   resetPassword,
   resendOTP,
@@ -30,5 +31,6 @@ router.post("/logout", authMiddleware, logoutUser);
 router.put("/update/:id", updateUser);
 router.get("/users", getAllUser);
 router.get("/user/:id", getUserById);
+router.post("/update-user-type", updateUserType);
 
 module.exports = router;
