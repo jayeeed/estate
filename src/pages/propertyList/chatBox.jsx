@@ -1,70 +1,103 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+// ChatBox.js
+import { useEffect, useState } from 'react';
+import { Button, TextField, IconButton, Paper } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
+import CloseIcon from '@mui/icons-material/Close';
+import SendIcon from '@mui/icons-material/Send';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const ChatBox = ({ onClose }) => {
+const ChatBox = ({ title, onClose, onMinimize, position}) => {
   const [messages, setMessages] = useState([]);
-  const [messageInput, setMessageInput] = useState("");
+  const [newMessage, setNewMessage] = useState('');
+  const [minimized, setMinimized] = useState(false);
 
-  const handleMessageSend = () => {
-    if (messageInput.trim() !== "") {
-      setMessages([...messages, { sender: "You", message: messageInput }]);
-      setMessageInput("");
-    }
+  const handleSendMessage = () => {
+    setMessages([...messages, { sender: 'You', text: newMessage }]);
+    setNewMessage('');
   };
 
+  const handleMinimize = () => {
+    setMinimized(!minimized);
+    onMinimize(); // Notify the parent component about minimizing
+  };
+
+  const handleClose = () => {
+    onClose(); // Notify the parent component about closing
+  };
+  // Dynamically calculate position based on the number of open chat boxes
+  // const [newMessage, setNewMessage] = useState('');
+  useEffect(() => {
+    const handleResize = () => {
+      const newRight = window.innerWidth - position.right - document.getElementById(`chat-box`).offsetWidth;
+      // No need to use setPosition here, as position is received as a prop
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [position]);
+
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        bottom: "80px",
-        right: "20px",
-        width: "300px",
-        backgroundColor: "#ffffff",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-        zIndex: "9999",
+    <Paper
+    id={`chat-box`}
+      style={{
+        position: 'fixed',
+        bottom: 16,
+        right: 16,
+        zIndex: 10,
+        maxWidth: 400,
+        width: '100%',
+        overflow: 'hidden',
       }}
     >
-      <Box sx={{ padding: "10px" }}>
-        <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-          Chat
-        </Typography>
-        <Box
-          sx={{
-            height: "200px",
-            overflowY: "scroll",
-            marginBottom: "10px",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            padding: "10px",
-          }}
-        >
-          {messages.map((msg, index) => (
-            <Typography key={index} variant="body1">
-              <strong>{msg.sender}: </strong> {msg.message}
-            </Typography>
-          ))}
-        </Box>
-        <TextField
-          variant="outlined"
-          placeholder="Type your message..."
-          fullWidth
-          value={messageInput}
-          onChange={(e) => setMessageInput(e.target.value)}
-          sx={{ marginBottom: "10px" }}
-        />
-        <Button variant="contained" onClick={handleMessageSend}>
-          Send
-        </Button>
-        <Button variant="text" onClick={onClose} sx={{ marginLeft: "10px" }}>
-          Close
-        </Button>
-      </Box>
-    </Box>
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', padding: '8px', backgroundColor: '#3f51b5', color: '#fff' }}>
+          <h2>{title}</h2>
+          <IconButton onClick={handleMinimize} style={{ marginLeft: 'auto', color: 'inherit' }}>
+            {minimized ? <ChatIcon /> : <ExpandMoreIcon />}
+          </IconButton>
+          <IconButton onClick={handleClose} style={{ color: 'inherit' }}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+
+        {!minimized && (
+          <div style={{ padding: '16px', backgroundColor: '#f0f0f0' }}>
+            {messages.map((message, index) => (
+              <div key={index} style={{ marginBottom: '8px', color: message.sender === 'You' ? '#4CAF50' : '#333' }}>
+                <strong>{message.sender}:</strong> {message.text}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {!minimized && (
+          <div style={{ display: 'flex', alignItems: 'center', padding: '8px', borderTop: '1px solid #ccc' }}>
+            <TextField
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()} // Trigger sendMessage on Enter key
+              fullWidth
+              variant="outlined"
+              size="small"
+              style={{ marginRight: '8px' }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSendMessage}
+              startIcon={<SendIcon />}
+              style={{ marginLeft: 'auto' }}
+            >
+              Send
+            </Button>
+          </div>
+        )}
+      </div>
+    </Paper>
   );
 };
 
@@ -72,105 +105,65 @@ export default ChatBox;
 
 
 
+// // You will need to install socket.io-client and axios using npm or yarn
+// import React, { useState, useEffect } from 'react';
+// import io from 'socket.io-client';
+// import axios from 'axios';
 
+// const ChatComponent = ({ sender, receiver }) => {
+//   const [messages, setMessages] = useState([]);
+//   const [text, setText] = useState('');
+//   const [socket, setSocket] = useState(null);
 
+//   useEffect(() => {
+//     // Connect to the WebSocket server
+//     const newSocket = io('http://localhost:5000');
+//     setSocket(newSocket);
 
-// import React, { useState } from "react";
-// import Box from "@mui/material/Box";
-// import Paper from "@mui/material/Paper";
-// import Typography from "@mui/material/Typography";
-// import TextField from "@mui/material/TextField";
-// import Button from "@mui/material/Button";
-// import IconButton from "@mui/material/IconButton";
-// import MinimizeIcon from "@mui/icons-material/Minimize";
-// import RestoreIcon from "@mui/icons-material/Restore";
+//     // Fetch existing messages from the server
+//     axios.get(`http://localhost:5000/messages/${sender}/${receiver}`)
+//       .then((response) => setMessages(response.data))
+//       .catch((error) => console.error('Error fetching messages:', error));
 
-// const ChatBox = ({ open, onClose, responseMessage, setResponseMessage, onSend }) => {
-//   const [minimized, setMinimized] = useState(false);
+//     return () => {
+//       newSocket.disconnect(); // Disconnect the socket when the component unmounts
+//     };
+//   }, [sender, receiver]);
 
-//   const handleSendResponse = () => {
-//     onSend();
+//   const sendMessage = () => {
+//     // Send the message to the server
+//     socket.emit('sendMessage', { sender, receiver, text });
+//     setText('');
 //   };
 
+//   useEffect(() => {
+//     // Listen for new messages from the server
+//     if (socket) {
+//       socket.on('newMessage', (message) => {
+//         setMessages([...messages, message]);
+//       });
+//     }
+//   }, [socket, messages]);
+
 //   return (
-//     <Box
-//       sx={{
-//         position: "fixed",
-//         bottom: minimized ? 0 : 20,
-//         right: 20,
-//         zIndex: 9999,
-//       }}
-//     >
-//       <Paper
-//         sx={{
-//           width: minimized ? 300 : 450,
-//           height: minimized ? "auto" : 400,
-//           padding: 2,
-//           backgroundColor: "#f3f2ef",
-//           position: "relative",
-//           display: "flex",
-//           flexDirection: "column",
-//         }}
-//       >
-//         {!minimized && (
-//           <Box sx={{ position: "absolute", top: 0, right: 0 }}>
-//             <IconButton onClick={() => setMinimized(true)}>
-//               <MinimizeIcon />
-//             </IconButton>
-//           </Box>
-//         )}
-//         {minimized && (
-//           <Box sx={{ position: "absolute", top: 0, right: 0 }}>
-//             <IconButton onClick={() => setMinimized(false)}>
-//               <RestoreIcon />
-//             </IconButton>
-//           </Box>
-//         )}
-//         {!minimized && (
-//           <Box sx={{ flex: 1, overflowY: "auto", paddingBottom: 2 }}>
-//             <div style={{ marginBottom: 8 }}>
-//               <Typography
-//                 variant="body2"
-//                 sx={{ color: "#555", textAlign: "center", marginBottom: 1 }}
-//               >
-//                 You - {new Date().toLocaleTimeString()}
-//               </Typography>
-//               <Typography
-//                 variant="body1"
-//                 sx={{ textAlign: "center", marginBottom: 2 }}
-//               >
-//                 Hello! How can I help you?
-//               </Typography>
-//               {/* Render previous chat messages here */}
-//             </div>
-//           </Box>
-//         )}
-//         {!minimized && (
-//           <>
-//             <TextField
-//               label="Type a message"
-//               multiline
-//               rows={4}
-//               fullWidth
-//               variant="outlined"
-//               sx={{ marginTop: 2 }}
-//               value={responseMessage}
-//               onChange={(e) => setResponseMessage(e.target.value)}
-//             />
-//             <Button
-//               variant="contained"
-//               color="primary"
-//               sx={{ marginTop: 1 }}
-//               onClick={handleSendResponse}
-//             >
-//               Send
-//             </Button>
-//           </>
-//         )}
-//       </Paper>
-//     </Box>
+//     <div>
+//       <div>
+//         {messages.map((message, index) => (
+//           <div key={index}>
+//             <strong>{message.sender}:</strong> {message.text}
+//           </div>
+//         ))}
+//       </div>
+//       <div>
+//         <input
+//           type="text"
+//           value={text}
+//           onChange={(e) => setText(e.target.value)}
+//         />
+//         <button onClick={sendMessage}>Send</button>
+//       </div>
+//     </div>
 //   );
 // };
 
-// export default ChatBox;
-
+// export default ChatComponent;

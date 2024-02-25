@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import DashboardLayout from "../../layouts/hostDashboard";
-import IconButton from "@mui/material/IconButton";
-import MinimizeIcon from "@mui/icons-material/Minimize";
-import RestoreIcon from "@mui/icons-material/Restore";
 import ChatBox from "./chatBox"; // Import the ChatBox component
 
 const RenterRequestComponent = () => {
@@ -24,64 +20,79 @@ const RenterRequestComponent = () => {
     },
     // Add more renter requests as needed
   ]);
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [responseMessage, setResponseMessage] = useState("");
-  const [chatOpen, setChatOpen] = useState(false); // State to control the chatbox
 
-  const handleOpenChat = () => {
-    setChatOpen(true);
+  const [chatBoxes, setChatBoxes] = useState([]);
+
+  const handleRespond = (request) => {
+    // Close existing chat boxes
+    setChatBoxes([]);
+
+    // Calculate the position for the new chat box
+    const position = calculateChatBoxPosition();
+
+    // Create a new chat box for the selected request with the calculated position
+    setChatBoxes([{ title: request.name, id: request.id, position }]);
   };
 
-  const handleCloseChat = () => {
-    setChatOpen(false);
+  const calculateChatBoxPosition = () => {
+    // You can implement your logic here to calculate the position dynamically
+    // For simplicity, let's just stack the chat boxes vertically
+    return {
+      right: 16,
+      bottom: 16 + chatBoxes.length * 400, // Adjust the width as needed
+    };
   };
 
-  const handleSendResponse = () => {
-    console.log("Response Message:", responseMessage);
-    setResponseMessage(""); // Clear the response message after sending
+  const handleMinimize = (chatBoxId) => {
+    // Find the chat box with the specified id
+    const updatedChatBoxes = chatBoxes.map((chatBox) =>
+      chatBox.id === chatBoxId ? { ...chatBox, minimized: !chatBox.minimized } : chatBox
+    );
+
+    setChatBoxes(updatedChatBoxes);
+  };
+
+  const handleClose = (chatBoxId) => {
+    // Filter out the chat box with the specified id
+    const updatedChatBoxes = chatBoxes.filter((chatBox) => chatBox.id !== chatBoxId);
+    setChatBoxes(updatedChatBoxes);
   };
 
   return (
-    <DashboardLayout title={"Properties Rent Applications"}>
+    <div>
       <Box>
         <Typography variant="h4" gutterBottom>
           Renter Requests
         </Typography>
         {renterRequests.map((request) => (
-          <Card key={request.id} sx={{ marginBottom: 2 }}>
-            <CardContent>
-              <Typography variant="h6">{request.name}</Typography>
-              <Typography variant="body1">{request.message}</Typography>
-              <Button
-                variant="outlined"
-                onClick={() => setSelectedRequest(request)}
-              >
-                Respond
-              </Button>
-            </CardContent>
-          </Card>
+          <div key={request.id}>
+            <Card sx={{ marginBottom: 2 }}>
+              <CardContent>
+                <Typography variant="h6">{request.name}</Typography>
+                <Typography variant="body1">{request.message}</Typography>
+                <Button
+                  variant="outlined"
+                  onClick={() => handleRespond(request)}
+                >
+                  Respond
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         ))}
-
-        {selectedRequest && (
-          <Box sx={{ position: "fixed", bottom: "20px", right: "20px" }}>
-            {!chatOpen ? (
-              <IconButton onClick={handleOpenChat}>
-                <MinimizeIcon />
-              </IconButton>
-            ) : (
-              <>
-                <ChatBox onClose={handleCloseChat} />
-                <IconButton onClick={handleCloseChat}>
-                  <RestoreIcon />
-                </IconButton>
-              </>
-            )}
-          </Box>
-        )}
-
-        {/* Additional content can be added here */}
       </Box>
-    </DashboardLayout>
+      <div>
+        {chatBoxes.map((chatBox) => (
+          <ChatBox
+            key={chatBox.id}
+            title={chatBox.title}
+            onMinimize={() => handleMinimize(chatBox.id)}
+            onClose={() => handleClose(chatBox.id)}
+            position={chatBox.position}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
