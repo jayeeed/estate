@@ -410,10 +410,10 @@ function Tab1Content() {
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
         <Box width={"70%"}>
-          <Typography variant="h3">Renter Profile </Typography>
+          <Typography variant="h3">Profile </Typography>
           <Typography>
             {" "}
-            Create your Renter Profile once and reuse it for all your
+            Create your Profile once and reuse it for all your
             applications.
           </Typography>
         </Box>

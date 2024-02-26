@@ -74,7 +74,7 @@ const SideBar = ({ setOpen, open }) => {
         ))}
       <Drawer
         sx={{
-          zIndex:1000,
+          zIndex: 1000,
           position: "absolute",
           width: "270px",
           flexShrink: 0,
@@ -122,29 +122,31 @@ const SideBar = ({ setOpen, open }) => {
                     },
                   }}
                 >
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <Icon
-                        style={{
-                          fontSize: "23px",
-                          color: activeItem === data ? "#2980b9" : "#888",
+                  <div>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <Icon
+                          style={{
+                            fontSize: "23px",
+                            color: activeItem === data ? "#2980b9" : "#888",
+                          }}
+                          icon={data.icon}
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={data.name}
+                        primaryTypographyProps={{
+                          style: {
+                            color: activeItem === data ? "#2980b9" : "#888",
+                            fontWeight: activeItem === data ? 600 : 400,
+                            borderRight:
+                              activeItem === data ? "3px solid #2980b9" : 400,
+                            fontSize: "15px",
+                          },
                         }}
-                        icon={data.icon}
                       />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={data.name}
-                      primaryTypographyProps={{
-                        style: {
-                          color: activeItem === data ? "#2980b9" : "#888",
-                          fontWeight: activeItem === data ? 600 : 400,
-                          borderRight:
-                            activeItem === data ? "3px solid #2980b9" : 400,
-                          fontSize: "15px",
-                        },
-                      }}
-                    />
-                  </ListItemButton>
+                    </ListItemButton>
+                  </div>
                 </ListItem>
               </Link>
             ))}

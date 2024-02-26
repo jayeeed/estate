@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, useMediaQuery } from "@mui/material";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
@@ -31,8 +31,8 @@ const AdminLayout = ({ children, title }) => {
         ))}
       <SideBar setOpen={setDrawerOpen} open={drawerOpen} />
       <Box
-        p={3}
         sx={{
+          padding:3,
           background: "#ddecff",
           minHeight: "100vh",
           width: "-webkit-fill-available",

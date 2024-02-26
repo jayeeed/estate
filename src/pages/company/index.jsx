@@ -55,7 +55,7 @@ const CompanyProfileInfo = () => {
   return (
     <>
       <DashboardLayout title={"Company info"} >
-        <Box margin={2} textAlign={"right"}>
+        <Box marginBlock={2} marginInline={0} textAlign={"right"}>
           <Button
             sx={{
               textTransform: "capitalize",

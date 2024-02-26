@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently --prefix-colors cyan,magenta,yellow --prefix \"[react-server]\" \"vite --port 3009\" \"npm run start-node\"",
+    "dev": "concurrently --prefix-colors cyan,red,green --prefix \"[react]\" \"vite --port 3009\" \"npm run start-node\"",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start-node": "cd node-server && npm start"
+    "start-node": "cd node-server && concurrently --prefix-colors cyan,green --prefix \"[node]\" \"npm start\""
   },
+
+
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",

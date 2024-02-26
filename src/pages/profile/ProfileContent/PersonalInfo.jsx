@@ -69,7 +69,7 @@ const PersonalInfo = () => {
       {isGreen ? (
         <>
           <Typography marginTop={2}>
-            You have succesfully Updated your renter profile.
+            You have succesfully Updated your profile.
           </Typography>
           <br/>
         </>

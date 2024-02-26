@@ -26,6 +26,7 @@ import CompanyProfileInfo from "../pages/company";
 import AddCompanyProfile from "../pages/company/addCompany";
 import RaisedIssues from "../pages/raisedIssues";
 import RenterRequestComponent from "../pages/propertyList/rentalApplication";
+import FCompany from "../pages/company/fc";
 // import RaiseIssue from "../pages/raisedIssues/tenat-raised";
 
 // import HostProfileInfo from "../pages/profile/HostInfo";
@@ -64,6 +65,10 @@ export const AppRoutes = () => {
         <Route
           path="/company"
           element={<ProtectedRoute children={<CompanyProfileInfo />} />}
+        />
+        <Route
+          path="/create-company"
+          element={<ProtectedRoute children={<FCompany />} />}
         />
 
         {/* /payments/coupons */}

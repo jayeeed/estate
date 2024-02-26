@@ -27,21 +27,11 @@ const RenterRequestComponent = () => {
     // Close existing chat boxes
     setChatBoxes([]);
 
-    // Calculate the position for the new chat box
-    const position = calculateChatBoxPosition();
-
     // Create a new chat box for the selected request with the calculated position
-    setChatBoxes([{ title: request.name, id: request.id, position }]);
+    setChatBoxes([{ title: request.name, id: request.id }]);
   };
 
-  const calculateChatBoxPosition = () => {
-    // You can implement your logic here to calculate the position dynamically
-    // For simplicity, let's just stack the chat boxes vertically
-    return {
-      right: 16,
-      bottom: 16 + chatBoxes.length * 400, // Adjust the width as needed
-    };
-  };
+
 
   const handleMinimize = (chatBoxId) => {
     // Find the chat box with the specified id
@@ -88,7 +78,7 @@ const RenterRequestComponent = () => {
             title={chatBox.title}
             onMinimize={() => handleMinimize(chatBox.id)}
             onClose={() => handleClose(chatBox.id)}
-            position={chatBox.position}
+           
           />
         ))}
       </div>

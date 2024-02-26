@@ -50,6 +50,7 @@ export const updateUserType = createAsyncThunk(
 
       // Assuming the response contains updated user data, update the Redux store
       const updatedUser = response.data.user;
+      console.log(response.data.user);
       return fulfillWithValue(updatedUser);
     } catch (error) {
       return rejectWithValue(error.response.data);

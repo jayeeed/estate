@@ -260,6 +260,7 @@ exports.updateUserType = async (req, res) => {
   try {
     // Assuming userId and userType are passed in the request body
     const { userId, userType } = req.body;
+    console.log(userId, userType);
 
     // Find the user by userId and update the userType
     const user = await User.findByIdAndUpdate(userId, { type: userType }, { new: true });

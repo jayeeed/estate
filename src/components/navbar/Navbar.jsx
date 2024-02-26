@@ -11,19 +11,22 @@ import {
 } from "@mui/material";
 import { EmailOutlined, NotificationsOutlined } from "@mui/icons-material";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
-import Category from "../category/Category";
-import { useLocation } from "react-router-dom";
-import SearchFilter from "../searchFilter";
-
 import PropTypes from "prop-types";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import AvatarMenu from "../avater";
 import SearchMobile from "../searchFilter/SearchMobile";
 import Logo from "./Logo";
+
+import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import SearchFilter from "../searchFilter";
+import Category from "../category/Category";
+
+
 import { useDispatch } from "react-redux";
 import { updateUserType } from "../../redux/features/AuthSlice"; // Import your updateUserType action from authSlice
+import { useAuthInfo } from "../../helpers/AuthCheck";
 
 // import VoiceSearch from "../VoiceSearch/VoiceSearch";
 
@@ -56,9 +59,11 @@ ElevationScroll.propTypes = {
 };
 
 export default function Navbar(props) {
+  const isUserInSession = useAuthInfo();
+  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch(); // Access the dispatch function from Redux
-  const [userType, setUserType] = useState("renter"); // Initialize user type as "host"
+  // const [userType, setUserType] = useState("renter");
 
 
   let showCategory;
@@ -77,14 +82,19 @@ export default function Navbar(props) {
   }
 
   const handleUserTypeChange = () => {
-    // Toggle between "host" and "renter" when the button is clicked
-    const newType = userType === "host" ? "renter" : "host";
-    setUserType(newType);
+    // Check if the user is in session and the userType is "renter"
+
+    const isUserRenter = isUserInSession.type === "renter";
+    console.log(isUserInSession)
   
-    // Dispatch the updateUserType thunk action with userId and new user type
-    dispatch(updateUserType({ userId: /* Add your userId here */, userType: newType }));
+    if (isUserInSession && isUserRenter) {
+      // Redirect the user to the create company page
+      dispatch(updateUserType({ userId: isUserInSession._id, userType: "host" }));
+      navigate("/create-company");
+    } else {
+      navigate("/hosting");
+    }
   };
-  
 
 
   return (
@@ -124,7 +134,7 @@ export default function Navbar(props) {
                 {/* <VoiceSearch /> */}
               </Box>
               <Stack direction={"row"} alignItems={"center"}>
-                <Link to={"/hosting"}>
+                {/* <Link to={"/hosting"}> */}
                   <Button
                     variant="text"
                     size="small"
@@ -141,9 +151,9 @@ export default function Navbar(props) {
                     }}
                     onClick={handleUserTypeChange}
                   >
-                    Switch to {userType === "host" ? "Renting" : "Hosting"}
+                    Switch to Hosting
                   </Button>
-                </Link>
+                {/* </Link> */}
 
                 {/* <Link to={"/notifications"}> */}
                 <Badge

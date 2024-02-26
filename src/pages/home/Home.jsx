@@ -13,7 +13,6 @@ import images from "./Images";
 import ReservationCard from "../../components/reservationCard";
 import AppLayout from "../../layouts/appLayout";
 import { getActiveProperties } from "../../redux/features/PropertySlice";
-import { updateUserType } from "../../redux/features/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CustomHashLoader from "../../components/customLoader/CustomHashLoader";
 import ReservationCardCopy from "../../components/reservationCard/index copy";
@@ -82,7 +81,7 @@ export default function Home() {
           } else {
             console.warn(
               "No recommended properties found in the API response:",
-              data
+              data,
             );
           }
         });
@@ -150,20 +149,21 @@ export default function Home() {
     setOpenMap(false);
   };
 
-  const handleScroll = () => {
-    const bottom =
-      Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
-    if (bottom && currentPage < totalPages && !loading) {
-      setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      const bottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight;
+      if (bottom && currentPage < totalPages && !loading) {
+        setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+  }, []);
 
   return (
     <AppLayout>
@@ -194,11 +194,9 @@ export default function Home() {
               ))
             ) : (
               <CustomHashLoader />
-            //  <p> No property left </p>
+              //  <p> No property left </p>
             )}
-          
-         
-    
+
             {/* Display recommended properties */}
             {/* fixed the bug of recomended id issue for jayeed */}
 
@@ -242,7 +240,6 @@ export default function Home() {
             ))}
           </Grid>
         </Container>
-
         <Box
           position={"fixed"}
           sx={{
@@ -365,7 +362,6 @@ export default function Home() {
         <ChatButton onClick={toggleChat} />{" "}
         {/* Add the ChatButton component/fahim */}
       </>
-    
       {/* Show loader when loading more properties */}
       {isChatOpen && <ChatWindow onClose={toggleChat} />}{" "}
       {/* Show the chat window when isChatOpen is true/fahim */}
