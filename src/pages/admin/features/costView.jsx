@@ -1,81 +1,55 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import {
-  Box,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
+const columns = [
+  { field: 'Country', headerName: 'Country', width: 150 },
+  { field: 'Currency', headerName: 'Currency', width: 150 },
+  { field: 'hostCost', headerName: 'Host Cost', width: 150 },
+  { field: 'TimeZone', headerName: 'Time Zone', width: 150 },
+];
 
+// ...
 
 const HostCostView = () => {
-  const [hostCosts, setHostCosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [hostCosts, setHostCosts] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchHostCosts();
   }, []);
 
   const fetchHostCosts = async () => {
     try {
       const response = await axios.get("/viewCost");
-      setHostCosts(response.data);
+      // Assuming each row has a unique identifier field named "_id"
+      const updatedHostCosts = response.data.map((row) => ({ ...row, id: row._id }));
+      setHostCosts(updatedHostCosts);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching host costs:", error);
     }
   };
 
-
   return (
-    <Box marginBlock={2} marginInline={1} >
-      <Typography variant="h4" fontWeight={"bold"} marginBlock={2}>Cost view</Typography>
+    <Box marginBlock={2} marginInline={1}>
+      <Typography variant="h4" fontWeight="bold" marginBlock={2}>
+        Cost view
+      </Typography>
       <Box>
         {loading ? (
           <Typography>Loading...</Typography>
         ) : (
-          <TableContainer component={Paper}   sx={{
-            width: '100%',
-            maxHeight: 400,
-            borderRadius: 4,
-            overflowY: 'auto',
-            '&::-webkit-scrollbar': {
-              display: 'none',
-            },
-          }}>
-            <Table stickyHeader>
-              <TableHead >  
-              {/* style={{ backgroundColor: "#f0f0f0"  }} */}
-                <TableRow>
-                  {/* <TableCell  style={{ width: '30%' }}>Region</TableCell> */}
-                  <TableCell  style={{ width: '30%', fontWeight:"bold" }}>Country</TableCell>
-                  <TableCell  style={{ width: '10%',fontWeight:"bold" }}>Currency</TableCell>
-                  <TableCell  style={{ width: '10%',fontWeight:"bold" }}>Host Cost</TableCell>
-                  {/* <TableCell  style={{ width: '30%' }}>Subscription Active</TableCell> */}
-                  <TableCell  style={{ width: '30%',fontWeight:"bold" }}>Time Zone</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {hostCosts.map((cost) => (
-                  <TableRow key={cost._id}>
-                    {/* <TableCell>{cost.Region}</TableCell> */}
-                    <TableCell>{cost.Country}</TableCell>
-                    <TableCell>{cost.Currency}</TableCell>
-                    <TableCell>{cost.hostCost}{" "}%</TableCell>
-                    {/* <TableCell>{cost.subscriptionActive ? "Yes" : "No"}</TableCell> */}
-
-                    <TableCell>{cost.TimeZone}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <div style={{ height: 400, width: '100%' }}>
+            <DataGrid
+              rows={hostCosts}
+              columns={columns}
+              pageSize={5}
+              checkboxSelection
+              getRowId={(row) => row.id}
+            />
+          </div>
         )}
       </Box>
     </Box>
@@ -83,6 +57,8 @@ const HostCostView = () => {
 };
 
 export default HostCostView;
+
+
 
   
   

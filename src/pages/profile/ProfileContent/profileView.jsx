@@ -1,8 +1,8 @@
 import {
   // Avatar,
   Box,
-  Card,
-  CardContent,
+  // Card,
+  // CardContent,
   Divider,
   Grid,
   // Table,
@@ -21,7 +21,7 @@ const ProfileView = () => {
         <Typography variant="h4">Personal Information</Typography>
       </Box>
       <Divider />
-      <Box>
+      <Box sx={{ marginBottom: 1 }}>
         <Grid
           container
           spacing={0}
@@ -102,39 +102,58 @@ const ProfileView = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box marginBlock={1}>
+
+
+
+
+
+      <Box sx={{ marginBottom: 2 }}>
         <Typography variant="h4">Income Sources</Typography>
       </Box>
       <Divider />
       <Table sx={{ borderRadius: 4, marginBlock: 2 }}>
         <TableBody>
           <TableRow>
-            <TableCell sx={{ border: "none" }}>
+            <TableCell sx={{ border: "none" }} align="left">
               <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Source:</strong>{" "}
+                <strong>Source:</strong>
+              </Typography>
+            </TableCell>
+            <TableCell sx={{ border: "none" }} align="left">
+              <Typography variant="body1" sx={{ lineHeight: 0 }}>
                 {userInfo.personalInfo.incomeSources.incomeSource}
               </Typography>
             </TableCell>
           </TableRow>
+
           <TableRow>
-            <TableCell sx={{ border: "none" }}>
+            <TableCell sx={{ border: "none" }} align="left">
               <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Office Name:</strong>{" "}
+                <strong>Office Name:</strong>
+              </Typography>
+            </TableCell>
+            <TableCell sx={{ border: "none" }} align="left">
+              <Typography variant="body1" sx={{ lineHeight: 0 }}>
                 {userInfo.personalInfo.incomeSources.officeName}
               </Typography>
             </TableCell>
           </TableRow>
+
           <TableRow>
-            <TableCell sx={{ border: "none" }}>
+            <TableCell sx={{ border: "none" }} align="left">
               <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Workplace Location:</strong>{" "}
+                <strong>Workplace Location:</strong>
+              </Typography>
+            </TableCell>
+            <TableCell sx={{ border: "none" }} align="left">
+              <Typography variant="body1" sx={{ lineHeight: 0 }}>
                 {userInfo.personalInfo.incomeSources.workplaceLocation}
               </Typography>
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-      {/* <Divider style={{ margin: "20px 0" }} /> */}{" "}
+
       <Box marginBlock={1}>
         <Typography variant="h4">Emergency Contacts</Typography>
       </Box>
@@ -142,34 +161,47 @@ const ProfileView = () => {
       <Table sx={{ borderRadius: 4, marginBlock: 2 }}>
         <TableBody>
           <TableRow>
-            <TableCell style={{ border: "none" }}>
+            <TableCell style={{ border: "none" }} align="left">
               <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Name:</strong>{" "}
+                <strong>Name:</strong>
+              </Typography>
+            </TableCell>
+            <TableCell style={{ border: "none" }} align="left">
+              <Typography variant="body1" sx={{ lineHeight: 0 }}>
                 {userInfo.personalInfo.emergencyContact.emergencyContactName}
               </Typography>
             </TableCell>
           </TableRow>
+
           <TableRow>
-            <TableCell style={{ border: "none" }}>
+            <TableCell style={{ border: "none" }} align="left">
               <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Relationship:</strong>{" "}
+                <strong>Relationship:</strong>
+              </Typography>
+            </TableCell>
+            <TableCell style={{ border: "none" }} align="left">
+              <Typography variant="body1" sx={{ lineHeight: 0 }}>
                 {userInfo.personalInfo.emergencyContact.relationship}
               </Typography>
             </TableCell>
           </TableRow>
+
           <TableRow>
-            <TableCell style={{ border: "none" }}>
+            <TableCell style={{ border: "none" }} align="left">
               <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Phone Number:</strong>{" "}
-                {
-                  userInfo.personalInfo.emergencyContact
-                    .emergencyContactPhoneNumber
-                }
+                <strong>Phone Number:</strong>
+              </Typography>
+            </TableCell>
+            <TableCell style={{ border: "none" }} align="left">
+              <Typography variant="body1" sx={{ lineHeight: 0 }}>
+                {userInfo.personalInfo.emergencyContact.emergencyContactPhoneNumber}
               </Typography>
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
+
+
     </Box>
   );
 };
