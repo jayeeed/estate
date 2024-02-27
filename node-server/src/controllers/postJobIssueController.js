@@ -1,10 +1,10 @@
-const PostJobModel = require("../models/postJobModel");
+const PostJobIssueModel = require("../models/postJobIssueModel");
 
 // Controller function to create a new job posting
 exports.createJob = async (req, res, next) => {
   try {
     const {
-      companyId,
+      userId,
       jobTitle,
       companyName,
       jobLocation,
@@ -12,8 +12,8 @@ exports.createJob = async (req, res, next) => {
       jobDescription,
     } = req.body;
 
-    const job = await PostJobModel.create({
-      companyId,
+    const job = await PostJobIssueModel.create({
+      userId,
       jobTitle,
       companyName,
       jobLocation,
@@ -30,7 +30,7 @@ exports.createJob = async (req, res, next) => {
 // Controller function to get all job postings
 exports.getAllJobs = async (req, res, next) => {
   try {
-    const jobs = await PostJobModel.find();
+    const jobs = await PostJobIssueModel.find();
     return res.status(200).json(jobs);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -41,7 +41,7 @@ exports.getAllJobs = async (req, res, next) => {
 exports.getJobById = async (req, res, next) => {
   try {
     const jobId = req.params.jobId;
-    const job = await PostJobModel.findById(jobId);
+    const job = await PostJobIssueModel.findById(jobId);
 
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
@@ -60,7 +60,7 @@ exports.updateJob = async (req, res, next) => {
     const update = req.body;
     const options = { new: true };
 
-    const updatedJob = await PostJobModel.findByIdAndUpdate(
+    const updatedJob = await PostJobIssueModel.findByIdAndUpdate(
       jobId,
       update,
       options
@@ -82,7 +82,7 @@ exports.updateJob = async (req, res, next) => {
 exports.deleteJob = async (req, res, next) => {
   try {
     const jobId = req.params.jobId;
-    const deletedJob = await PostJobModel.findByIdAndDelete(jobId);
+    const deletedJob = await PostJobIssueModel.findByIdAndDelete(jobId);
 
     if (!deletedJob) {
       return res.status(404).json({ message: "Job not found" });

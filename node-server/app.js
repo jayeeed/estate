@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors"); // Import the CORS package
-const { ErrorHandler, handleErrors } = require("./src/utils/errorHandler");
+const { handleErrors } = require("./src/utils/errorHandler");
 const pdf = require("html-pdf");
 require("dotenv").config();
 
@@ -48,6 +48,7 @@ const adminRoutes = require("./src/routes/adminRoutes");
 const companyRoute = require("./src/routes/companyRoutes");
 const subCompanyRoute = require("./src/routes/subCompanyRoutes");
 const postJobRoute = require("./src/routes/postJobRoutes");
+const postJobIssueRoute = require("./src/routes/postJobIssueRoutes");
 
 app.use("/api", userRoute);
 app.use("/api", adminRoutes);
@@ -60,6 +61,7 @@ app.use("/api", profileRoute);
 app.use("/api", companyRoute);
 app.use("/api", subCompanyRoute);
 app.use("/api", postJobRoute);
+app.use("/api", postJobIssueRoute);
 
 // pdf generate and fetch from client
 app.post("/api/create-pdf", (req, res) => {
@@ -83,7 +85,7 @@ app.get("/api/fetch-pdf", (req, res) => {
 //Error handling middleware
 app.use(handleErrors);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
@@ -114,6 +116,6 @@ connection.on("disconnected", () => {
   console.log("Disconnected from MongoDB");
 });
 
-app.get("/", (req, res, next) => {
+app.get("/", (req, res) => {
   res.status(200).send("Server is working...");
 });

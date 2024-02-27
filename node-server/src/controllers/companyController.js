@@ -29,7 +29,7 @@ exports.getAllCompanies = async (req, res) => {
 exports.getUserCompanies = async (req, res) => {
   const userId = req.params.id;
   try {
-    const companies = await CompanyModel.find({ userId });
+    const companies = await CompanyModel.findOne({ userId });
     res.status(200).json(companies);
   } catch (error) {
     res.status(500).json({

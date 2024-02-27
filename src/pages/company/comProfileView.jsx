@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { getApi } from "../../config/configAxios";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
+
 import {
   Typography,
-  Paper,
-  Avatar,
   CardMedia,
   Box,
   Grid,
@@ -17,7 +16,6 @@ import { useAuthInfo } from "../../helpers/AuthCheck";
 import axios from "axios";
 
 // Custom TabPanel component
-// eslint-disable-next-line react/prop-types
 const CustomTabPanel = ({ children, value, index, ...other }) => {
   return (
     <div
@@ -34,7 +32,7 @@ const CustomTabPanel = ({ children, value, index, ...other }) => {
 
 const CompanyProfilePanels = () => {
   const [value, setValue] = useState(0);
-  const [companyData, setCompanyData] = useState(null);
+  const [companyData, setCompanyData] = useState({});
   const userInfo = useAuthInfo();
 
   const handleChange = (event, newValue) => {
@@ -46,6 +44,8 @@ const CompanyProfilePanels = () => {
       try {
         const response = await axios.get(`/user/companies/${userInfo._id}`);
         setCompanyData(response.data);
+        console.log(response.data)
+        // console.log(companyData["companyLogo"]);
       } catch (error) {
         console.error("Error fetching company data:", error);
       }
@@ -94,14 +94,17 @@ const CompanyProfilePanels = () => {
             component="img"
             alt="Banner"
             height="250px"
-            image="src/pages/company/assets/house.jpg"
+            image={`data:image/png;base64,${companyData["companyLogo"]}`}
             className="banner"
             sx={{ borderRadius: 4 }}
           />
+          {/* <Avatar alt="Company Logo" src={`data:image/png;base64,${logoBase64}`} /> */}
+          {/* ... other image elements */}
           <Box className="content" display={"block"} position={"relative"}>
             <Box
               component="img"
-              src="src/pages/company/assets/OIP.jpeg"
+              src={`data:image/png;base64,${companyData["companyBanner"]}`}
+              // src="src/pages/company/assets/OIP.jpeg"
               className="avatar"
             />
 
@@ -115,15 +118,15 @@ const CompanyProfilePanels = () => {
 
             <CustomTabPanel value={value} index={0}>
               <Typography variant="h3" className="title">
-                VAI Bashar Propreties & Co
+              {companyData.companyName} Propreties & Co
               </Typography>
               <br />
               <Typography variant="body1">
-                Registration Number: 7355689345697454e{" "}
+                Registration Number: 735568-{companyData.companyRegistrationNumber}{" "}
               </Typography>
 
               <Typography variant="body1">
-                Address: Science lab, Dhaka-1205{" "}
+                Address: {companyData.companyAddress}{" "}
               </Typography>
               {/* 
               {companyData.map((company) => (
@@ -142,19 +145,7 @@ const CompanyProfilePanels = () => {
               ))} */}
 
               <Typography variant="body1" className="details">
-                History: Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Minima, ratione necessitatibus ducimus eaque incidunt
-                saepe? Delectus similique laudantium amet quaerat eius possimus
-                itaque, fuga tempora magni quia? Maxime culpa esse eligendi
-                facilis quasi delectus exercitationem, dolores, dicta voluptates
-                reiciendis cupiditate. Architecto, a, labore minus illum iusto
-                culpa eveniet accusantium libero maxime fuga ratione quidem
-                laborum ea? Vero repellat, numquam quisquam quam tempora cumque
-                quaerat ducimus, unde, modi ea illum velit voluptatem magni!
-                Mollitia est similique a ea officia! Itaque, consectetur?
-                Voluptatem at sapiente placeat id exercitationem quisquam, cum,
-                perferendis ipsa quos illo ad similique debitis omnis non quas
-                suscipit nostrum?
+                Our moto: {companyData.companyAdditionalDetails}
               </Typography>
 
               <Typography variant="h4" className="title">
@@ -162,10 +153,7 @@ const CompanyProfilePanels = () => {
               </Typography>
               <br />
               <Typography variant="body1" className="details">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima,
-                ratione necessitatibus ducimus eaque incidunt saepe? Delectus
-                similique laudantium amet quaerat eius possimus itaque, fuga
-                tempora magni quia? Maxime
+                {companyData.companyAppreciationDetails}
               </Typography>
             </CustomTabPanel>
 

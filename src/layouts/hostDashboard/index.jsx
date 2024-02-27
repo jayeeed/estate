@@ -14,20 +14,22 @@ const DashboardLayout = ({ children, title }) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }} position={"relative"}>
-      {isMdScreen ||
-        (drawerOpen && (
-          <Box
-            onClick={toggleDrawer}
-            bgcolor={"#00000050"}
-            position={"absolute"}
-            left={"0"}
-            right={"0"}
-            top={"0"}
-            zIndex={"5"}
-            bottom={"0"}
-          />
-        ))}
+    <Box sx={{ display: "flex", position: "relative" }}>
+    {isMdScreen ||
+      (drawerOpen && (
+        <Box
+          onClick={toggleDrawer}
+          sx={{
+            backgroundColor: "#00000050",
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            zIndex: 5,
+            bottom: 0,
+          }}
+        ></Box>
+      ))}
       <SideBar setOpen={setDrawerOpen} open={drawerOpen} />
       <Box
         p={3}

@@ -18,7 +18,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["react", "react-dom"], // Specify the dependencies to pre-bundle for faster startup time
+    include: ["react", "react-dom", 'buffer',], // Specify the dependencies to pre-bundle for faster startup time
   },
   esbuild: {
     jsxFactory: "h", // Use 'h' as JSX factory for faster JSX transformation

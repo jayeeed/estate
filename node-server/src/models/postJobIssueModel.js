@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
-const postJobSchema = new mongoose.Schema(
+const postJobIssueSchema = new mongoose.Schema(
   {
-    hostId: {
+    renterId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    companyId: {
+    propertyId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Company",
+      ref: "AllProperty",
       required: true,
     },
     jobTitle: {
@@ -38,6 +38,6 @@ const postJobSchema = new mongoose.Schema(
   }
 );
 
-const PostJobModel = mongoose.model("PostJob", postJobSchema);
+const PostJobIssueModel = mongoose.model("PostJobIssue", postJobIssueSchema);
 
-module.exports = PostJobModel;
+module.exports = PostJobIssueModel;

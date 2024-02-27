@@ -11,6 +11,10 @@ const companySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    letter: {
+      type: String,
+      required: true,
+    },
     companyRegistrationNumber: {
       type: String,
       required: true,

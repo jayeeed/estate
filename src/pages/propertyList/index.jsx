@@ -52,13 +52,17 @@ const PropertyList = () => {
 
 
 
-  const handleApplication = (event) => {
-    // setAnchorEl(event.currentTarget);
-  };
+  // const handleApplication = (event) => {
+  //   // setAnchorEl(event.currentTarget);
+  // };
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
+
+
+
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -218,6 +222,9 @@ const PropertyList = () => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
+
+console.log(userProperties)
+
   return (
     <DashboardLayout title={"Property list"}>
       <Grid container spacing={3} >
@@ -297,7 +304,7 @@ const PropertyList = () => {
         ) : (
           <>
             {Array.isArray(userProperties) && userProperties.length > 0 ? (
-              userProperties.map((data) => (
+              userProperties.map((data,index) => (
                 <Grid key={data._id} item xs={12} sm={6} md={4}>
                   <Card
                     sx={{
@@ -325,7 +332,7 @@ const PropertyList = () => {
                       />
                     </Box>
                     {data.images?.length > 0 && (
-                      <CardActionArea component={Link} to="/view-applications/:id">
+                      <CardActionArea component={Link} to={`/view-applications/${data._id}`}>
 
                         <CardMedia
                           component="img"
