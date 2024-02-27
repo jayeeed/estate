@@ -10,8 +10,6 @@
     "preview": "vite preview",
     "start-node": "cd node-server && concurrently --prefix-colors cyan,green --prefix \"[node]\" \"npm start\""
   },
-
-
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -53,6 +51,7 @@
     "react-slideshow-image": "^4.3.0",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.4",
+    "socket.io": "^4.7.4",
     "socket.io-client": "^4.7.4",
     "styled-components": "^6.1.8",
     "sweetalert2": "^11.10.4",

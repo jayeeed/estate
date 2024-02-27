@@ -5,12 +5,24 @@ const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors"); // Import the CORS package
+const http = require("http"); // Import the 'http' module
+const socketIO = require("socket.io"); // Import Socket.IO
 const { ErrorHandler, handleErrors } = require("./src/utils/errorHandler");
 const pdf = require("html-pdf");
 require("dotenv").config();
 
 // Create the Express app
 const app = express();
+
+const server = http.createServer(app); // Create an HTTP server using Express
+// Initialize Socket.IO with the HTTP server
+const io = socketIO(server, {
+  cors: {
+    origin: "http://localhost:3009",
+    methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
+    credentials: true // Allow cookies to be sent along with requests
+  }
+});
 
 // Set up port for the server
 const port = process.env.PORT || 5000;
@@ -22,13 +34,17 @@ const dbURL =
 // "mongodb+srv://ukbd:MNjqO714lSWx6le5@uk-bd-00.kt2fhlb.mongodb.net/uk-bd";
 
 // Use CORS middleware
+// app.use(cors());
+
+// Use CORS middleware
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     credentials: true, // Allow cookies to be sent along with requests
   })
-);
+);console.log(process.env.CORS_ORIGIN);
+
 
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -102,10 +118,26 @@ const connection = mongoose.connection;
 connection.on("connected", () => {
   console.log("Connected to MongoDB");
 
+    // Socket.IO connection handling
+    io.on("connection", (socket) => {
+      console.log("New client connected");
+      
+      // Handle socket events here
+      
+      socket.on("disconnect", () => {
+        console.log("Client disconnected");
+      });
+    });
+
+    server.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+
+
   // Start the server only after the database connection is established
-  app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
+  // app.listen(port, () => {
+  //   console.log(`Server is running on http://localhost:${port}`);
+  // });
 });
 
 connection.on("error", (err) => {

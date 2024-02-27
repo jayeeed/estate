@@ -1,4 +1,5 @@
-const ChatMessage = require('../models/chatMessageModel');
+const ChatMessage = require("../models/chatMessageModel");
+const io = require("../utils/socket");
 
 exports.getAllMessages = async (req, res) => {
   try {
@@ -10,13 +11,23 @@ exports.getAllMessages = async (req, res) => {
 };
 
 exports.createMessage = async (req, res) => {
-  const { sender, receiver, text } = req.body;
-  const message = new ChatMessage({ sender, receiver, text });
-
   try {
-    const newMessage = await message.save();
-    res.status(201).json(newMessage);
+    const { sender, receiver, text, sentAt, file } = req.body;
+    const newMessage = new ChatMessage({
+      sender,
+      receiver,
+      text,
+      sentAt,
+      file,
+    });
+    await newMessage.save();
+
+    // Emit the new message to clients using socket.io
+    io.getIO().emit("newMessage", newMessage);
+
+    res.status(201).json({ message: "Message saved successfully" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error("Error saving message:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

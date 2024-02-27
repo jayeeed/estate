@@ -1,10 +1,15 @@
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import ChatBox from "./chatBox"; // Import the ChatBox component
+import DashboardLayout from "../../layouts/hostDashboard";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Box,
+} from "@mui/material";
 
 const RenterRequestComponent = () => {
   const [renterRequests, setRenterRequests] = useState([
@@ -31,12 +36,12 @@ const RenterRequestComponent = () => {
     setChatBoxes([{ title: request.name, id: request.id }]);
   };
 
-
-
   const handleMinimize = (chatBoxId) => {
     // Find the chat box with the specified id
     const updatedChatBoxes = chatBoxes.map((chatBox) =>
-      chatBox.id === chatBoxId ? { ...chatBox, minimized: !chatBox.minimized } : chatBox
+      chatBox.id === chatBoxId
+        ? { ...chatBox, minimized: !chatBox.minimized }
+        : chatBox
     );
 
     setChatBoxes(updatedChatBoxes);
@@ -44,32 +49,38 @@ const RenterRequestComponent = () => {
 
   const handleClose = (chatBoxId) => {
     // Filter out the chat box with the specified id
-    const updatedChatBoxes = chatBoxes.filter((chatBox) => chatBox.id !== chatBoxId);
+    const updatedChatBoxes = chatBoxes.filter(
+      (chatBox) => chatBox.id !== chatBoxId
+    );
     setChatBoxes(updatedChatBoxes);
   };
 
   return (
-    <div>
-      <Box>
-        <Typography variant="h4" gutterBottom>
-          Renter Requests
-        </Typography>
-        {renterRequests.map((request) => (
-          <div key={request.id}>
-            <Card sx={{ marginBottom: 2 }}>
-              <CardContent>
-                <Typography variant="h6">{request.name}</Typography>
-                <Typography variant="body1">{request.message}</Typography>
-                <Button
-                  variant="outlined"
-                  onClick={() => handleRespond(request)}
-                >
-                  Respond
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        ))}
+    <DashboardLayout title={"Renter Requests/Applications"}>
+      <Box marginInline={8}>
+        <Box marginTop={3}>
+          {renterRequests.map((request, index) => (
+            <div key={index}>
+              <Card sx={{ marginBottom: 2, borderRadius: 6 }}>
+                <CardHeader title={request.name} sx={{ paddingBottom: 1 }} />
+                <CardContent sx={{ paddingInline: 4, paddingBlock: 1 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    {request.message}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ paddingTop: 1 }}>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => handleRespond(request)}
+                  >
+                    Respond
+                  </Button>
+                </CardActions>
+              </Card>
+            </div>
+          ))}
+        </Box>
       </Box>
       <div>
         {chatBoxes.map((chatBox) => (
@@ -78,11 +89,10 @@ const RenterRequestComponent = () => {
             title={chatBox.title}
             onMinimize={() => handleMinimize(chatBox.id)}
             onClose={() => handleClose(chatBox.id)}
-           
           />
         ))}
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

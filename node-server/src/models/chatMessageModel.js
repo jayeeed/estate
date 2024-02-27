@@ -13,6 +13,12 @@ const chatMessageSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  file: {
+    name: String,
+    size: Number,
+    type: String,
+    content: String // Store file content as base64 string
+  },
   sentAt: {
     type: Date,
     default: Date.now

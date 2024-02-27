@@ -6,21 +6,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import io from "socket.io-client";
+import socketIOClient from "socket.io-client";
+import { AttachFile } from "@mui/icons-material";
 
-const ChatBox = ({
-  title,
-  onClose,
-  onMinimize,
-  sender,
-  receiver,
-}) => {
+const ChatBox = ({ title, onClose, onMinimize, sender, receiver }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [file, setFile] = useState(null); // State to hold the selected file
   const [minimized, setMinimized] = useState(false);
   const [socket, setSocket] = useState(null);
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-
 
   const formatDate = (date) => {
     const today = new Date();
@@ -66,19 +61,20 @@ const ChatBox = ({
     },
   ];
 
-  // Replace socket connection and message listener with dummy data
-  useEffect(() => {
-    setMessages(dummyMessages); // Set initial messages with dummy data
-  }, []);
 
   useEffect(() => {
-    const newSocket = io(`${VITE_API_BASE_URL}/notiChat`);
+    console.log(VITE_API_BASE_URL);
+    const newSocket = io("http://localhost:5050/api/notiChat");
+    console.log(newSocket)
     setSocket(newSocket);
 
-    newSocket.emit('subscribe', { sender, receiver });
+    newSocket.emit("subscribe", { sender, receiver });
 
-    newSocket.on('message', (message) => {
-      setMessages(prevMessages => [...prevMessages, { ...message, receivedAt: new Date() }]);
+    newSocket.on("message", (message) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { ...message, receivedAt: new Date() },
+      ]);
     });
 
     return () => {
@@ -86,18 +82,50 @@ const ChatBox = ({
     };
   }, [sender, receiver]);
 
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  // Replace socket connection and message listener with dummy data
+  useEffect(() => {
+    setMessages(dummyMessages); // Set initial messages with dummy data
+  }, []);
+
   const handleSendMessage = () => {
     if (socket) {
-      // Check if socket is not null
       const sentAt = new Date();
-      socket.emit("sendMessage", {
+      const messageData = {
         sender,
         receiver,
         text: newMessage,
         sentAt,
-      });
-      setMessages([...messages, { sender: "You", text: newMessage, sentAt }]); // Update UI optimistically
-      setNewMessage("");
+        file: file
+          ? {
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              content: null, // Initialize content
+            }
+          : null,
+      };
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          messageData.file.content = event.target.result; // Set content to base64 data URI
+          socket.emit("sendMessage", messageData);
+          setMessages([...messages, { sender: "You", ...messageData }]); // Update UI optimistically
+          setNewMessage("");
+          setFile(null); // Clear selected file after sending
+        };
+        reader.readAsDataURL(file); // Read file as data URL
+      } else {
+        socket.emit("sendMessage", messageData);
+        setMessages([...messages, { sender: "You", ...messageData }]); // Update UI optimistically
+        setNewMessage("");
+        setFile(null); // Clear selected file after sending
+      }
     } else {
       console.error("Socket is not initialized");
     }
@@ -112,126 +140,160 @@ const ChatBox = ({
     onClose();
   };
 
-
-
   return (
     <Paper
       id={`chat-box`}
       style={{
         position: "fixed",
-        // bottom: position.bottom,
-        // right: position.right,
-        bottom: 16,
+        bottom: minimized ? 16 : 0, // Adjusted bottom position when minimized
         right: 16,
         zIndex: 10,
-        maxWidth: 400,
-        width: "100%",
-        overflow: "hidden",
+        width: 400, // Fixed width
+        height: minimized ? "auto" : 600, // Adjusted height when minimized
+        overflow: "hidden", // Hide overflow when minimized
+        transition: "bottom 0.3s ease", // Smooth transition animation
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <div>
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "8px",
+          backgroundColor: "#075e54",
+          color: "#fff",
+          flexShrink: 0, // Don't allow header to be scrolled
+        }}
+      >
+        <h3
+          onClick={handleMinimize}
+          style={{ cursor: "pointer", width: "75%" }}
+        >
+          {minimized ? (
+            <>
+              <ChatIcon /> {title}
+            </>
+          ) : (
+            <>
+              <ExpandMoreIcon /> {title}
+            </>
+          )}
+        </h3>
+        <IconButton
+          onClick={handleClose}
+          style={{ color: "inherit" }}
+          onMouseDown={(e) => e.stopPropagation()} // Stop event propagation
+        >
+          <CloseIcon />
+        </IconButton>
+      </div>
+      {/* Message Container */}
+      {!minimized && (
+        <div
+          style={{
+            overflowY: "auto", // Enable vertical scrolling if content exceeds height
+            flexGrow: 1, // Allow message container to grow and occupy remaining space
+          }}
+        >
+          {/* Messages */}
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              style={{
+                textAlign: message.sender === sender ? "right" : "left",
+                display: "flex",
+                justifyContent:
+                  message.sender === sender ? "flex-end" : "flex-start",
+                marginBottom: "8px",
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor:
+                    message.sender === sender ? "#dcf8c6" : "#fff",
+                  padding: "8px",
+                  borderRadius: "12px",
+                  alignSelf: "flex-end",
+                }}
+              >
+                <span
+                  style={{
+                    color: message.sender === sender ? "#075e54" : "#000",
+                  }}
+                >
+                  {message.text}
+                </span>{" "}
+                {message.file && (
+                  <div>
+                    <span style={{ fontSize: "0.8rem" }}>
+                      {message.file.name} (
+                      {(message.file.size / 1024).toFixed(2)} KB)
+                    </span>
+                    <br />
+                    {message.file.type.startsWith("image/") ? (
+                      <img
+                        src={message.file.content} // Use the content directly as the src
+                        alt={message.file.name}
+                        style={{ maxWidth: "200px", maxHeight: "200px" }}
+                      />
+                    ) : (
+                      <a href={message.file.content} download>
+                        Download {message.file.name}
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {/* Input and Send Button */}
+      {!minimized && (
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            alignContent: "center",
-            justifyContent: "space-between",
             padding: "8px",
-            backgroundColor: "#075e54",
-            color: "#fff",
+            borderTop: "1px solid #ccc",
+            flexShrink: 0, // Don't allow input container to be scrolled
           }}
         >
-          <h3
-            onClick={handleMinimize}
-            style={{ cursor: "pointer", width: "75%" }}
+          <TextField
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+            fullWidth
+            variant="outlined"
+            size="small"
+            style={{ marginRight: "8px" }}
+          />
+          <input
+            type="file"
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+            id="file-input"
+          />
+          <label htmlFor="file-input">
+            <IconButton component="span">
+              <AttachFile />
+            </IconButton>
+          </label>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSendMessage}
+            startIcon={<SendIcon />}
+            style={{ marginLeft: "auto" }}
           >
-            {minimized ? (
-              <>
-                <ChatIcon /> {title}
-              </>
-            ) : (
-              <>
-                <ExpandMoreIcon /> {title}
-              </>
-            )}
-          </h3>
-
-          <IconButton
-            onClick={handleClose}
-            style={{ color: "inherit" }}
-            onMouseDown={(e) => e.stopPropagation()} // Stop event propagation
-          >
-            <CloseIcon />
-          </IconButton>
+            Send
+          </Button>
         </div>
-
-        {!minimized && (
-          <div style={{ padding: "16px", backgroundColor: "#f0f0f0" }}>
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                style={{
-                  textAlign: message.sender === "You" ? "right" : "left",
-                  display: "flex",
-                  justifyContent:
-                    message.sender === "You" ? "flex-end" : "flex-start",
-                  marginBottom: "8px", // Add some space between messages
-                }}
-              >
-                <div
-                  style={{
-                    backgroundColor:
-                      message.sender === "You" ? "#dcf8c6" : "#fff", // Different background for sender and receiver
-                    padding: "8px",
-                    borderRadius: "12px", // Rounded corners
-                    alignSelf: "flex-end", // Align to bottom
-                  }}
-                >
-                  <span
-                    style={{
-                      color: message.sender === "You" ? "#075e54" : "#000",
-                    }}
-                  >
-                    {message.text}
-                  </span>{" "}
-                  {/* Different text color */}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {!minimized && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              padding: "8px",
-              borderTop: "1px solid #ccc",
-            }}
-          >
-            <TextField
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-              fullWidth
-              variant="outlined"
-              size="small"
-              style={{ marginRight: "8px" }}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSendMessage}
-              startIcon={<SendIcon />}
-              style={{ marginLeft: "auto" }}
-            >
-              Send
-            </Button>
-          </div>
-        )}
-      </div>
+      )}
     </Paper>
   );
 };
@@ -239,19 +301,3 @@ const ChatBox = ({
 export default ChatBox;
 
 
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     // Dynamically calculate position based on the number of open chat boxes
-  //     const newRight =
-  //       window.innerWidth -
-  //       position.right -
-  //       document.getElementById(`chat-box`).offsetWidth;
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, [position]);

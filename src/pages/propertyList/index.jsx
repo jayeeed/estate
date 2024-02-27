@@ -50,7 +50,7 @@ const PropertyList = () => {
 
   const theme = useTheme();
 
-console.log(useAuthInfo);
+// console.log(useAuthInfo);
 
 
 
@@ -226,7 +226,7 @@ console.log(useAuthInfo);
   }
 
 
-console.log(userInfo)
+// console.log(userInfo)
 
   return (
     <DashboardLayout title={"Property list"}>
