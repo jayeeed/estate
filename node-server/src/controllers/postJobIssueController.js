@@ -4,7 +4,8 @@ const PostJobIssueModel = require("../models/postJobIssueModel");
 exports.createJob = async (req, res, next) => {
   try {
     const {
-      userId,
+      renterId,
+      propertyId,
       jobTitle,
       companyName,
       jobLocation,
@@ -13,7 +14,8 @@ exports.createJob = async (req, res, next) => {
     } = req.body;
 
     const job = await PostJobIssueModel.create({
-      userId,
+      renterId,
+      propertyId,
       jobTitle,
       companyName,
       jobLocation,

@@ -4,6 +4,7 @@ const PostJobModel = require("../models/postJobModel");
 exports.createJob = async (req, res, next) => {
   try {
     const {
+      hostId,
       companyId,
       jobTitle,
       companyName,
@@ -13,6 +14,7 @@ exports.createJob = async (req, res, next) => {
     } = req.body;
 
     const job = await PostJobModel.create({
+      hostId,
       companyId,
       jobTitle,
       companyName,
