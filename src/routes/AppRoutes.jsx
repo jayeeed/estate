@@ -86,6 +86,13 @@ export const AppRoutes = () => {
           path="/raise-issue"
           element={<ProtectedRoute children={<RaiseIssue />} />}
         /> */}
+        
+
+        {/* <Route
+          path="/job-portal"
+          element={<ProtectedRoute children={<JosPortal />} />}
+        /> */}
+
 
         <Route
           path="/inbox"

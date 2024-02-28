@@ -5,6 +5,11 @@ const sidebarContent = [
     icon: "uil:chart",
   },
   {
+    name: "Login & security",
+    path: "/login/security",
+    icon: "mdi:security-lock-outline",
+  },
+  {
     name: "Inbox",
     path: "/inbox",
     icon: "mi:email",
@@ -25,8 +30,8 @@ const sidebarContent = [
     icon: "bi:exclamation-diamond", // Change the icon to an exclamation diamond
   },  
   {
-    name: "Login & security",
-    path: "/login/security",
+    name: "Jobs Corner",
+    path: "/job-portal",
     icon: "mdi:security-lock-outline",
   },
   {

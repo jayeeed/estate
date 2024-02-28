@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useAuthInfo } from "../../../helpers/AuthCheck";
-import { Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { List, ListItem, ListItemText,  } from "@mui/material";
 
 const ProfileView = () => {
   const userInfo = useAuthInfo();
@@ -29,181 +29,123 @@ const ProfileView = () => {
           alignContent={"center"}
         >
           <Grid item xs={6}>
-            <Table sx={{ borderRadius: 4, marginBlock: 2 }}>
-              <TableBody>
-                <TableRow>
-                  <TableCell sx={{ border: "none", lineHeight: 0 }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      <strong>User Name:</strong>
-                    </Typography>
-                  </TableCell>
-                  <TableCell sx={{ border: "none", lineHeight: 0 }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      {userInfo.name}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ border: "none", lineHeight: 0 }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      <strong>Date of Birth:</strong>
-                    </Typography>
-                  </TableCell>
-                  <TableCell sx={{ border: "none", lineHeight: 0 }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      {userInfo.regex_data.dob}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ border: "none", lineHeight: 0 }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      <strong>Full Name:</strong>
-                    </Typography>
-                  </TableCell>
-                  <TableCell sx={{ border: "none" }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      {`${userInfo.personalInfo.firstName} ${userInfo.personalInfo.lastName}`}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <List>
+              <ListItem disablePadding>
+                <ListItemText
+                  primaryTypographyProps={{ variant: "body1" }}
+                  secondaryTypographyProps={{ variant: "body1" }}
+                  primary={<strong>User Name:</strong>}
+                  secondary={userInfo.name}
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primaryTypographyProps={{ variant: "body1" }}
+                  secondaryTypographyProps={{ variant: "body1" }}
+                  primary={<strong>Date of Birth:</strong>}
+                  secondary={userInfo.regex_data.dob}
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primaryTypographyProps={{ variant: "body1" }}
+                  secondaryTypographyProps={{ variant: "body1" }}
+                  primary={<strong>Full Name:</strong>}
+                  secondary={`${userInfo.personalInfo.firstName} ${userInfo.personalInfo.lastName}`}
+                />
+              </ListItem>
+            </List>
           </Grid>
           <Grid item xs={6}>
-            <Table sx={{ borderRadius: 4, marginBlock: 2 }}>
-              <TableBody>
-                <TableRow>
-                  <TableCell style={{ border: "none" }}>
-                    <Typography variant="subtitle1" sx={{ lineHeight: 0 }}>
-                      <strong>Email:</strong>
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "none" }}>
-                    <Typography variant="subtitle1" sx={{ lineHeight: 0 }}>
-                      {userInfo.email}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ border: "none" }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      <strong>Phone Number:</strong>
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "none" }}>
-                    <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                      {userInfo.personalInfo.phoneNumber}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <List>
+              <ListItem disablePadding>
+                <ListItemText
+                  primaryTypographyProps={{ variant: "body1" }}
+                  secondaryTypographyProps={{ variant: "body1" }}
+                  primary={<strong>Email:</strong>}
+                  secondary={userInfo.email}
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primaryTypographyProps={{ variant: "body1" }}
+                  secondaryTypographyProps={{ variant: "body1" }}
+                  primary={<strong>Phone Number:</strong>}
+                  secondary={userInfo.personalInfo.phoneNumber}
+                />
+              </ListItem>
+            </List>
           </Grid>
         </Grid>
       </Box>
-
-
-
-
-
+  
       <Box sx={{ marginBottom: 2 }}>
         <Typography variant="h4">Income Sources</Typography>
       </Box>
       <Divider />
-      <Table sx={{ borderRadius: 4, marginBlock: 2 }}>
-        <TableBody>
-          <TableRow>
-            <TableCell sx={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Source:</strong>
-              </Typography>
-            </TableCell>
-            <TableCell sx={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                {userInfo.personalInfo.incomeSources.incomeSource}
-              </Typography>
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell sx={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Office Name:</strong>
-              </Typography>
-            </TableCell>
-            <TableCell sx={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                {userInfo.personalInfo.incomeSources.officeName}
-              </Typography>
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell sx={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Workplace Location:</strong>
-              </Typography>
-            </TableCell>
-            <TableCell sx={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                {userInfo.personalInfo.incomeSources.workplaceLocation}
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-
+      <List>
+        <ListItem disablePadding>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body1" }}
+            secondaryTypographyProps={{ variant: "body1" }}
+            primary={<strong>Source:</strong>}
+            secondary={userInfo.personalInfo.incomeSources.incomeSource}
+          />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body1" }}
+            secondaryTypographyProps={{ variant: "body1" }}
+            primary={<strong>Office Name:</strong>}
+            secondary={userInfo.personalInfo.incomeSources.officeName}
+          />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body1" }}
+            secondaryTypographyProps={{ variant: "body1" }}
+            primary={<strong>Workplace Location:</strong>}
+            secondary={userInfo.personalInfo.incomeSources.workplaceLocation}
+          />
+        </ListItem>
+      </List>
+  
       <Box marginBlock={1}>
         <Typography variant="h4">Emergency Contacts</Typography>
       </Box>
       <Divider />
-      <Table sx={{ borderRadius: 4, marginBlock: 2 }}>
-        <TableBody>
-          <TableRow>
-            <TableCell style={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Name:</strong>
-              </Typography>
-            </TableCell>
-            <TableCell style={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                {userInfo.personalInfo.emergencyContact.emergencyContactName}
-              </Typography>
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell style={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Relationship:</strong>
-              </Typography>
-            </TableCell>
-            <TableCell style={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                {userInfo.personalInfo.emergencyContact.relationship}
-              </Typography>
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell style={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                <strong>Phone Number:</strong>
-              </Typography>
-            </TableCell>
-            <TableCell style={{ border: "none" }} align="left">
-              <Typography variant="body1" sx={{ lineHeight: 0 }}>
-                {userInfo.personalInfo.emergencyContact.emergencyContactPhoneNumber}
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-
-
+      <List>
+        <ListItem disablePadding>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body1" }}
+            secondaryTypographyProps={{ variant: "body1" }}
+            primary={<strong>Name:</strong>}
+            secondary={userInfo.personalInfo.emergencyContact.emergencyContactName}
+          />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body1" }}
+            secondaryTypographyProps={{ variant: "body1" }}
+            primary={<strong>Relationship:</strong>}
+            secondary={userInfo.personalInfo.emergencyContact.relationship}
+          />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body1" }}
+            secondaryTypographyProps={{ variant: "body1" }}
+            primary={<strong>Phone Number:</strong>}
+            secondary={userInfo.personalInfo.emergencyContact.emergencyContactPhoneNumber}
+          />
+        </ListItem>
+      </List>
     </Box>
   );
+  
+  
+  
+  
 };
 
 export default ProfileView;

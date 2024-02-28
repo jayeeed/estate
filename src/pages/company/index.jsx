@@ -135,7 +135,7 @@ const CompanyProfileInfo = () => {
             <CompanyProfileView />
           )}
 
-          {isPopupOpen && <JobPostForm onClose={closePopup} />}
+          {isPopupOpen && <JobPostForm hostId={"6561c8daf5d08290c6327551"} companyId={"65d8636b4bfd3c4a68766ffd"} onClose={closePopup} />}
         </Box>
 
         <Drawer anchor="right" open={isSidebarOpen} onClose={handleClose}>

@@ -16,10 +16,10 @@ const postJobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    companyName: {
-      type: String,
-      required: true,
-    },
+    // companyName: {
+    //   type: String,
+    //   required: true,
+    // },
     jobLocation: {
       type: String,
       required: true,
