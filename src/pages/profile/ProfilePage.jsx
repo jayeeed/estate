@@ -58,7 +58,7 @@ function ProfilePage() {
 
       if (!response.ok) {
         console.error(
-          "Failed to send image. Server responded with " + response.status
+          "Failed to send image. Server responded with " + response.status,
         );
         return;
       }
@@ -209,16 +209,14 @@ function ProfilePage() {
                   >
                     Credits
                   </Typography>
-                  
+
                   <Typography>$1000</Typography>
                   <Divider />
                   <Typography
                     variant="subtitle1"
                     sx={{ display: "flex", gap: 1 }}
                     gutterBottom
-                  >
-
-                  </Typography>
+                  ></Typography>
                 </Box>
 
                 <Divider
@@ -226,40 +224,19 @@ function ProfilePage() {
                     m: 2,
                   }}
                 />
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ display: "flex", gap: 1 }}
-                    gutterBottom
-                  >
-                    Reports
-
-                  </Typography>
-              
+                <Typography
+                  variant="subtitle1"
+                  sx={{ display: "flex", gap: 1 }}
+                  gutterBottom
+                >
+                  Reports
+                </Typography>
 
                 <Divider
                   sx={{
                     m: 2,
                   }}
                 />
-                
-                <Box>
-                  <Typography
-                    variant="h6"
-                    style={{ fontWeight: "bold" }}
-                    gutterBottom
-                  >
-                    Verify your identity
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Before you book or Host on Estate, you’ll need to complete
-                    this step.
-                  </Typography>
-
-                  {/* <Verification /> */}
-                  <Confirmation />
-
-                  {/* userId={ userInfo._id } */}
-                </Box>
               </Paper>
               <Paper
                 sx={{
@@ -410,11 +387,10 @@ function Tab1Content() {
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
         <Box width={"70%"}>
-          <Typography variant="h3">Renter Profile </Typography>
+          <Typography variant="h3">Profile </Typography>
           <Typography>
             {" "}
-            Create your Renter Profile once and reuse it for all your
-            applications.
+            Create your Profile once and reuse it for all your applications.
           </Typography>
         </Box>
 

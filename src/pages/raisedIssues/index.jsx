@@ -195,7 +195,7 @@ const RaisedIssues = ({ onClose }) => {
             All Issues
           </Typography>
           <TableContainer component={Paper} sx={{ marginBlock: 3 }}>
-            <Table marginBlock={3}>
+            <Table>
               <TableBody>
                 {allIssues.map((issue) => (
                   <TableRow key={issue.id}>

@@ -74,7 +74,7 @@ const SideBar = ({ setOpen, open }) => {
         ))}
       <Drawer
         sx={{
-          zIndex:1000,
+          zIndex: 1000,
           position: "absolute",
           width: "270px",
           flexShrink: 0,
@@ -100,8 +100,8 @@ const SideBar = ({ setOpen, open }) => {
         anchor="left"
         open={isMdScreen || open} // Open on md and larger screens and when the open state is true
       >
-        <Box sx={{ p: "20px" }}>
-          <Box sx={{ p: "20px", textAlign: "center" }}>
+        <Box sx={{ padding: "20px" }}>
+          <Box sx={{ padding: "20px", textAlign: "center" }}>
             <Link to={"/"}>
               <img src={assets.images.logo} alt="" height={"75px"} />
             </Link>
@@ -109,7 +109,7 @@ const SideBar = ({ setOpen, open }) => {
           <Divider />
           <List>
             {sidebarContent.map((data, index) => (
-              <Link to={data.path} key={index}>
+              <>
                 <ListItem
                   key={index}
                   disablePadding
@@ -121,6 +121,8 @@ const SideBar = ({ setOpen, open }) => {
                       borderRadius: "10px",
                     },
                   }}
+                  component={Link}
+                  to={data.path}
                 >
                   <ListItemButton>
                     <ListItemIcon>
@@ -146,7 +148,7 @@ const SideBar = ({ setOpen, open }) => {
                     />
                   </ListItemButton>
                 </ListItem>
-              </Link>
+              </>
             ))}
           </List>
         </Box>

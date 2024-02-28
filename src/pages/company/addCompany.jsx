@@ -169,6 +169,21 @@ const CreateCompanyProfile = () => {
       reader.onerror = (error) => reject(error);
       reader.readAsDataURL(file);
     });
+  // Function to clear form fields
+  const clearFormFields = () => {
+    setCompanyName("");
+    setCompanyRegistrationNumber("");
+    setCompanyBankAccountNumber("");
+    setCompanyAddress("");
+    setCompanyAdditionalDetails("");
+    setCompanyAppreciationDetails("");
+    setLetter(""); // Assuming letter is a state variable
+    setCompanyLogo(null); // Assuming companyLogo is a state variable
+    setCompanyBanner(null); // Assuming companyBanner is a state variable
+  };
+  const navigateToCompanyViewPage = () => {
+    window.location.href = '/company'; // Replace '/companyView' with the URL you want to navigate to
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -214,7 +229,11 @@ const CreateCompanyProfile = () => {
         setIsSuccessSnackbarOpen(true);
         setMessage("You successfully created a company");
         setType("success");
+        clearFormFields();
         handleSuccessSnackbarOpen();
+        navigateToCompanyViewPage();
+
+
       } else {
         console.error("Error saving data:", response.statusText);
       }
@@ -226,10 +245,16 @@ const CreateCompanyProfile = () => {
 
   return (
     <>
-      {/* <DashboardLayout title={"Company info"}> */}
-      <Grid container spacing={0} height={"100vh"}>
-        <Grid item xs={6}>
-          <Container maxWidth="md">
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        style={{ marginTop: "30px" }}
+      >
+        <Grid container spacing={0} >
+
+          <Grid item xs={12} md={6} >
+            {/* <Container maxWidth="md"> */}
+
             <Box
               sx={{
                 marginTop: 1,
@@ -242,156 +267,157 @@ const CreateCompanyProfile = () => {
               <Typography component="heading" variant="h2">
                 Company Registration
               </Typography>
-              <form
-                onSubmit={handleSubmit}
-                encType="multipart/form-data"
-                style={{ marginTop: 1 }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={8}>
-                    {/* Company Details */}
-                    <TextField
-                      label="Company Name"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      required
-                      error={isError}
-                      helperText={isError ? validationErrors.companyName : ""}
-                      sx={{ borderRadius: 8 }}
-                    />
 
-                    <TextField
-                      label="Registration Number"
-                      fullWidth
-                      margin="normal"
-                      value={companyRegistrationNumber}
-                      onChange={(e) =>
-                        setCompanyRegistrationNumber(e.target.value)
-                      }
-                      required
-                      error={!!validationErrors.companyRegistrationNumber}
-                      helperText={
-                        validationErrors.companyRegistrationNumber || ""
-                      }
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    display={"flex"}
-                    flexDirection={"column"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  >
-                    <input
-                      accept="image/*"
-                      id="logo-upload"
-                      type="file"
-                      style={{ display: "none" }}
-                      onChange={handleLogoUpload}
-                    />
-                    <label htmlFor="logo-upload">
-                      <Button
-                        variant="outlined"
-                        component="span"
-                        startIcon={<CloudUploadIcon />}
-                        style={{
-                          backgroundColor: companyLogo ? "green" : "inherit",
-                        }}
-                      >
-                        {companyLogo ? "Logo Uploaded" : "Upload Logo"}
-                      </Button>
-                    </label>
-                    <br />
-                    <input
-                      accept="image/*"
-                      id="banner-upload"
-                      type="file"
-                      style={{ display: "none" }}
-                      onChange={handleBannerUpload}
-                    />
-                    <label htmlFor="banner-upload">
-                      <Button
-                        variant="outlined"
-                        component="span"
-                        startIcon={<CloudUploadIcon />}
-                        style={{
-                          backgroundColor: companyBanner ? "green" : "inherit",
-                        }}
-                      >
-                        {companyBanner ? "Banner Uploaded" : "Upload Banner"}
-                      </Button>
-                    </label>
-                  </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+                  {/* Company Details */}
+                  <TextField
+                    label="Company Name"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    required
+                    error={isError}
+                    helperText={isError ? validationErrors.companyName : ""}
+                    sx={{ borderRadius: 8 }}
+                  />
+
+                  <TextField
+                    label="Registration Number"
+                    fullWidth
+                    margin="normal"
+                    value={companyRegistrationNumber}
+                    onChange={(e) =>
+                      setCompanyRegistrationNumber(e.target.value)
+                    }
+                    required
+                    error={!!validationErrors.companyRegistrationNumber}
+                    helperText={
+                      validationErrors.companyRegistrationNumber || ""
+                    }
+                  />
                 </Grid>
-
-                <TextField
-                  label="Bank Account Number"
-                  fullWidth
-                  margin="normal"
-                  value={companyBankAccountNumber}
-                  onChange={(e) => setCompanyBankAccountNumber(e.target.value)}
-                  required
-                  error={!!validationErrors.companyBankAccountNumber}
-                  helperText={validationErrors.companyBankAccountNumber || ""}
-                />
-                <TextField
-                  label="companyAddress"
-                  fullWidth
-                  margin="normal"
-                  value={companyAddress}
-                  onChange={(e) => setCompanyAddress(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="Additional Details"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  margin="normal"
-                  value={companyAdditionalDetails}
-                  onChange={(e) => setCompanyAdditionalDetails(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="Appreciation Details"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  margin="normal"
-                  value={companyAppreciationDetails}
-                  onChange={(e) =>
-                    setCompanyAppreciationDetails(e.target.value)
-                  } required
-                />
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                <Grid
+                  item
+                  xs={4}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
                 >
-                  Register
-                </Button>
-              </form>
+                  <input
+                    accept="image/*"
+                    id="logo-upload"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={handleLogoUpload}
+                  />
+                  <label htmlFor="logo-upload">
+                    <Button
+                      variant="outlined"
+                      component="span"
+                      startIcon={<CloudUploadIcon />}
+                      style={{
+                        backgroundColor: companyLogo ? "green" : "inherit",
+                      }}
+                    >
+                      {companyLogo ? "Logo Uploaded" : "Upload Logo"}
+                    </Button>
+                  </label>
+                  <br />
+                  <input
+                    accept="image/*"
+                    id="banner-upload"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={handleBannerUpload}
+                  />
+                  <label htmlFor="banner-upload">
+                    <Button
+                      variant="outlined"
+                      component="span"
+                      startIcon={<CloudUploadIcon />}
+                      style={{
+                        backgroundColor: companyBanner ? "green" : "inherit",
+                      }}
+                    >
+                      {companyBanner ? "Banner Uploaded" : "Upload Banner"}
+                    </Button>
+                  </label>
+                </Grid>
+              </Grid>
+
+              <TextField
+                label="Bank Account Number"
+                fullWidth
+                margin="normal"
+                value={companyBankAccountNumber}
+                onChange={(e) => setCompanyBankAccountNumber(e.target.value)}
+                required
+                error={!!validationErrors.companyBankAccountNumber}
+                helperText={validationErrors.companyBankAccountNumber || ""}
+              />
+              <TextField
+                label="companyAddress"
+                fullWidth
+                margin="normal"
+                value={companyAddress}
+                onChange={(e) => setCompanyAddress(e.target.value)}
+                required
+              />
+              <TextField
+                label="Additional Details"
+                fullWidth
+                multiline
+                rows={4}
+                margin="normal"
+                value={companyAdditionalDetails}
+                onChange={(e) => setCompanyAdditionalDetails(e.target.value)}
+                required
+              />
+              <TextField
+                label="Appreciation Details"
+                fullWidth
+                multiline
+                rows={4}
+                margin="normal"
+                value={companyAppreciationDetails}
+                onChange={(e) =>
+                  setCompanyAppreciationDetails(e.target.value)
+                } required
+              />
+
+
+
             </Box>
-          </Container>
-        </Grid>
+            {/* </Container> */}
+          </Grid>
 
-        <Grid item xs={6}>
-          {/* Replace placeholder values with actual data */}
-          <HostLetterTemplate
+          <Grid item xs={12} md={6}>
+            {/* Replace placeholder values with actual data */}
+            <HostLetterTemplate
 
-            propertyManagementCompany={companyName}
-            propertyCompanycompanyAddress={companyAddress}
-            additionalDetails={companyAdditionalDetails}
-            appreciationDetails={companyAppreciationDetails}
-          />
+              propertyManagementCompany={companyName}
+              propertyCompanycompanyAddress={companyAddress}
+              additionalDetails={companyAdditionalDetails}
+              appreciationDetails={companyAppreciationDetails}
+            />
+          </Grid>
+
+
         </Grid>
-      </Grid>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+
+          sx={{ mt: 3, mb: 10 }}
+        >
+          Register
+        </Button>
+      </form>
 
       {/* Snackbar for Success */}
       <CustomizedSnackbars

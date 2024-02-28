@@ -14,38 +14,42 @@ const DashboardLayout = ({ children, title }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", position: "relative" }}>
-    {isMdScreen ||
-      (drawerOpen && (
+    <>
+      <div style={{ display: "flex", position: "relative" }}>
+        {isMdScreen ||
+          (drawerOpen && (
+            <Box
+              onClick={toggleDrawer}
+              sx={{
+                backgroundColor: "#00000050",
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 0,
+                zIndex: 5,
+                bottom: 0,
+              }}
+            ></Box>
+          ))}
+        <SideBar setOpen={setDrawerOpen} open={drawerOpen} />
         <Box
-          onClick={toggleDrawer}
+
           sx={{
-            backgroundColor: "#00000050",
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            zIndex: 5,
-            bottom: 0,
+            padding: 3,
+            background: "#f4f9ff",
+            minHeight: "100vh",
+            width: "100%",
+            marginLeft: isMdScreen ? "270px" : "0",
+            transition: "margin-left 0.3s ease-in-out",
           }}
-        ></Box>
-      ))}
-      <SideBar setOpen={setDrawerOpen} open={drawerOpen} />
-      <Box
-        p={3}
-        sx={{
-          background: "#f4f9ff",
-          minHeight: "100vh",
-          width: "100%",
-          marginLeft: isMdScreen ? "270px" : "0",
-          transition: "margin-left 0.3s ease-in-out",
-        }}
-      >
-        <TopBar setOpen={setDrawerOpen} open={drawerOpen} title={title} />
-        {children}
-      </Box>
-      <BottomBar />
-    </Box>
+        >
+          <TopBar setOpen={setDrawerOpen} open={drawerOpen} title={title} />
+          {children}
+        </Box>
+        <BottomBar />
+      </div>
+    </>
+
   );
 };
 

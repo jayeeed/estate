@@ -50,6 +50,9 @@ const PropertyList = () => {
 
   const theme = useTheme();
 
+// console.log(useAuthInfo);
+
+
 
 
   // const handleApplication = (event) => {
@@ -223,7 +226,7 @@ const PropertyList = () => {
   }
 
 
-console.log(userProperties)
+// console.log(userInfo)
 
   return (
     <DashboardLayout title={"Property list"}>
@@ -305,7 +308,7 @@ console.log(userProperties)
           <>
             {Array.isArray(userProperties) && userProperties.length > 0 ? (
               userProperties.map((data,index) => (
-                <Grid key={data._id} item xs={12} sm={6} md={4}>
+                <Grid key={index} item xs={12} sm={6} md={4}>
                   <Card
                     sx={{
                       boxShadow: theme.palette.boxShadow,

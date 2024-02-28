@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Box,
@@ -81,7 +81,7 @@ export default function Home() {
           } else {
             console.warn(
               "No recommended properties found in the API response:",
-              data
+              data,
             );
           }
         });
@@ -149,20 +149,21 @@ export default function Home() {
     setOpenMap(false);
   };
 
-  const handleScroll = () => {
-    const bottom =
-      Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
-    if (bottom && currentPage < totalPages && !loading) {
-      setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      const bottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight;
+      if (bottom && currentPage < totalPages && !loading) {
+        setCurrentPage((prevPage) => prevPage + 1); // Load next page if not already loading and not at last page
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+  }, []);
 
   return (
     <AppLayout>
@@ -193,11 +194,9 @@ export default function Home() {
               ))
             ) : (
               <CustomHashLoader />
-            //  <p> No property left </p>
+              //  <p> No property left </p>
             )}
-          
-         
-    
+
             {/* Display recommended properties */}
             {/* fixed the bug of recomended id issue for jayeed */}
 
@@ -241,7 +240,6 @@ export default function Home() {
             ))}
           </Grid>
         </Container>
-
         <Box
           position={"fixed"}
           sx={{
@@ -311,7 +309,7 @@ export default function Home() {
                               width={"250px"}
                               style={{ borderRadius: "10px" }}
                               alt=""
-                              srcset=""
+                              // srcset=""
                             />
                             <div
                               style={{
@@ -364,7 +362,6 @@ export default function Home() {
         <ChatButton onClick={toggleChat} />{" "}
         {/* Add the ChatButton component/fahim */}
       </>
-    
       {/* Show loader when loading more properties */}
       {isChatOpen && <ChatWindow onClose={toggleChat} />}{" "}
       {/* Show the chat window when isChatOpen is true/fahim */}

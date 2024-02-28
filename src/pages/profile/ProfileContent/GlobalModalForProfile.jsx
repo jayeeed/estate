@@ -49,7 +49,7 @@ const GlobalModalForProfile = ({ open, onClose, typeOfForm }) => {
         <Fade in={open}>
           {/* marginBlock:"5rem", marginInline:"5rem" */}
           <Paper sx={{ width:"62vw",marginInline:"auto" }}>  
-            {/* Personal Information for renter profile */}
+            {/* Personal Information for profile */}
             <div className="body" style={{ padding:"3.5rem", width:"60vw", marginInline:"auto"}}>
               <Grid
                 item
@@ -114,7 +114,7 @@ export default GlobalModalForProfile;
 // //className="style"
 // >
 
-// {/* Personal Information for renter profile */}
+// {/* Personal Information for profile */}
 // <div  className="body">
 //   <Grid item xs={12}
 //   justifyContent={"center"}

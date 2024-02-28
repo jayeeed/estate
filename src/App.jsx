@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 // import { ThemeProvider } from "@mui/material";
 import { ThemeProvider } from '@mui/material';
 
@@ -12,7 +12,7 @@ import OtpScreen from "./pages/OTP";
 import { ToastContainer } from "react-toastify";
 import { AppRoutes } from "./routes/AppRoutes";
 import { AdminRoutes } from "./routes/AdminRoutes";
-import AdminCheck from "./helpers/userRoles";
+// import AdminCheck from "./helpers/userRoles";
 import Success from "./pages/paymentStatus/Success";
 import Cancel from "./pages/paymentStatus/Cancel";
 
@@ -22,7 +22,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Edit } from "./pages/students/Edit";
 import { theme } from "./assets/themes/index";
 
+
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
 
 
 
@@ -33,6 +35,8 @@ export default function App() {
   // Create a theme instance.
   // const customTheme = theme(customization);
   const customTheme = theme();
+
+
 
 
   return (

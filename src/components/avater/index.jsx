@@ -98,88 +98,88 @@ const AvatarMenu = () => {
       >
         {isAuthenticated
           ? // Menu items for authenticated user
-            [
-              <Link
-                to="/profile"
-                style={{ textDecoration: "none", color: "inherit" }}
-                key="profile-link"
-              >
-                <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
-                  <Avatar /> Profile
-                </MenuItem>
-              </Link>,
-              <MenuItem
-                sx={{ minWidth: "250px" }}
-                onClick={handleMenuClose}
-                key="my-account"
-              >
-                <Avatar /> My account
-              </MenuItem>,
-              <Divider key="divider" />,
-              <MenuItem
-                sx={{ minWidth: "250px" }}
-                onClick={handleMenuClose}
-                key="add-account"
-              >
-                Add another account
-              </MenuItem>,
+          [
+            <Link
+              to="/profile"
+              style={{ textDecoration: "none", color: "inherit" }}
+              key="profile-link"
+            >
+              <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
+                <Avatar /> Profile
+              </MenuItem>
+            </Link>,
+            <MenuItem
+              sx={{ minWidth: "250px" }}
+              onClick={handleMenuClose}
+              key="my-account"
+            >
+              <Avatar /> My account
+            </MenuItem>,
+            <Divider key="divider" />,
+            <MenuItem
+              sx={{ minWidth: "250px" }}
+              onClick={handleMenuClose}
+              key="add-account"
+            >
+              Add another account
+            </MenuItem>,
 
-              <Link
-                to="/wishlist"
-                style={{ textDecoration: "none", color: "inherit" }}
-                key="profile-link"
-              >
-                <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
-                  Wishlists
-                </MenuItem>
-              </Link>,
+            <Link
+              to="/wishlist"
+              style={{ textDecoration: "none", color: "inherit" }}
+              key="wishlist-link"
+            >
+              <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
+                Wishlists
+              </MenuItem>
+            </Link>,
 
-              <Link
-                to="/my-trips"
-                style={{ textDecoration: "none", color: "inherit" }}
-                key="profile-link"
-              >
-                <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
-                  My Trips
-                </MenuItem>
-              </Link>,
+            <Link
+              to="/my-trips"
+              style={{ textDecoration: "none", color: "inherit" }}
+              key="my-trips-link"
+            >
+              <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
+                My Trips
+              </MenuItem>
+            </Link>,
 
-              <MenuItem
-                sx={{ minWidth: "250px" }}
-                onClick={handleMenuClose}
-                key="settings"
-              >
-                Settings
-              </MenuItem>,
-              <MenuItem
-                onClick={handleLogout}
-                sx={{ minWidth: "250px" }}
-                key="logout"
-              >
-                Logout
-              </MenuItem>,
-            ]
+            <MenuItem
+              sx={{ minWidth: "250px" }}
+              onClick={handleMenuClose}
+              key="settings"
+            >
+              Settings
+            </MenuItem>,
+            <MenuItem
+              onClick={handleLogout}
+              sx={{ minWidth: "250px" }}
+              key="logout"
+            >
+              Logout
+            </MenuItem>,
+          ]
           : // Menu items for non-authenticated user
-            [
-              <Link
-                to="/login"
-                style={{ textDecoration: "none", color: "inherit" }}
-                key="login-link"
-              >
-                <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
-                  Login
-                </MenuItem>
-              </Link>,
-              <Link
-                to="/register"
-                style={{ textDecoration: "none", color: "inherit" }}
-                key="register-link"
-              >
-                <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
-                  Register
-                </MenuItem>
-              </Link>,
-            ]}
+          [
+            <Link
+              to="/login"
+              style={{ textDecoration: "none", color: "inherit" }}
+              key="login-link"
+            >
+              <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
+                Login
+              </MenuItem>
+            </Link>,
+            <Link
+              to="/register"
+              style={{ textDecoration: "none", color: "inherit" }}
+              key="register-link"
+            >
+              <MenuItem sx={{ minWidth: "250px" }} onClick={handleMenuClose}>
+                Register
+              </MenuItem>
+            </Link>,
+          ]}
       </Menu>
     </>
   );

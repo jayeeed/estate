@@ -11,17 +11,23 @@ import {
 } from "@mui/material";
 import { EmailOutlined, NotificationsOutlined } from "@mui/icons-material";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
-import Category from "../category/Category";
-import { useLocation } from "react-router-dom";
-import SearchFilter from "../searchFilter";
-
 import PropTypes from "prop-types";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import AvatarMenu from "../avater";
 import SearchMobile from "../searchFilter/SearchMobile";
 import Logo from "./Logo";
+
+import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import SearchFilter from "../searchFilter";
+import Category from "../category/Category";
+
+
+import { useDispatch } from "react-redux";
+import { updateUserType } from "../../redux/features/AuthSlice"; // Import your updateUserType action from authSlice
+import { useAuthInfo } from "../../helpers/AuthCheck";
+
 // import VoiceSearch from "../VoiceSearch/VoiceSearch";
 
 const StyledToolbar = styled(Toolbar)({
@@ -53,7 +59,12 @@ ElevationScroll.propTypes = {
 };
 
 export default function Navbar(props) {
+  const isUserInSession = useAuthInfo();
+  const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch(); // Access the dispatch function from Redux
+  // const [userType, setUserType] = useState("renter");
+
 
   let showCategory;
   let showSearchFilter;
@@ -69,6 +80,22 @@ export default function Navbar(props) {
     containerWidth = "xl";
     // containerWidth = "lg";
   }
+
+  const handleUserTypeChange = () => {
+    // Check if the user is in session and the userType is "renter"
+
+    const isUserRenter = isUserInSession.type === "renter";
+    console.log(isUserInSession)
+  
+    if (isUserInSession && isUserRenter) {
+      // Redirect the user to the create company page
+      dispatch(updateUserType({ userId: isUserInSession._id, userType: "host" }));
+      navigate("/create-company");
+    } else {
+      navigate("/hosting");
+    }
+  };
+
 
   return (
     <>
@@ -107,7 +134,7 @@ export default function Navbar(props) {
                 {/* <VoiceSearch /> */}
               </Box>
               <Stack direction={"row"} alignItems={"center"}>
-                <Link to={"/hosting"}>
+                {/* <Link to={"/hosting"}> */}
                   <Button
                     variant="text"
                     size="small"
@@ -122,10 +149,11 @@ export default function Navbar(props) {
                         md: "block",
                       },
                     }}
+                    onClick={handleUserTypeChange}
                   >
-                    Switch to hosting
+                    Switch to Hosting
                   </Button>
-                </Link>
+                {/* </Link> */}
 
                 {/* <Link to={"/notifications"}> */}
                 <Badge
