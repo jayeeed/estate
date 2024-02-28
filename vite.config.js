@@ -5,8 +5,6 @@ export default defineConfig({
   plugins: [react()],
 
   build: {
-    minify: "terser", // Use terser for minification
-    terserPath: require.resolsve('terser'),
     brotliSize: false, // Disable Brotli compression for faster build times
     assetsInlineLimit: 4096,
     sourcemap: false,
